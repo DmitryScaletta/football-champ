@@ -30,7 +30,6 @@ if (isProduction) {
 	entry.push('webpack-hot-middleware/client')
 }
 
-entry.push('babel-polyfill')
 entry.push('./client/index.js')
 
 
