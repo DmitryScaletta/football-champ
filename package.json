@@ -2,9 +2,9 @@
   "name": "football-champ",
   "version": "0.0.1",
   "description": "My course project",
-  "main": "server/server.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js ./server",
+    "start": "nodemon ./server/index.js ./server",
     "build": "set NODE_ENV=production&& webpack -p",
     "dev:client": "node dev-client.js"
   },
