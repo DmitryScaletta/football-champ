@@ -19,7 +19,7 @@ class Main extends Component {
 								<Link className="nav-link" to='fcs'>Команды</Link>
 							</li>
 							<li className={(path.indexOf('/player') === 0) ? 'nav-item active' : 'nav-item'}>
-								<Link className="nav-link" to='player'>Игроки</Link>
+								<Link className="nav-link" to='players'>Игроки</Link>
 							</li>
 							<li className={(path.indexOf('/match') === 0) ? 'nav-item active' : 'nav-item'}>
 								<Link className="nav-link" to='matches'>Матчи</Link>

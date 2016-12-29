@@ -37,13 +37,13 @@ const initial_state = {
 	matches: {
 		last_matches: [],
 		next_matches: [],
-		fetching: false,
-		error: null,
+		fetching:     false,
+		error:        null,
 	},
 	match: {
-		data: {},
-		fetching: false,
-		error: null,
+		data:         {},
+		fetching:     false,
+		error:        null,
 	},
 }
 

@@ -6,6 +6,7 @@ import fc                  from './FootballClub'
 import players             from './PlayerList'
 import player              from './Player'
 import matches             from './MatchList'
+import match               from './Match'
 
 const rootReducer = combineReducers({
 	championat,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	players,
 	player,
 	matches,
+	match,
 })
 
 export default rootReducer

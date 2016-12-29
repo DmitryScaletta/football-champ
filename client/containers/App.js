@@ -11,6 +11,7 @@ import FootballClub         from './FootballClub'
 import PlayerList           from './PlayerList'
 import Player               from './Player'
 import MatchList            from './MatchList'
+import Match                from './Match'
 
 export default class App extends Component {
 	render() {
@@ -24,10 +25,10 @@ export default class App extends Component {
 						</Route>
 						<Route path='fcs' component={FootballClubList} />
 						<Route path='fc/:id' component={FootballClub} />
-						<Route path='player' component={PlayerList} />
+						<Route path='players' component={PlayerList} />
 						<Route path='player/:id' component={Player} />
 						<Route path='matches' component={MatchList} />
-						{/*<Route path='match/:id' component={Match} />*/}
+						<Route path='match/:id' component={Match} />
 					</Route>
 					<Route path='/admin' component={Admin}>
 						{/*

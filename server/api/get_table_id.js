@@ -61,13 +61,18 @@ module.exports = function(req, res) {
 		m.id,
 		m.season_id,
 		s.championat_id,
-		c.name AS championat_name,
+		ch.name AS championat_name,
+		ch.country_id AS championat_country_id,
+		co.short_name AS championat_country_short_name,
 		s.year_begin AS season_year_begin,
 		s.year_end AS season_year_end,
 		m.home_fc_id,
 		home_fc.name AS home_fc_name,
+		home_fc.image AS home_fc_image,
+		home_fc.stadium_name,
 		m.away_fc_id,
 		away_fc.name AS away_fc_name,
+		away_fc.image AS away_fc_image,
 		m.tour,
 		m.score_home,
 		m.score_away,
@@ -75,7 +80,8 @@ module.exports = function(req, res) {
 		m.is_over
 	FROM Match AS m
 	INNER JOIN Season AS s ON m.season_id=s.id
-	INNER JOIN Championat AS c ON s.championat_id=c.id
+	INNER JOIN Championat AS ch ON s.championat_id=ch.id
+	INNER JOIN Country AS co ON ch.country_id=co.id
 	INNER JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
 	INNER JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
 	WHERE m.id=@id`

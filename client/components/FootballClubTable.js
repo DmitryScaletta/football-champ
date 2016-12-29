@@ -1,5 +1,7 @@
-import React    from 'react'
-import { Link } from 'react-router'
+import React            from 'react'
+import { Link }         from 'react-router'
+import FootballClubLink from '../components/FootballClubLink'
+import FlagLink         from '../components/FlagLink'
 
 
 const FootballClubTable = ({ fcs }) => {
@@ -8,16 +10,10 @@ const FootballClubTable = ({ fcs }) => {
 		return (
 			<tr key={fc.id}>
 				<td>
-					<Link to={`/fc/${fc.id}`}>
-						<img alt={fc.name} src={`/img/logos/small/${fc.image}`} />
-						{' '}
-						{fc.name}
-					</Link>
+					<FootballClubLink id={fc.id} name={fc.name} image={fc.image} />
 				</td>
 				<td>
-					<img className="country-flag" alt={fc.country_name} src={`/img/flags/${fc.country_short_name}.png`} />
-					{' '}
-					{fc.country_name}
+					<FlagLink title={fc.country_name} flag={fc.country_short_name} />
 				</td>
 				<td>{fc.city_name}</td>
 				<td>{fc.stadium_name}</td>
