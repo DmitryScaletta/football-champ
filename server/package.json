@@ -1,0 +1,22 @@
+{
+  "name": "football-champ-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:server": "nodemon . -V -w index.js -w api -w db",
+    "start": "node server.js"
+  },
+  "author": "DmitryScaletta",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "co": "^4.6.0",
+    "express": "^4.14.0",
+    "lodash": "^4.17.2",
+    "mssql": "^3.3.0",
+    "nodemon": "^1.11.0",
+    "sqlite3": "^3.1.8"
+  }
+}

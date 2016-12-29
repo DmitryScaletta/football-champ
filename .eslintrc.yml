@@ -1,0 +1,36 @@
+env:
+  browser: true
+  es6: true
+  node: true
+  commonjs: true
+extends: 
+  - 'eslint:recommended'
+  - 'plugin:react/recommended'
+parserOptions:
+  ecmaVersion: 2017
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+  sourceType: module
+plugins:
+  - react
+  - babel
+rules:
+  indent:
+    - warn
+    - tab
+    - SwitchCase: 1
+  linebreak-style:
+    - off
+    - unix
+  quotes:
+    - warn
+    - single
+  semi:
+    - warn
+    - never
+  no-console: 0
+  no-unused-vars: warn
+  no-mixed-spaces-and-tabs: warn
+
+  react/prop-types: warn
