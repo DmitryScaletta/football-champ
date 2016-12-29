@@ -1,0 +1,733 @@
+{
+	"variables": [],
+	"info": {
+		"name": "football-course",
+		"_postman_id": "9ab4d370-9128-4504-8971-59815585fcbc",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DELETE",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "GET",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/player/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/player/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"player",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "35",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/fc/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/fc/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"fc",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "2",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/match/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/match/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"match",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "228",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/championat/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/championat/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"championat",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "228",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/season/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/season/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "228",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/season-fc/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/season-fc/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season-fc",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "228",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/trainer/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/country/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"country",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "228",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/country/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/country/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"country",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "43",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/city/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/city/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"city",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "3",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/line/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/line/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"line",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "1",
+									"id": "id"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HEAD",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/:table/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/:table/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								":table",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "player",
+									"id": "table"
+								},
+								{
+									"value": "2",
+									"id": "id"
+								}
+							]
+						},
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"season_id\": 1,\n\t\"home_fc_id\": 2,\n\t\"away_fc_id\": 1,\n\t\"tour\": 20,\n\t\"score_home\": 0,\n\t\"score_away\": 1,\n\t\"match_date\": 123456789,\n\t\"is_over\": 0\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/:table",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/:table",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								":table"
+							],
+							"variable": [
+								{
+									"value": "player",
+									"id": "table"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Курт\",\n  \"surname\": \"Зума\",\n  \"name_eng\": \"Court\",\n  \"surname_eng\": \"Zuma\",\n  \"fc_id\": 10,\n  \"country_id\": 192,\n  \"birth_date\": \"783216000\",\n  \"player_number\": 5,\n  \"line_id\": 2,\n  \"weight\": 76,\n  \"growth\": 187\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "search",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/player/search",
+					"request": {
+						"url": "localhost:3000/api/player/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filter\": {\n\t\t\"fc_id\": 2\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/fc/search",
+					"request": {
+						"url": "localhost:3000/api/fc/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n\t\"limit\": 20\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/match/search",
+					"request": {
+						"url": "localhost:3000/api/match/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filter\": {\n\t\t\"season_id\": 1\n\t},\n\t\"limit\": 10,\n\t\"order_by\": \"match_date\",\n\t\"order_type\": \"ASC\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/championat/search",
+					"request": {
+						"url": "localhost:3000/api/championat/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"limit\": 20\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/season/search",
+					"request": {
+						"url": "localhost:3000/api/season/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filter\": {\n\t\t\"championat_id\": 1,\n\t\t\"year_begin\": 2016\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/season-fc/search",
+					"request": {
+						"url": "localhost:3000/api/season-fc/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filter\": {\n\t\t\"season_id\": 2\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/trainer/search",
+					"request": {
+						"url": "localhost:3000/api/trainer/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"limit\": 20\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/country/search",
+					"request": {
+						"url": "localhost:3000/api/country/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/city/search",
+					"request": {
+						"url": "localhost:3000/api/city/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/line/search",
+					"request": {
+						"url": "localhost:3000/api/line/search",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/league_table/:season_id",
+			"request": {
+				"url": {
+					"raw": "localhost:3000/api/league_table/:season_id",
+					"auth": {},
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"league_table",
+						":season_id"
+					],
+					"variable": [
+						{
+							"value": "1",
+							"id": "season_id"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
