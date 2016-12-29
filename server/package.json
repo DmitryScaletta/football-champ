@@ -2,11 +2,11 @@
   "name": "football-champ-server",
   "version": "0.0.1",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:server": "nodemon . -V -w index.js -w api -w db",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "author": "DmitryScaletta",
   "license": "MIT",
