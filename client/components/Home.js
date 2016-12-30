@@ -15,8 +15,8 @@ export default class Home extends Component {
 						<div className="list-group">
 							<Link className="list-group-item" to="championat">Чемпионаты</Link>
 							<Link className="list-group-item" to="fcs">Команды</Link>
-							<Link className="list-group-item" to="player">Игроки</Link>
-							<Link className="list-group-item" to="match">Матчи</Link>
+							<Link className="list-group-item" to="players">Игроки</Link>
+							<Link className="list-group-item" to="matches">Матчи</Link>
 							<Link className="list-group-item" to="search">Поиск</Link>
 						</div>
 					</div>

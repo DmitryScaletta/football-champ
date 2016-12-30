@@ -5,6 +5,8 @@ import Moment               from 'moment'
 import * as actions         from '../actions/Player'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
+import FlagLink             from '../components/FlagLink'
+import FootballClubLink     from '../components/FootballClubLink'
 
 class Player extends Component {
 
@@ -20,6 +22,8 @@ class Player extends Component {
 
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
+
+		Moment.locale('ru')
 
 		return (
 			<div>
@@ -44,16 +48,12 @@ class Player extends Component {
 								<tr>
 									<td><em>Страна:</em></td>
 									<td>
-										<Link>
-											{ !player.country_short_name ? null : <img className="country-flag" alt={player.country_name} src={`/img/flags/${player.country_short_name}.png`} /> }
-											{' '}
-											{player.country_name}
-										</Link>
+										<FlagLink title={player.country_name} flag={player.country_short_name} />
 									</td>
 								</tr>
 								<tr>
 									<td><em>Дата рождения:</em></td>
-									<td>{Moment.unix(player.birth_date).format('LL')}</td>
+									<td>{Moment.unix(player.birth_date).format('LL')} ({Moment().diff(Moment.unix(player.birth_date), 'years')})</td>
 								</tr>
 								{ !player.growth ? null : <tr>
 									<td><em>Рост:</em></td>
@@ -66,11 +66,7 @@ class Player extends Component {
 								<tr>
 									<td><em>Команда:</em></td>
 									<td>
-										<Link to={`/fc/${player.fc_id}`}>
-											{ !player.fc_name ? null : <img alt={player.fc_name} src={`/img/logos/small/${player.fc_image}`} /> }
-											{' '}
-											{player.fc_name}
-										</Link>
+										<FootballClubLink id={player.fc_id} name={player.fc_name} image={player.fc_image} />
 									</td>
 								</tr>
 								<tr>

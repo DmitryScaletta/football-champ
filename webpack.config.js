@@ -1,9 +1,9 @@
-const path               = require('path')
-const webpack            = require('webpack')
+const path         = require('path')
+const webpack      = require('webpack')
 
-const isProduction       = process.env.NODE_ENV === 'production'
-let   plugins            = []
-let   entry              = []
+const isProduction = process.env.NODE_ENV === 'production'
+let   plugins      = []
+let   entry        = []
 
 plugins.push(new webpack.NoErrorsPlugin())
 plugins.push(new webpack.DefinePlugin({
@@ -30,11 +30,12 @@ if (isProduction) {
 	entry.push('webpack-hot-middleware/client')
 }
 
+// entry.push('babel-polyfill')
 entry.push('./client/index.js')
 
 
 module.exports = {
-	devtool: isProduction ? 'source-map' : null,
+	devtool: isProduction ? null : 'source-map',
 	entry,
 	plugins,
 	output: {

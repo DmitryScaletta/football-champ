@@ -88,6 +88,7 @@ module.exports = function(req, res) {
 		FootballClub.name,
 		FootballClub.image,
 		FootballClub.stadium_name,
+		FootballClub.country_id,
 		co.name AS country_name,
 		co.short_name AS country_short_name,
 		ci.name AS city_name

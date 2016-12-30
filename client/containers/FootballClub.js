@@ -4,8 +4,10 @@ import { Link }             from 'react-router'
 import * as actions         from '../actions/FootballClub'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
+import FlagLink             from '../components/FlagLink'
 import MatchesTable         from '../components/MatchesTable'
 import PlayersTable         from '../components/PlayersTable'
+
 
 class FootballClub extends Component {
 
@@ -61,11 +63,7 @@ class FootballClub extends Component {
 								<tr>
 									<td width="40%"><em>Страна:</em></td>
 									<td>
-										<Link>
-											{ fc.country_short_name ? <img className="country-flag" alt={fc.country_name} src={`/img/flags/${fc.country_short_name}.png`} /> : null }
-											{' '}
-											{fc.country_name}
-										</Link>
+										<FlagLink title={fc.country_name} flag={fc.country_short_name} />
 									</td>
 								</tr>
 								<tr>

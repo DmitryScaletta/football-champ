@@ -22,6 +22,8 @@ class Match extends Component {
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
 
+		Moment.locale('ru')
+
 		return (
 			<div>
 				<div className="row">

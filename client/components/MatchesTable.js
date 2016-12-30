@@ -6,6 +6,7 @@ import FootballClubLink from './FootballClubLink'
 
 const MatchesTable = ({ matches }) => {
 
+	Moment.locale('ru')
 	const rows = !matches ? null : matches.map((match) => {
 		return (
 			<tr key={match.id}>

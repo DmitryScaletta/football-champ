@@ -25,10 +25,10 @@ const FootballClubTable = ({ fcs }) => {
 		<table className="table">
 			<thead>
 				<tr>
-					<th>Название</th>
-					<th>Страна</th>
-					<th>Город</th>
-					<th>Стадион</th>
+					<th width="25%">Название</th>
+					<th width="25%">Страна</th>
+					<th width="25%">Город</th>
+					<th width="25%">Стадион</th>
 				</tr>
 			</thead>
 			<tbody>

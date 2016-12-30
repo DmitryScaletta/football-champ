@@ -13,6 +13,7 @@ const initial_state = {
 	},
 	fcs: {
 		items:        [],
+		filter:       0,
 		fetching:     false,
 		error:        null,
 	},

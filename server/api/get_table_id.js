@@ -28,6 +28,7 @@ module.exports = function(req, res) {
 	INNER JOIN Country AS co ON fc.country_id=co.id
 	INNER JOIN City    AS ci ON fc.city_id=ci.id
 	INNER JOIN Trainer AS t  ON fc.trainer_id=t.id
+	
 	WHERE fc.id=@id`
 
 	const SQL_SELECT_PLAYER =

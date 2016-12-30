@@ -29,16 +29,16 @@ class Season extends Component {
 		return (
 			<div className="row">
 				<div className="col-xl-6 col-lg-12">
-					<div className="col-xl-12">
+					<div className="col-xl-12 col-lg-12">
 						<h5>Прошедшие матчи</h5>
 						<MatchesTable matches={next_matches} />
 					</div>
-					<div className="col-xl-12">
+					<div className="col-xl-12 col-lg-12">
 						<h5>Будущие матчи</h5>
 						<MatchesTable matches={last_matches} />
 					</div>
 				</div>
-				<div className="col-xl-6">
+				<div className="col-xl-6 col-lg-12">
 					<h5>Турнирная таблица</h5>
 					<LeagueTable fcs={league_table} />
 				</div>

@@ -4,6 +4,7 @@ import { Link }             from 'react-router'
 import * as actions         from '../actions/Championat'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
+import FlagLink             from '../components/FlagLink'
 
 
 class Championat extends Component {
@@ -46,15 +47,13 @@ class Championat extends Component {
 			const champ       = championats[champ_id]
 			const last_season = champ.seasons[champ.seasons.length - 1]
 			return (
-				<Link 
-					className="list-group-item"
+				<FlagLink
+					className={'list-group-item'}
 					key={champ.id}
 					to={`championat/${champ.id}/${last_season.year_begin}-${last_season.year_end}`}
-				>
-					<img className="country-flag" alt={champ.country_name} src={`/img/flags/${champ.country_short_name}.png`} />
-					{' '}
-					{champ.name}
-				</Link>
+					title={champ.name}
+					flag={champ.country_short_name}
+				/>
 			)
 		})
 
