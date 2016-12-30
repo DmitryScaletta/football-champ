@@ -11,6 +11,7 @@ const FlagLink = ({className, onClick, to = null, title, flag}) => (
 
 FlagLink.propTypes = {
 	className: React.PropTypes.string,
+	onClick:   React.PropTypes.func,
 	to:        React.PropTypes.string,
 	title:     React.PropTypes.string,
 	flag:      React.PropTypes.string,

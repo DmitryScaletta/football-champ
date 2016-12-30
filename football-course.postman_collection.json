@@ -109,7 +109,7 @@
 							],
 							"variable": [
 								{
-									"value": "228",
+									"value": "2",
 									"id": "id"
 								}
 							]
@@ -147,7 +147,7 @@
 							],
 							"variable": [
 								{
-									"value": "228",
+									"value": "3",
 									"id": "id"
 								}
 							]
@@ -185,7 +185,7 @@
 							],
 							"variable": [
 								{
-									"value": "228",
+									"value": "2",
 									"id": "id"
 								}
 							]
@@ -223,7 +223,7 @@
 							],
 							"variable": [
 								{
-									"value": "228",
+									"value": "53",
 									"id": "id"
 								}
 							]
@@ -248,7 +248,7 @@
 					"name": "/api/trainer/:id",
 					"request": {
 						"url": {
-							"raw": "localhost:3000/api/country/:id",
+							"raw": "localhost:3000/api/trainer/:id",
 							"auth": {},
 							"host": [
 								"localhost"
@@ -256,12 +256,12 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"country",
+								"trainer",
 								":id"
 							],
 							"variable": [
 								{
-									"value": "228",
+									"value": "45",
 									"id": "id"
 								}
 							]
@@ -532,7 +532,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\n\t\"limit\": 20\n}"
+							"raw": "{\n\t\"limit\": 20\n}"
 						},
 						"description": ""
 					},
@@ -717,7 +717,7 @@
 					],
 					"variable": [
 						{
-							"value": "1",
+							"value": "4",
 							"id": "season_id"
 						}
 					]

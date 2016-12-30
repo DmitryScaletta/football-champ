@@ -22,7 +22,7 @@ const FootballClubTable = ({ fcs }) => {
 	})
 
 	return (
-		<table className="table">
+		<table className="table table-striped">
 			<thead>
 				<tr>
 					<th width="25%">Название</th>

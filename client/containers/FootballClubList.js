@@ -39,7 +39,7 @@ class FootballClubList extends Component {
 						title={countries[key].name}
 						flag={countries[key].short_name}
 						onClick={(e) => {
-							change_filter(Number(key))
+							if (filter !== Number(key)) change_filter(Number(key))
 							e.preventDefault()
 						}}
 					/>
@@ -57,7 +57,7 @@ class FootballClubList extends Component {
 					<ul className="nav nav-pills">
 						<li className="nav-item">
 							<a href="#" className={(filter === 0) ? 'nav-link active' : 'nav-link'} onClick={(e) => {
-								change_filter(0)
+								if (filter !== 0) change_filter(0)
 								e.preventDefault()
 							}}>Все</a>
 						</li>
