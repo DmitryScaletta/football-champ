@@ -74,6 +74,16 @@ module.exports = function(req, res) {
 	INNER JOIN Country AS co ON Championat.country_id=co.id
 	INNER JOIN Season AS s ON Championat.id=s.championat_id`
 	
+	const SQL_SEARCH_SEASON =
+	`SELECT
+		Season.id,
+		Season.championat_id,
+		ch.name AS championat_name,
+		Season.year_begin,
+		Season.year_end	
+	FROM Season
+	INNER JOIN Championat AS ch ON Season.championat_id=ch.id`
+
 	const SQL_SEARCH_SEASON_FC =
 	`SELECT
 		SeasonFootbalClub.season_id,
@@ -123,15 +133,26 @@ module.exports = function(req, res) {
 	INNER JOIN FootballClub AS home_fc ON Match.home_fc_id=home_fc.id
 	INNER JOIN FootballClub AS away_fc ON Match.away_fc_id=away_fc.id`
 
+	const SQL_SEARCH_CITY  = 
+	`SELECT ${limit_sql}
+		City.id,
+		City.name,
+		City.country_id,
+		co.name AS country_name
+	FROM City
+	INNER JOIN Country AS co ON City.country_id=co.id`
+
 	// make sql
 	let sql = ''
 
 	switch (req.params.table) {
 		case 'championat': { sql = SQL_SEARCH_CHAMP     } break
+		case 'season':     { sql = SQL_SEARCH_SEASON    } break
 		case 'season-fc':  { sql = SQL_SEARCH_SEASON_FC } break
 		case 'fc':         { sql = SQL_SEARCH_FC        } break
 		case 'player':     { sql = SQL_SEARCH_PLAYER    } break
 		case 'match':      { sql = SQL_SEARCH_MATCH     } break
+		case 'city':       { sql = SQL_SEARCH_CITY      } break
 
 		default:
 			sql = `SELECT ${limit_sql}${field_names.join(',')} FROM ${table_schema.name}`
@@ -173,6 +194,7 @@ module.exports = function(req, res) {
 				}
 				champs[champ.id].seasons.push(season)
 			}
+			champs = Object.keys(champs).map((key) => champs[key])
 			res.send(champs)
 		} else {
 			res.send(result.recordsets)

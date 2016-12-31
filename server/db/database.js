@@ -58,7 +58,6 @@ function set_param_types_for_request(request, param_types, params = false) {
 			// for prepared statement
 			request.input(key, type)
 		}
-
 	}
 	
 	return true
@@ -224,7 +223,7 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 			switch (condition.type) {
 				// only string values
 				case 'LIKE':
-				case 'NOT LIKE':
+				case 'NOT LIKE': {
 					if (table_field_type === 'number') {
 						throw {
 							status: 400,
@@ -240,15 +239,15 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type} @${table_field.name}`
 					params     [table_field.name] = condition.value
 					param_types[table_field.name] = 'string'
-
 					break
+				}
 
 				// single value
 				case '<>':
 				case '>':
 				case '<':
 				case '>=':
-				case '<=':
+				case '<=': {
 					if (typeof condition.value !== table_field_type) throw { 
 						status: 400, 
 						message: 'Type of field and type of filter value must be the same'
@@ -258,11 +257,12 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 					params     [table_field.name] = condition.value
 					param_types[table_field.name] = table_field_type
 					break
+				}
 
 				// array of 2 values
 				case 'BETWEEN':
-				case 'NOT BETWEEN':
-					if (!Array.isArray(condition.value) || condition.length !== 2) throw {
+				case 'NOT BETWEEN': {
+					if (!Array.isArray(condition.value) || condition.value.length !== 2) throw {
 						status: 400,
 						message: 'Value for BETWEEN operator must be an array of 2 values'
 					}
@@ -277,22 +277,42 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 					params     [table_field.name + '2'] = condition.value[1]
 					param_types[table_field.name + '1'] = table_field_type
 					param_types[table_field.name + '2'] = table_field_type
-
 					break
+				}
 
-				// array of any values
-				// TODO
-				/* 
+				// array of 1 or more				
 				case 'IN':
-				case 'NOT IN':
+				case 'NOT IN': {
+					if (!Array.isArray(condition.value) || condition.value.length < 1) throw {
+						status: 400,
+						message: 'Value for IN operator must be an array of 1 or more values'
+					}
+
+					for (const value of condition.value) {
+						if (typeof value !== table_field_type) throw {
+							status: 400,
+							message: 'Type of field and type of filter value must be the same'
+						}
+					}
+
+					let i = 0
+					const new_values = condition.value.map((value) => {
+						i++
+						const param_name = table_field.name + String(i)
+						params     [param_name] = value
+						param_types[param_name] = table_field_type
+						return `@${param_name}`
+					})
+					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type} (${new_values.join(',')})`
 					break
-				*/
+				}
 
 				// any field
 				case 'IS NULL':
-				case 'IS NOT NULL':
+				case 'IS NOT NULL': {
 					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type}`
 					break
+				}
 
 				default:
 					throw { status: 400, message: 'Wrong condition type' }

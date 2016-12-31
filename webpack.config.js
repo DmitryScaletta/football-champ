@@ -35,7 +35,7 @@ entry.push('./client/index.js')
 
 
 module.exports = {
-	devtool: isProduction ? null : 'source-map',
+	devtool: null, // isProduction ? null : 'source-map',
 	entry,
 	plugins,
 	output: {

@@ -49,9 +49,7 @@ const LeagueTable = ({ fcs }) => {
 }
 
 LeagueTable.propTypes = {
-	// onClick: PropTypes.func.isRequired,
-	// completed: PropTypes.bool.isRequired,
-	// text: PropTypes.string.isRequired,
+	fcs: React.PropTypes.array,
 }
 
 export default LeagueTable

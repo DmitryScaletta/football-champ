@@ -21,7 +21,13 @@ class Championat extends Component {
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
 		
-		const current_championat = championats[params.champ_id]
+		let current_championat = null
+		for (const champ of championats) {
+			if (champ.id === Number(params.champ_id)) {
+				current_championat = champ
+				break
+			}
+		}
 
 		let seasons = !current_championat ? [] : current_championat.seasons.map((season) => {
 			const year_begin = Number(params.years.split('-')[0])
@@ -43,8 +49,7 @@ class Championat extends Component {
 			)
 		})
 
-		let champs = Object.keys(championats).map((champ_id) => {
-			const champ       = championats[champ_id]
+		let champs = championats.map((champ) => {
 			const last_season = champ.seasons[champ.seasons.length - 1]
 			return (
 				<FlagLink
@@ -87,7 +92,7 @@ Championat.propTypes = {
 	params:            React.PropTypes.object,
 	fetching:          React.PropTypes.bool,
 	error:             React.PropTypes.any,
-	championats:       React.PropTypes.object,
+	championats:       React.PropTypes.array,
 	children:          React.PropTypes.node,
 	router:            React.PropTypes.object,
 	fetch_championats: React.PropTypes.func,

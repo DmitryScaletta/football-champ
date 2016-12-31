@@ -3,7 +3,6 @@ import { Provider }         from 'react-redux'
 import { hashHistory, Router, Route, IndexRoute } from 'react-router'
 import Main                 from './Main'
 import Home                 from '../components/Home'
-import Admin                from '../components/Admin'
 import Championat           from './Championat'
 import Season               from './Season'
 import FootballClubList     from './FootballClubList'
@@ -12,6 +11,8 @@ import PlayerList           from './PlayerList'
 import Player               from './Player'
 import MatchList            from './MatchList'
 import Match                from './Match'
+import Admin                from './Admin'
+import AdminTable           from './AdminTable'
 
 export default class App extends Component {
 	render() {
@@ -31,9 +32,7 @@ export default class App extends Component {
 						<Route path='match/:id' component={Match} />
 					</Route>
 					<Route path='/admin' component={Admin}>
-						{/*
-						<Route path='championats' component={AdminChampionats} />
-						*/}
+						<Route path=':table' component={AdminTable} />
 					</Route>
 				</Router>
 			</Provider>

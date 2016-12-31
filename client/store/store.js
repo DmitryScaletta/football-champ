@@ -1,6 +1,6 @@
 const initial_state = {
 	championat: {
-		items:        {},
+		items:        [],
 		fetching:     false,
 		error:        null,
 	},
@@ -46,6 +46,11 @@ const initial_state = {
 		fetching:     false,
 		error:        null,
 	},
+	admin: {
+		data:         [],
+		fetching:     false,
+		error:        null,
+	}
 }
 
 export default initial_state

@@ -7,6 +7,7 @@ import players             from './PlayerList'
 import player              from './Player'
 import matches             from './MatchList'
 import match               from './Match'
+import admin               from './AdminTable'
 
 const rootReducer = combineReducers({
 	championat,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	player,
 	matches,
 	match,
+	admin,
 })
 
 export default rootReducer

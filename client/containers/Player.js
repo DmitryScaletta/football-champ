@@ -46,7 +46,7 @@ class Player extends Component {
 									<td>{player.name_eng} {player.surname_eng}</td>
 								</tr>
 								<tr>
-									<td><em>Страна:</em></td>
+									<td><em>Гражданство:</em></td>
 									<td>
 										<FlagLink title={player.country_name} flag={player.country_short_name} />
 									</td>
