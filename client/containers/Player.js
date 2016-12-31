@@ -39,11 +39,7 @@ class Player extends Component {
 							<tbody>
 								<tr width="40%">
 									<td><em>Имя:</em></td>
-									<td>{player.name} {player.surname}</td>
-								</tr>
-								<tr>
-									<td><em>Имя (ориг):</em></td>
-									<td>{player.name_eng} {player.surname_eng}</td>
+									<td>{player.name} {player.surname} ({player.name_eng} {player.surname_eng})</td>
 								</tr>
 								<tr>
 									<td><em>Гражданство:</em></td>

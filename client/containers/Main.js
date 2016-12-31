@@ -28,7 +28,7 @@ class Main extends Component {
 								<Link className="nav-link" to='search'>Поиск</Link>
 							</li>
 							<li className={(path.indexOf('/admin') === 0) ? 'nav-item float-xs-right active' : 'nav-item float-xs-right'}>
-								<Link className="nav-link" to='admin'>Админка</Link>
+								<Link className="nav-link" to='admin/championats'>Админка</Link>
 							</li>
 						</ul>
 					</div>

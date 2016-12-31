@@ -138,7 +138,8 @@ module.exports = function(req, res) {
 		City.id,
 		City.name,
 		City.country_id,
-		co.name AS country_name
+		co.name AS country_name,
+		co.short_name AS country_short_name
 	FROM City
 	INNER JOIN Country AS co ON City.country_id=co.id`
 

@@ -5,8 +5,6 @@ export const ADMIN_FETCH_TABLE_SUCCESS = 'ADMIN_FETCH_TABLE_SUCCESS'
 export const ADMIN_FETCH_TABLE_FAILURE = 'ADMIN_FETCH_TABLE_FAILURE'
 
 
-
-
 export function fetch_table(table) {
 	return (dispatch) => {
 		dispatch({ type: ADMIN_FETCH_TABLE_REQUEST })
@@ -23,10 +21,21 @@ export function fetch_table(table) {
 			
 			case 'players':
 			case 'matches': {
-				dispatch({
-					type: ADMIN_FETCH_TABLE_SUCCESS,
-					data: []
-				})
+				axios.post('/api/fc/search')
+				.then(
+					(result) => {
+						dispatch({
+							type: ADMIN_FETCH_TABLE_SUCCESS,
+							data: result.data
+						})
+					},
+					(error) => {
+						dispatch({
+							type: ADMIN_FETCH_TABLE_FAILURE,
+							error: error.response.data
+						})
+					}
+				)
 				return
 			}
 
@@ -56,4 +65,3 @@ export function fetch_table(table) {
 		)
 	}
 }
-

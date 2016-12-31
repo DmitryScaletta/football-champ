@@ -48,18 +48,19 @@ class Admin extends Component {
 			<div>
 				<div>
 					<AppBar
+						style={{position: 'fixed'}}
 						title="Football Champ"
 						onLeftIconButtonTouchTap={this.handleToggle}
 					/>
-					<div style={{padding: '20px', paddingLeft: '276px'}}>
+					<div style={{padding: '84px 20px 20px 20px'}}>
 
 						{this.props.children}
 
 					</div>
 				</div>
 				<Drawer
-					docked={true}
-					open={true/*this.state.open*/}
+					docked={false}
+					open={this.state.open}
 					onRequestChange={(open) => this.setState({open})}
 				>
 					<AppBar title="Таблицы" showMenuIconButton={false} />
