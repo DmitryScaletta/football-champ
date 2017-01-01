@@ -12,9 +12,10 @@ function validate_field_type(value, type) {
 module.exports = function(req, res) {
 
 	const table_schema = db.get_table_schema(db.schema, req.params.table)
-	const field_names  = db.get_field_names(table_schema)
+	const field_names  = db.get_field_names(table_schema).splice(1)
 
-	let obj            = {}
+	let params         = {}
+	let param_types    = {}
 
 	for (let field of table_schema.fields) {
 		if (field.primary) continue
@@ -38,22 +39,22 @@ module.exports = function(req, res) {
 			return
 		}
 		
-		obj[field.name] = req.body[field.name] === undefined ? default_value : req.body[field.name]
+		params     [field.name] = req.body[field.name] === undefined ? default_value : req.body[field.name]
+		param_types[field.name] = field.type
 	}
 
 	// generate SQL query
-	let sql = `INSERT INTO ${table_schema.name} (${field_names.join(',')}) VALUES (${field_names.map(() => '?').join(',')})`
+	let sql = `INSERT INTO ${table_schema.name} (${field_names.join(',')}) VALUES (${field_names.map((field_name) => `@${field_name}`).join(',')})`
+
+	// res.send(sql + '\n\n' + JSON.stringify(params) + '\n\n' + JSON.stringify(param_types))
+	// return 
 
 	// create object in database
-	const result = db.query(sql, obj)
-	if (result.status === 'OK') {
-		res.status(200).send({
-			status: 'OK'
-		})
-	} else {
-		res.status(500).send({
-			status: 'Database Error',
-			message: result.message
-		})
-	}
+	db.query(sql, params, param_types)
+	.then((result) => {
+		res.status(200).send({ affected: result.affected })
+	})
+	.catch((err) => {
+		res.status(500).send(err.message)
+	})
 }

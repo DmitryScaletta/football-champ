@@ -76,9 +76,6 @@ function query(sql_query, params, param_types) {
 
 		connect()
 		.then(() => {
-
-			// console.time('Execute query')
-
 			const stmt = new sql.PreparedStatement(connection)
 
 			// set parameter types
@@ -89,12 +86,13 @@ function query(sql_query, params, param_types) {
 
 			// prepare and execute statement
 			stmt.prepare(sql_query, (err) => {
-				if (err) reject(err)
+				if (err) {
+					reject(err)
+					return
+				}
 
 				stmt.execute(params, (err, recordsets, affected) => {
 					if (err) reject(err)
-
-					// console.timeEnd('Execute query')
 
 					resolve({
 						recordsets,
