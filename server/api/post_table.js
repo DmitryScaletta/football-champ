@@ -12,7 +12,7 @@ function validate_field_type(value, type) {
 module.exports = function(req, res) {
 
 	const table_schema = db.get_table_schema(db.schema, req.params.table)
-	const field_names  = db.get_field_names(table_schema).splice(1)
+	const field_names  = db.get_field_names(table_schema).splice(1) // without first field (id)
 
 	let params         = {}
 	let param_types    = {}

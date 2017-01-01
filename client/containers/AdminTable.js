@@ -7,6 +7,7 @@ import FontIcon              from 'material-ui/FontIcon'
 import { red500, yellow700 } from 'material-ui/styles/colors'
 import SelectField           from 'material-ui/SelectField'
 import MenuItem              from 'material-ui/MenuItem'
+import AutoComplete          from 'material-ui/AutoComplete'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import FlagLink              from '../components/FlagLink'
 
@@ -261,7 +262,8 @@ class AdminTable extends Component {
 
 		// console.log(this.state)
 
-		const filter = (params.table !== 'fcs') ? null : data.map((fc) => (<MenuItem key={fc.id} value={fc.id} primaryText={fc.name} />))
+		// const filter = (params.table !== 'fcs') ? null : data.map((fc) => (<MenuItem key={fc.id} value={fc.id} primaryText={fc.name} />))
+		//const filter = (params.table !== 'fcs' || !data) ? [] : data.map((fc) => { return { textKey: fc.name, valueKey: fc.id } })
 
 		return (
 			<div>
@@ -271,7 +273,15 @@ class AdminTable extends Component {
 				</div>
 				
 				<div>
-					<SelectField
+					<AutoComplete
+						hintText="Type anything"
+						dataSource={data || []}
+						openOnFocus={true}
+						filter={AutoComplete.caseInsensitiveFilter}
+						dataSourceConfig={{text: 'name', value: 'id' }}
+						// onUpdateInput={this.handleUpdateInput}
+					/>
+					{/*<SelectField
 						floatingLabelText="Команда"
 						hintText="Выберите команду"
 						value={this.state.value}
@@ -279,7 +289,7 @@ class AdminTable extends Component {
 						autoWidth={true}
 					>
 						{filter}
-					</SelectField>
+					</SelectField>*/}
 				</div>
 				
 				<Table fixedHeader={false} selectable={false} >
