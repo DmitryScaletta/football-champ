@@ -1,4 +1,17 @@
 const initial_state = {
+	data: {
+		championats:  [],
+		seasons:      [],
+		fcs:          [],
+		// players:      [],
+		trainers:     [],
+		countries:    [],
+		cities:       [],
+		lines:        [],
+		// matches:      [],
+		fetching:     false,
+		error:        null,
+	},
 	championat: {
 		items:        [],
 		fetching:     false,
@@ -27,6 +40,7 @@ const initial_state = {
 	},
 	players: {
 		items:        [],
+		fcs:          [],
 		fetching:     false,
 		error:        null,
 	},
@@ -50,7 +64,8 @@ const initial_state = {
 		data:         [],
 		fetching:     false,
 		error:        null,
-	}
+	},
+	admin_edit: {}
 }
 
 export default initial_state

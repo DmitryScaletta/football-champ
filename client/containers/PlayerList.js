@@ -1,63 +1,75 @@
-import React, { Component } from 'react'
-import { connect }          from 'react-redux'
-// import { Link }             from 'react-router'
-import TextField            from 'material-ui/TextField'
-// import FlatButton           from 'material-ui/FlatButton'
-import * as actions         from '../actions/PlayerList'
-import ErrorMessage         from '../components/ErrorMessage'
-import Loading              from '../components/Loading'
-import PlayersTable         from '../components/PlayersTable'
+import React, { Component }     from 'react'
+import { connect }              from 'react-redux'
+// import { Link }                 from 'react-router'
+import TextField                from 'material-ui/TextField'
+// import FlatButton               from 'material-ui/FlatButton'
+import * as actions             from '../actions/PlayerList'
+import { fetch_football_clubs } from '../actions/FootballClubList'
+import ErrorMessage             from '../components/ErrorMessage'
+import Loading                  from '../components/Loading'
+import PlayersTableExtended     from '../components/PlayersTableExtended'
 
 class PlayerList extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = { value: '' }
+		this.state = { value: 0 }
 
-		this.handle_submit = this.handle_submit.bind(this)
+		this.handle_change = this.handle_change.bind(this)
 	}
 
 	componentDidMount() {
-		// this.props.fetch_players('алек')
+		this.props.fetch_football_clubs()
 	}
 
-	// componentDidUpdate(prevProps) {}
+	// componentDidUpdate(prev_props) {}
 
-	handle_submit(event) {
-		// this.props.fetch_players()
-		event.preventDefault()
+	handle_change(event) {
+		this.setState({value: event.target.value})
+		if (event.target.value !== 0) this.props.fetch_players(event.target.value)
 	}
 
 	render() {
-		const { error, fetching, players } = this.props
+		const { error, fetching, players, fcs } = this.props
 
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
 
-		return (
-			<div className="row">
-				<div className="col-lg-12">
-					<h2>Игроки</h2>
-					<form onSubmit={this.handle_submit}>
-						<TextField hintText="Поиск" onChange={() => {}} />
-						{/*<FlatButton type="submit" label="Search" />*/}
-					</form>
-				</div>
-				<div className="col-lg-6">
-					<PlayersTable players={players} />
-				</div>
+		const select_list = fcs.map((fc) => <option key={fc.id} value={fc.id}>{fc.name}</option>)
 
+		return (
+			<div>
+				<div className="row">
+					<div className="col-lg-6">
+						<h2>Игроки</h2>
+						<div className="form-group">
+							<label htmlFor="select-fc">Выберите команду</label>
+							<select value={this.state.value} className="form-control" id="select-fc" onChange={this.handle_change}>
+								<option value={0}></option>
+								{select_list}
+							</select>
+						</div>
+						
+					</div>
+				</div>
+				<div className="row" style={{paddingTop: '0'}}>
+					<div className="col-lg-12">
+						<PlayersTableExtended players={players} />
+					</div>
+				</div>
 			</div>
 		)
 	}
 }
 
 PlayerList.propTypes = {
-	params:        React.PropTypes.object,
-	fetching:      React.PropTypes.bool,
-	error:         React.PropTypes.any,
-	players:       React.PropTypes.array,
-	fetch_players: React.PropTypes.func,
+	params:               React.PropTypes.object,
+	fetching:             React.PropTypes.bool,
+	error:                React.PropTypes.any,
+	players:              React.PropTypes.array,
+	fcs:                  React.PropTypes.array,
+	fetch_players:        React.PropTypes.func,
+	fetch_football_clubs: React.PropTypes.func,
 }
 
 function mapStateToProps(state) {
@@ -65,7 +77,11 @@ function mapStateToProps(state) {
 		fetching: state.players.fetching,
 		error:    state.players.error,
 		players:  state.players.items,
+		fcs:      state.fcs.items,
 	}
 }
 
-export default connect(mapStateToProps, actions)(PlayerList)
+export default connect(mapStateToProps, { 
+	...actions,
+	fetch_football_clubs
+})(PlayerList)

@@ -1,8 +1,10 @@
 import React    from 'react'
 import { Link } from 'react-router'
+import Moment   from 'moment'
+import FlagLink from './FlagLink'
 
 
-const PlayersTable = ({ players }) => {
+const PlayersTableExtended = ({ players }) => {
 
 	const rows = !players ? null : players.map((player) => {
 		return (
@@ -11,10 +13,16 @@ const PlayersTable = ({ players }) => {
 				<td>
 					<Link to={`/player/${player.id}`}>{player.name} {player.surname}</Link>
 				</td>
-				<td>{player.line_name}</td>
+				<td>
+					<FlagLink title={player.country_name} flag={player.country_short_name} />
+				</td>
+				<td>{Moment.unix(player.birth_date).format('L')} ({ Moment().diff(Moment.unix(player.birth_date), 'years')})</td>
+				<td>{player.line_short_name}</td>
 			</tr>
 		)
 	})
+
+	Moment.locale('ru')
 
 	return (
 		<table className="table" >
@@ -22,6 +30,8 @@ const PlayersTable = ({ players }) => {
 				<tr>
 					<th>#</th>
 					<th>Игрок</th>
+					<th>Гражданство</th>
+					<th>Дата рождения</th>
 					<th>Амплуа</th>
 				</tr>
 			</thead>
@@ -32,8 +42,8 @@ const PlayersTable = ({ players }) => {
 	)
 }
 
-PlayersTable.propTypes = {
+PlayersTableExtended.propTypes = {
 	players: React.PropTypes.any,
 }
 
-export default PlayersTable
+export default PlayersTableExtended

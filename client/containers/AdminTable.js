@@ -16,7 +16,7 @@ class AdminTable extends Component {
 		super(props)
 		this.state = { value: 0 }
 
-		this.handleChange = this.handleChange.bind(this)
+		this.handle_change = this.handle_change.bind(this)
 	}
 
 	componentDidMount() {
@@ -97,7 +97,11 @@ class AdminTable extends Component {
 		header = (
 			<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 				<TableRow>
-					{ TABLE_HEADERS[params.table].map((title, i) => (i === 0) ? (<TableHeaderColumn width="80px" key={i}>{title}</TableHeaderColumn>) : (<TableHeaderColumn key={i}>{title}</TableHeaderColumn>)) }
+					{ TABLE_HEADERS[params.table].map((title, i) => {
+						return (i === 0) ? 
+							(<TableHeaderColumn width="80px" key={i}>{title}</TableHeaderColumn>) : 
+							(<TableHeaderColumn key={i}>{title}</TableHeaderColumn>)
+					}) }
 					<TableHeaderColumn width="70px"></TableHeaderColumn>
 					<TableHeaderColumn width="70px"></TableHeaderColumn>
 				</TableRow>
@@ -186,7 +190,7 @@ class AdminTable extends Component {
 						</TableRowColumn>
 						<TableRowColumn>{country.short_name}</TableRowColumn>
 						<TableRowColumn>
-							<Link to={`/admin/championats/edit/${country.id}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
+							<Link to={`/admin/countries/edit/${country.id}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
 						</TableRowColumn>
 						<TableRowColumn>
 							<Link to={''}><FontIcon className="material-icons" color={red500}>delete</FontIcon></Link>
@@ -243,7 +247,7 @@ class AdminTable extends Component {
 		}
 	}
 
-	handleChange(event, index, value) {
+	handle_change(event, index, value) {
 		this.setState({value})
 	}
 
@@ -271,7 +275,7 @@ class AdminTable extends Component {
 						floatingLabelText="Команда"
 						hintText="Выберите команду"
 						value={this.state.value}
-						onChange={this.handleChange}
+						onChange={this.handle_change}
 						autoWidth={true}
 					>
 						{filter}

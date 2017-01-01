@@ -112,9 +112,15 @@ module.exports = function(req, res) {
 		Player.name,
 		Player.surname,
 		Player.player_number,
-		l.name AS line_name
+		l.name AS line_name,
+		l.short_name AS line_short_name,
+		Player.country_id,
+		co.name AS country_name,
+		co.short_name AS country_short_name,
+		Player.birth_date
 	FROM Player
-	INNER JOIN Line AS l ON Player.line_id=l.id`
+	INNER JOIN Line AS l ON Player.line_id=l.id
+	INNER JOIN Country AS co ON Player.country_id=co.id`
 	
 	const SQL_SEARCH_MATCH  = 
 	`SELECT ${limit_sql}

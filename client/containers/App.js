@@ -13,6 +13,7 @@ import MatchList            from './MatchList'
 import Match                from './Match'
 import Admin                from './Admin'
 import AdminTable           from './AdminTable'
+import AdminEdit            from './AdminEdit'
 
 export default class App extends Component {
 	render() {
@@ -33,6 +34,8 @@ export default class App extends Component {
 					</Route>
 					<Route path='/admin' component={Admin}>
 						<Route path=':table' component={AdminTable} />
+						<Route path=':table/new' component={AdminEdit} />
+						<Route path=':table/edit/:id' component={AdminEdit} />
 					</Route>
 				</Router>
 			</Provider>

@@ -6,6 +6,7 @@ export const FETCH_FC_LIST_FAILURE = 'FETCH_FC_LIST_FAILURE'
 
 export const FC_LIST_CHANGE_FILTER = 'FC_LIST_CHANGE_FILTER'
 
+
 export function fetch_football_clubs() {
 	return (dispatch) => {
 		dispatch({ type: FETCH_FC_LIST_REQUEST })
