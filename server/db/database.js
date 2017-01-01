@@ -92,7 +92,10 @@ function query(sql_query, params, param_types) {
 				}
 
 				stmt.execute(params, (err, recordsets, affected) => {
-					if (err) reject(err)
+					if (err) {
+						reject(err)
+						return
+					}
 
 					resolve({
 						recordsets,
@@ -333,6 +336,51 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 	return where_array
 }
 
+function add_all_params(table_schema, obj, params, param_types) {
+
+	function validate_field_type(value, type) {
+
+		if (is_int_type(type) || is_bigint_type(type)) { return typeof value === 'number'  }
+		if (is_nvarchar_type(type))                    { return typeof value === 'string'  }
+		if (is_bit_type(type))                         { return value === 0 || value === 1 }
+
+		return false
+	}
+
+	for (let field of table_schema.fields) {
+		if (field.primary) continue
+
+		// check required fields and default values
+		let default_value
+		if (field.required && obj[field.name] === undefined) {
+			throw {
+				status: 400,
+				message: 'Need all required fields'
+			}
+		} else
+		if (field.default !== undefined) {
+			default_value = field.default
+		} 
+		else {
+			default_value = null
+		}
+
+		// check field type
+		if (!validate_field_type(obj[field.name], field.type)) {
+			throw {
+				status: 400,
+				message: `Wrong field type: ${field.name}`
+			}
+		}
+
+		params     [field.name + DATA_POSTFIX] = obj[field.name] === undefined ? default_value : obj[field.name]
+		param_types[field.name + DATA_POSTFIX] = field.type
+	}
+
+}
+
+const DATA_POSTFIX = '_d'
+
 
 module.exports.connect               = connect
 module.exports.query                 = query
@@ -349,3 +397,6 @@ module.exports.is_bigint_type        = is_bigint_type
 module.exports.get_table_schema      = get_table_schema
 module.exports.get_field_names       = get_field_names
 module.exports.filter_to_where_array = filter_to_where_array
+module.exports.add_all_params        = add_all_params
+
+module.exports.DATA_POSTFIX          = DATA_POSTFIX

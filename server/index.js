@@ -164,10 +164,10 @@ app.post('/api/:table', post_table)
 	method: PUT
 	request:
 		data         {object} - object with new values for some fields
-		filter       {string} - 
+		filter       {object} - filter
 	response:
 		200 OK                - all objects updated successfully
-			affected {string} - count of updated objects
+			affected {number} - count of updated objects
 		204 No Content        - no objects found matching
 */
 app.put('/api/:table', put_table)
@@ -176,10 +176,11 @@ app.put('/api/:table', put_table)
 	Update object by id
 	method:   PUT
 	request:
-		{} {object}    - new object for updating
+		{} {object}           - new object for updating
 	response:
-		200 OK         - object updated successfully
-		204 No Content - object doesn't exist
+		200 OK                - object updated successfully
+			affected {number} - count of updated objects
+		204 No Content        - object doesn't exist
 */
 app.put('/api/:table/:id', put_table_id)
 
@@ -200,8 +201,9 @@ app.delete('/api/:table', delete_table)
 	method: DELETE
 	request: -
 	response:
-		200 OK         - object deleted successfully
-		204 No Content - object doesn't exist
+		200 OK                - object deleted successfully
+			affected {number} - count of deleted objects
+		204 No Content        - object doesn't exist
 */
 app.delete('/api/:table/:id', delete_table_id)
 

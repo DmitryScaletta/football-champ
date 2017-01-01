@@ -10,7 +10,66 @@
 		{
 			"name": "DELETE",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "/api/player/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/player/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"player",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "2687",
+									"id": "id"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/player",
+					"request": {
+						"url": "localhost:3000/api/player",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"filter\": {\n\t\t\"id\": 2690\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "GET",
@@ -451,26 +510,9 @@
 			"description": "",
 			"item": [
 				{
-					"name": "/api/:table",
+					"name": "/api/player",
 					"request": {
-						"url": {
-							"raw": "localhost:3000/api/:table",
-							"auth": {},
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								":table"
-							],
-							"variable": [
-								{
-									"value": "player",
-									"id": "table"
-								}
-							]
-						},
+						"url": "localhost:3000/api/player",
 						"method": "POST",
 						"header": [
 							{
@@ -481,7 +523,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Курт\",\n  \"surname\": \"Зума\",\n  \"name_eng\": \"Court\",\n  \"surname_eng\": \"Zuma\",\n  \"fc_id\": 10,\n  \"country_id\": 192,\n  \"birth_date\": \"783216000\",\n  \"player_number\": 5,\n  \"line_id\": 2,\n  \"weight\": 76,\n  \"growth\": 187\n}"
+							"raw": "{\n  \"name\": \"Курт\",\n  \"surname\": \"Зума\",\n  \"name_eng\": \"Court\",\n  \"surname_eng\": \"Zuma\",\n  \"fc_id\": 10,\n  \"country_id\": 192,\n  \"birth_date\": 783216000,\n  \"player_number\": 5,\n  \"line_id\": 2,\n  \"weight\": 76,\n  \"growth\": 187\n}"
 						},
 						"description": ""
 					},
@@ -492,7 +534,66 @@
 		{
 			"name": "PUT",
 			"description": "",
-			"item": []
+			"item": [
+				{
+					"name": "/api/player",
+					"request": {
+						"url": "localhost:3000/api/player",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": {\n\t\t\"name\": \"Зума\",\n\t\t\"surname\": \"Курт\",\n\t\t\"name_eng\": \"Court\",\n\t\t\"surname_eng\": \"Zuma\",\n\t\t\"fc_id\": 10,\n\t\t\"country_id\": 192,\n\t\t\"birth_date\": 783216000,\n\t\t\"player_number\": 5,\n\t\t\"line_id\": 2,\n\t\t\"weight\": 76,\n\t\t\"growth\": 187\n\t},\n\t\"filter\": {\n\t\t\"id\": 2691\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/player/:id",
+					"request": {
+						"url": {
+							"raw": "localhost:3000/api/player/:id",
+							"auth": {},
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"player",
+								":id"
+							],
+							"variable": [
+								{
+									"value": "2691",
+									"id": "id"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Зума\",\n\t\"surname\": \"Курт\",\n\t\"name_eng\": \"Zuma\",\n\t\"surname_eng\": \"Court\",\n\t\"fc_id\": 10,\n\t\"country_id\": 192,\n\t\"birth_date\": 783216000,\n\t\"player_number\": 5,\n\t\"line_id\": 2,\n\t\"weight\": 76,\n\t\"growth\": 187\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "search",
@@ -692,7 +793,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"filter\": {\n\t\t\"id\": { \"type\": \"IN\", \"value\": [1, 2, 3] }\n\t}\n}"
 						},
 						"description": ""
 					},
