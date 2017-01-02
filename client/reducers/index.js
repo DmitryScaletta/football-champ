@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import championat          from './Championat'
 import season              from './Season'
 import fcs                 from './FootballClubList'
@@ -11,6 +12,7 @@ import admin               from './AdminTable'
 import admin_edit          from './AdminEdit'
 
 const rootReducer = combineReducers({
+	form: formReducer,
 	championat,
 	season,
 	fcs,
