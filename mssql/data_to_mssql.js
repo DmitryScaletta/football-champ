@@ -6,7 +6,7 @@ const JSON_FILENAME = 'data.json'
 let data = JSON.parse(fs.readFileSync(JSON_FILENAME))
 
 
-const db_schema = require('../db/schema.js')
+const db_schema = require('../server/db/schema.js')
 
 
 let sql = 'USE [football-champ]\nGO\n\n'
