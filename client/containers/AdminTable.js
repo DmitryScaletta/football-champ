@@ -13,12 +13,12 @@ import FlagLink              from '../components/FlagLink'
 
 class AdminTable extends Component {
 
-	constructor(props) {
+	/*constructor(props) {
 		super(props)
 		this.state = { value: 0 }
 
 		this.handle_change = this.handle_change.bind(this)
-	}
+	}*/
 
 	componentDidMount() {
 		const { params, fetch_table } = this.props
@@ -29,7 +29,7 @@ class AdminTable extends Component {
 		const { params, fetch_table } = this.props
 		if (params.table !== prev_props.params.table) {
 			fetch_table(params.table)
-			this.setState({ current_row: null })
+			// this.setState({ current_row: null })
 		}
 	}
 
@@ -248,9 +248,9 @@ class AdminTable extends Component {
 		}
 	}
 
-	handle_change(event, index, value) {
+	/*handle_change(event, index, value) {
 		this.setState({value})
-	}
+	}*/
 
 	render() {
 		const { error, fetching, params, data } = this.props
@@ -265,6 +265,8 @@ class AdminTable extends Component {
 		// const filter = (params.table !== 'fcs') ? null : data.map((fc) => (<MenuItem key={fc.id} value={fc.id} primaryText={fc.name} />))
 		//const filter = (params.table !== 'fcs' || !data) ? [] : data.map((fc) => { return { textKey: fc.name, valueKey: fc.id } })
 
+		const data_source = (Array.isArray(data)) ? data : []
+
 		return (
 			<div>
 				<div style={{height: '45px'}}>
@@ -275,7 +277,7 @@ class AdminTable extends Component {
 				<div>
 					<AutoComplete
 						hintText="Type anything"
-						dataSource={data || []}
+						dataSource={data_source}
 						openOnFocus={true}
 						filter={AutoComplete.caseInsensitiveFilter}
 						dataSourceConfig={{text: 'name', value: 'id' }}
@@ -306,7 +308,6 @@ class AdminTable extends Component {
 AdminTable.propTypes = {
 	params:             React.PropTypes.object,
 	data:               React.PropTypes.array,
-	current_row:        React.PropTypes.number,
 	fetching:           React.PropTypes.bool,
 	error:              React.PropTypes.any,
 	fetch_table:        React.PropTypes.func,

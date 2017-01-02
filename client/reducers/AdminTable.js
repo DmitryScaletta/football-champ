@@ -2,12 +2,11 @@ import {
 	ADMIN_FETCH_TABLE_REQUEST, 
 	ADMIN_FETCH_TABLE_SUCCESS, 
 	ADMIN_FETCH_TABLE_FAILURE,
-	ADMIN_CHANGE_CURRENT_ROW,
-} from '../actions/AdminEdit'
+} from '../actions/AdminTable'
 import initial_state from '../store/store'
 
 
-export default function(state = initial_state.admin_edit, action) {
+export default function(state = initial_state.admin, action) {
 	switch (action.type) {
 		
 		case ADMIN_FETCH_TABLE_REQUEST:

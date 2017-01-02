@@ -4,32 +4,37 @@ import { Link }              from 'react-router'
 import * as actions          from '../actions/AdminEdit'
 // import RaisedButton          from 'material-ui/RaisedButton'
 // import FontIcon              from 'material-ui/FontIcon'
-// import { red500, yellow700 } from 'material-ui/styles/colors'
-// import SelectField           from 'material-ui/SelectField'
-// import MenuItem              from 'material-ui/MenuItem'
-// import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-// import FlagLink              from '../components/FlagLink'
 
 class AdminEdit extends Component {
 
 	componentDidMount() {
-		// const { params, fetch_table } = this.props
-		// fetch_table(params.table)
+		const { params, fetch_record } = this.props
+		fetch_record(params.table, params.id)
 	}
 
 	componentDidUpdate(prev_props) {
-		// const { params, fetch_table } = this.props
-		// if (params.table !== prev_props.params.table) {
-			// fetch_table(params.table)
-			// this.setState({ current_row: null })
-		// }
+		const { params, fetch_record } = this.props
+		if (params.table !== prev_props.params.table || params.table !== prev_props.params.table) {
+			fetch_record(params.table, params.id)
+		}
 	}
 
+	render_form() {
+		const { params } = this.props
+
+		switch (params.table) {
+
+			
+		}
+
+	}
 
 	render() {
-		const { error, fetching, params } = this.props
+		const { error, fetching, params, data } = this.props
 
-		if (error)    return <div>ERROR</div>
+		console.log(data)
+
+		if (error)    return <div>ERROR. {error}</div>
 		if (fetching) return <div>Loading...</div>
 
 		return (
@@ -42,19 +47,22 @@ class AdminEdit extends Component {
 }
 
 AdminEdit.propTypes = {
-	params:             React.PropTypes.object,
-	data:               React.PropTypes.array,
-	current_row:        React.PropTypes.number,
-	fetching:           React.PropTypes.bool,
-	error:              React.PropTypes.any,
-	fetch_table:        React.PropTypes.func,
+	params:        React.PropTypes.object,
+	data:          React.PropTypes.object,
+	affected:      React.PropTypes.number,
+	fetching:      React.PropTypes.bool,
+	error:         React.PropTypes.any,
+	fetch_record:  React.PropTypes.func,
+	update_record: React.PropTypes.func,
+	create_record: React.PropTypes.func,
 }
 
 function mapStateToProps(state) {
 	return {
-		data:        state.admin.data,
-		fetching:    state.admin.fetching,
-		error:       state.admin.error,
+		data:     state.admin_edit.data,
+		affected: state.admin_edit.affected,
+		fetching: state.admin_edit.fetching,
+		error:    state.admin_edit.error,
 	}
 }
 

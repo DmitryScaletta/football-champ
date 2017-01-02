@@ -65,7 +65,12 @@ const initial_state = {
 		fetching:     false,
 		error:        null,
 	},
-	admin_edit: {}
+	admin_edit: {
+		data:         {},
+		affected:     0,
+		fetching:     false,
+		error:        null,	
+	}
 }
 
 export default initial_state
