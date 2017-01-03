@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
+import { Link }             from 'redux'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
 // import RaisedButton from 'material-ui/RaisedButton'
 
 // import Paper from 'material-ui/Paper'
@@ -13,7 +15,6 @@ import MenuItem from 'material-ui/MenuItem'
 // import FontIcon from 'material-ui/FontIcon'
 // import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
 import DropDownMenu from 'material-ui/DropDownMenu'
-// import RaisedButton from 'material-ui/RaisedButton'
 
 // import * as actions         from '../actions/Admin'
 
@@ -27,19 +28,19 @@ class Admin extends Component {
 		super(props)
 		this.state = {open: false}
 
-		this.handleToggle = this.handleToggle.bind(this)
-		this.handleClose  = this.handleClose.bind(this)
+		this.handle_toggle = this.handle_toggle.bind(this)
+		this.handle_close  = this.handle_close.bind(this)
 	}
 
-	handleToggle() { this.setState({open: !this.state.open}) }
+	handle_toggle() { this.setState({open: !this.state.open}) }
 
-	handleClose(table) {
+	handle_close(table) {
 		this.setState({open: false})
 		this.props.router.push(`/admin/${table}`)
 	}
 
 	render() {
-		const { location } = this.props
+		const { location, router } = this.props
 
 		const active = {backgroundColor: 'rgba(0,0,0,.2)'}
 
@@ -50,7 +51,8 @@ class Admin extends Component {
 					<AppBar
 						style={{position: 'fixed'}}
 						title="Football Champ"
-						onLeftIconButtonTouchTap={this.handleToggle}
+						onLeftIconButtonTouchTap={this.handle_toggle}
+						iconElementRight={<FlatButton onClick={() => router.push('/')} label="На главную" />}
 					/>
 					<div style={{padding: '84px 20px 20px 20px'}}>
 
@@ -64,15 +66,15 @@ class Admin extends Component {
 					onRequestChange={(open) => this.setState({open})}
 				>
 					<AppBar title="Таблицы" showMenuIconButton={false} />
-					<MenuItem onTouchTap={() => {this.handleClose('championats')}} style={(location.pathname === '/admin/championats') ? active : null}>Чемпионаты</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('seasons')}}     style={(location.pathname === '/admin/seasons')     ? active : null}>Сезоны</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('fcs')}}         style={(location.pathname === '/admin/fcs')         ? active : null}>Команды</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('players')}}     style={(location.pathname === '/admin/players')     ? active : null}>Игроки</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('trainers')}}    style={(location.pathname === '/admin/trainers')    ? active : null}>Тренеры</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('countries')}}   style={(location.pathname === '/admin/countries')   ? active : null}>Страны</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('cities')}}      style={(location.pathname === '/admin/cities')      ? active : null}>Города</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('lines')}}       style={(location.pathname === '/admin/lines')       ? active : null}>Амплуа</MenuItem>
-					<MenuItem onTouchTap={() => {this.handleClose('matches')}}     style={(location.pathname === '/admin/matches')     ? active : null}>Матчи</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('championats')}} style={(location.pathname === '/admin/championats') ? active : null}>Чемпионаты</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('seasons')}}     style={(location.pathname === '/admin/seasons')     ? active : null}>Сезоны</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('fcs')}}         style={(location.pathname === '/admin/fcs')         ? active : null}>Команды</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('players')}}     style={(location.pathname === '/admin/players')     ? active : null}>Игроки</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('trainers')}}    style={(location.pathname === '/admin/trainers')    ? active : null}>Тренеры</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('countries')}}   style={(location.pathname === '/admin/countries')   ? active : null}>Страны</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('cities')}}      style={(location.pathname === '/admin/cities')      ? active : null}>Города</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('lines')}}       style={(location.pathname === '/admin/lines')       ? active : null}>Амплуа</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('matches')}}     style={(location.pathname === '/admin/matches')     ? active : null}>Матчи</MenuItem>
 				</Drawer>
 			</div>
 		)
