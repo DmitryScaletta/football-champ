@@ -27,9 +27,9 @@ class ChampionatForm extends Component {
 
 		const { action_type, load_form_data, data } = this.props
 
-		if (action_type === 'edit') {
-			load_form_data(data)
-		}
+		// if (action_type === 'edit') {
+			// load_form_data(data)
+		// }
 	}
 
 	// componentDidUpdate() {}
@@ -45,6 +45,8 @@ class ChampionatForm extends Component {
 		}
 
 		const submit_title = (action_type === 'new') ? 'Добавить' : (action_type === 'edit') ? 'Сохранить' : 'Error'
+
+		// console.log(action_type)
 
 		return (
 			<form onSubmit={handleSubmit}>

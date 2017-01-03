@@ -24,7 +24,7 @@ class AdminEdit extends Component {
 			fetch_record(params.table, params.id)
 			// load_form_data(data)
 		}
-		load_form_data({})
+		load_form_data({}) // TODO rename to clear data
 		fetch_additional_tables(params.table)
 	}
 
@@ -60,7 +60,7 @@ class AdminEdit extends Component {
 				// fetch countries
 				return <ChampionatForm
 					initialValues={data}
-					action_type={data}
+					action_type={action_type}
 					data={data}
 					countries={countries}
 					onCancel={onCancel}

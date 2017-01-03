@@ -219,7 +219,7 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 		let condition     = filter[filter_field_name]
 		let sql_condition = ''
 		
-		if (typeof condition === 'object') {
+		if (condition && typeof condition === 'object') {
 
 			switch (condition.type) {
 				// only string values

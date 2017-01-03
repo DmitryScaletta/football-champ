@@ -1,7 +1,6 @@
 import React, { Component }  from 'react'
 import { connect }           from 'react-redux'
 import { Link }              from 'react-router'
-import * as actions          from '../actions/AdminTable'
 import RaisedButton          from 'material-ui/RaisedButton'
 import FontIcon              from 'material-ui/FontIcon'
 import { red500, yellow700 } from 'material-ui/styles/colors'
@@ -9,6 +8,8 @@ import SelectField           from 'material-ui/SelectField'
 import MenuItem              from 'material-ui/MenuItem'
 import AutoComplete          from 'material-ui/AutoComplete'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
+import * as actions          from '../actions/AdminTable'
+import { delete_record }     from '../actions/AdminEdit'
 import FlagLink              from '../components/FlagLink'
 
 class AdminTable extends Component {
@@ -34,7 +35,7 @@ class AdminTable extends Component {
 	}
 
 	prepare_table_data() {
-		const { params, data } = this.props
+		const { params, data, delete_record } = this.props
 
 		let header = null
 		let rows   = null
@@ -109,6 +110,9 @@ class AdminTable extends Component {
 			</TableHeader>
 		)
 
+		// TODO add delete question
+		const on_delete = (id) => { delete_record(params.table, id) }
+
 		switch (params.table) {
 			case 'championats': {
 				rows = data.map((champ) => (
@@ -122,7 +126,7 @@ class AdminTable extends Component {
 							<Link to={`/admin/championats/edit/${champ.id}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
 						</TableRowColumn>
 						<TableRowColumn>
-							<FontIcon onClick={() => console.log(champ.id)} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
+							<FontIcon onClick={() => on_delete(champ.id)} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
 						</TableRowColumn>
 					</TableRow>
 				))
@@ -240,8 +244,6 @@ class AdminTable extends Component {
 				break
 		}
 
-		
-
 		return {
 			header,
 			rows
@@ -325,19 +327,20 @@ class AdminTable extends Component {
 }
 
 AdminTable.propTypes = {
-	params:             React.PropTypes.object,
-	data:               React.PropTypes.array,
-	fetching:           React.PropTypes.bool,
-	error:              React.PropTypes.any,
-	fetch_table:        React.PropTypes.func,
+	params:        React.PropTypes.object,
+	data:          React.PropTypes.array,
+	fetching:      React.PropTypes.bool,
+	error:         React.PropTypes.any,
+	fetch_table:   React.PropTypes.func,
+	delete_record: React.PropTypes.func,
 }
 
 function mapStateToProps(state) {
 	return {
-		data:        state.admin.data,
-		fetching:    state.admin.fetching,
-		error:       state.admin.error,
+		data:     state.admin.data,
+		fetching: state.admin.fetching,
+		error:    state.admin.error,
 	}
 }
 
-export default connect(mapStateToProps, actions)(AdminTable)
+export default connect(mapStateToProps, { ...actions, delete_record })(AdminTable)

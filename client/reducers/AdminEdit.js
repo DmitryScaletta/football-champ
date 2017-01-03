@@ -11,6 +11,9 @@ import {
 	CREATE_RECORD_REQUEST,
 	CREATE_RECORD_SUCCESS,
 	CREATE_RECORD_FAILURE,
+	DELETE_RECORD_REQUEST,
+	DELETE_RECORD_SUCCESS,
+	DELETE_RECORD_FAILURE,
 	LOAD_FORM_DATA,
 } from '../actions/AdminEdit'
 import initial_state from '../store/store'
@@ -97,6 +100,25 @@ export default function(state = initial_state.admin_edit, action) {
 				fetching: false,
 			}
 		case CREATE_RECORD_FAILURE:
+			return {
+				...state,
+				error:    action.error,
+				fetching: false,
+			}
+
+		case DELETE_RECORD_REQUEST:
+			return {
+				...state,
+				error:    false,
+				fetching: true,
+			}
+		case DELETE_RECORD_SUCCESS:
+			return {
+				...state,
+				affected: action.affected,
+				fetching: false,
+			}
+		case DELETE_RECORD_FAILURE:
 			return {
 				...state,
 				error:    action.error,

@@ -16,6 +16,10 @@ export const CREATE_RECORD_REQUEST           = 'CREATE_RECORD_REQUEST'
 export const CREATE_RECORD_SUCCESS           = 'CREATE_RECORD_SUCCESS'
 export const CREATE_RECORD_FAILURE           = 'CREATE_RECORD_FAILURE'
 
+export const DELETE_RECORD_REQUEST           = 'DELETE_RECORD_REQUEST'
+export const DELETE_RECORD_SUCCESS           = 'DELETE_RECORD_SUCCESS'
+export const DELETE_RECORD_FAILURE           = 'DELETE_RECORD_FAILURE'
+
 export const LOAD_FORM_DATA                  = 'LOAD_FORM_DATA'
 
 
@@ -103,7 +107,7 @@ export function update_record(table, new_record, callback) {
 	}
 }
 
-export function create_record(table, new_record) {
+export function create_record(table, new_record, callback) {
 	return (dispatch) => {
 		dispatch({ type: CREATE_RECORD_REQUEST })
 
@@ -124,10 +128,44 @@ export function create_record(table, new_record) {
 					type: CREATE_RECORD_SUCCESS,
 					affected: result.data.affected,
 				})
+				callback()
 			},
 			(error) => {
 				dispatch({
 					type: CREATE_RECORD_FAILURE,
+					error: error.response.data,
+				})
+			}
+		)
+	}
+}
+
+export function delete_record(table, id, callback) {
+	return (dispatch) => {
+		dispatch({ type: DELETE_RECORD_REQUEST })
+
+		const table_name = validate_table_name(table)
+
+		if (!table_name) {
+			dispatch({
+				type: DELETE_RECORD_FAILURE,
+				error: 'Wrong table name',
+			})
+			return
+		}
+
+		axios.delete(`/api/${table_name}/${id}`)
+		.then(
+			(result) => {
+				dispatch({
+					type: DELETE_RECORD_SUCCESS,
+					affected: result.data.affected,
+				})
+				callback()
+			},
+			(error) => {
+				dispatch({
+					type: DELETE_RECORD_FAILURE,
 					error: error.response.data,
 				})
 			}
@@ -208,6 +246,7 @@ export function fetch_additional_tables(table) {
 		)
 	}
 }
+
 
 
 /*export const FETCH_RECORD_CHAMPIONAT_REQUEST = 'FETCH_RECORD_CHAMPIONAT_REQUEST'
