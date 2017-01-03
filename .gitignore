@@ -39,3 +39,4 @@ jspm_packages
 
 parser*
 _
+server/static/bundle.js
