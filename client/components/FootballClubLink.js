@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 const FootballClubLink = ({id = null, name, image}) => (
 	<Link to={(id) ? `/fc/${id}` : null}>
-		<img alt={name} src={`/img/logos/small/${image}`} />
+		{ image ? <img alt={name} src={`/img/logos/small/${image}`} /> : null }
 		{' '}
 		{name}
 	</Link>

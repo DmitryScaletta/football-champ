@@ -38,8 +38,8 @@ class AdminTable extends Component {
 		const { params, current_fc, fetch_table, fetch_football_clubs, admin_clear_data } = this.props
 		if (params.table !== prev_props.params.table) {
 			if (params.table === 'players' || params.table === 'matches') {
-				fetch_football_clubs()
 				admin_clear_data()
+				fetch_football_clubs()
 			} else {
 				fetch_table(params.table)
 			}
@@ -196,7 +196,7 @@ class AdminTable extends Component {
 					<FootballClubLink name={match.home_fc_name} image={match.home_fc_image} />,
 					(match.score_home === null) ? '-' : `${match.score_home} - ${match.score_away}`,
 					<FootballClubLink name={match.away_fc_name} image={match.away_fc_image} />,
-					<DateTime timestamp={match.match_date} format={'L'} />,
+					<DateTime timestamp={match.match_date} format={'L LT'} />,
 					(match.is_over) ? 'Да' : 'Нет',
 				])
 				break

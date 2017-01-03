@@ -13,7 +13,7 @@ const DateTime = ({ timestamp = 0, format = 'L', years = false }) => {
 }
 
 DateTime.propTypes = {
-	timestamp: React.PropTypes.number,
+	timestamp: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
 	format:    React.PropTypes.string,
 	years:     React.PropTypes.bool,
 }

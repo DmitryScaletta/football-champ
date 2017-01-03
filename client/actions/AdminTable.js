@@ -11,6 +11,15 @@ export const ADMIN_CLEAR_DATA            = 'ADMIN_CLEAR_DATA'
 
 export function fetch_table(table, fc_id = 0) {
 	return (dispatch) => {
+
+		if ((table === 'players' || table === 'matches') && fc_id === 0) {
+			dispatch({ 
+				type: ADMIN_FETCH_TABLE_SUCCESS,
+				data: [],
+			})
+			return
+		}
+
 		dispatch({ type: ADMIN_FETCH_TABLE_REQUEST })
 
 		let api_table = ''

@@ -40,8 +40,8 @@ export default function(state = initial_state.admin, action) {
 		case ADMIN_CLEAR_DATA:
 			return {
 				...state,
+				data:       [],
 				current_fc: 0,
-				data: [],
 			}
 
 		default:
