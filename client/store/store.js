@@ -1,17 +1,17 @@
 const initial_state = {
-	data: {
+	/*common: {
 		championats:  [],
 		seasons:      [],
 		fcs:          [],
-		// players:      [],
+		players:      [],
 		trainers:     [],
 		countries:    [],
 		cities:       [],
 		lines:        [],
-		// matches:      [],
+		matches:      [],
 		fetching:     false,
 		error:        null,
-	},
+	},*/
 	championat: {
 		items:        [],
 		fetching:     false,
@@ -62,12 +62,22 @@ const initial_state = {
 	},
 	admin: {
 		data:         [],
+		valid:        true,
 		fetching:     false,
 		error:        null,
 	},
 	admin_edit: {
 		data:         {},
+		form_data:    {},
 		affected:     0,
+		championats:  [],
+		seasons:      [],
+		fcs:          [],
+		trainers:     [],
+		countries:    [],
+		cities:       [],
+		lines:        [],
+		valid:        true,
 		fetching:     false,
 		error:        null,	
 	}

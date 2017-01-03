@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-export const ADMIN_FETCH_TABLE_REQUEST = 'ADMIN_FETCH_TABLE_REQUEST'
-export const ADMIN_FETCH_TABLE_SUCCESS = 'ADMIN_FETCH_TABLE_SUCCESS'
-export const ADMIN_FETCH_TABLE_FAILURE = 'ADMIN_FETCH_TABLE_FAILURE'
+export const ADMIN_FETCH_TABLE_REQUEST   = 'ADMIN_FETCH_TABLE_REQUEST'
+export const ADMIN_FETCH_TABLE_SUCCESS   = 'ADMIN_FETCH_TABLE_SUCCESS'
+export const ADMIN_FETCH_TABLE_FAILURE   = 'ADMIN_FETCH_TABLE_FAILURE'
+
+export const INVALIDATE_ADMIN_TABLE_DATA = 'INVALIDATE_ADMIN_TABLE_DATA'
 
 
 export function fetch_table(table) {
@@ -63,5 +65,11 @@ export function fetch_table(table) {
 				})
 			}
 		)
+	}
+}
+
+export function invalidate_data() {
+	return {
+		type: INVALIDATE_ADMIN_TABLE_DATA
 	}
 }

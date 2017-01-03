@@ -267,11 +267,30 @@ class AdminTable extends Component {
 
 		const data_source = (Array.isArray(data)) ? data : []
 
+		const titles = {
+			championats: '',
+			seasons:     '',
+			fcs:         '',
+			players:     '',
+			trainers:    '',
+			countries:   '',
+			cities:      '',
+			lines:       '',
+			matches:     '',
+		}
+
 		return (
 			<div>
 				<div style={{height: '45px'}}>
 					<h4 style={{padding: '0 0 10px', float: 'left'}}>{params.table}</h4>
-					<RaisedButton label="Добавить" primary={true} style={{float: 'right'}} icon={<FontIcon className="material-icons">add</FontIcon>} />
+					<Link to={`/admin/${params.table}/new`}>
+						<RaisedButton 
+							label="Добавить"
+							primary={true}
+							style={{float: 'right'}}
+							icon={<FontIcon className="material-icons">add</FontIcon>}
+						/>
+					</Link>
 				</div>
 				
 				<div>
