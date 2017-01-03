@@ -1,7 +1,9 @@
 import React, { Component }     from 'react'
 import { connect }              from 'react-redux'
 import { Link }                 from 'react-router'
+import Dialog                   from 'material-ui/Dialog'
 import RaisedButton             from 'material-ui/RaisedButton'
+import FlatButton               from 'material-ui/FlatButton'
 import FontIcon                 from 'material-ui/FontIcon'
 import { red500, yellow700 }    from 'material-ui/styles/colors'
 import SelectField              from 'material-ui/SelectField'
@@ -14,15 +16,20 @@ import { delete_record }        from '../actions/AdminEdit'
 import FlagLink                 from '../components/FlagLink'
 import FootballClubLink         from '../components/FootballClubLink'
 import DateTime                 from '../components/DateTime'
+import DeleteDialog             from '../components/DeleteDialog'
 
 
 class AdminTable extends Component {
 
 	constructor(props) {
 		super(props)
-		// this.state = { value: 0 }
+		this.state = {
+			open: false,
+		}
 
 		this.handle_change = this.handle_change.bind(this)
+		this.handle_open   = this.handle_open  .bind(this)
+		this.handle_close  = this.handle_close .bind(this)
 	}
 
 	componentDidMount() {
@@ -48,6 +55,14 @@ class AdminTable extends Component {
 			// fetch players or matches
 			fetch_table(params.table, current_fc)
 		}
+	}
+
+	handle_open() {
+		this.setState({ open: true })
+	}
+
+	handle_close() {
+		this.setState({ open: false })
 	}
 
 	prepare_table_data() {
@@ -207,7 +222,7 @@ class AdminTable extends Component {
 		}
 
 		// TODO add delete question
-		const on_delete = (id) => { delete_record(params.table, id) }
+		// const on_delete = (id) => { delete_record(params.table, id, () => {}) }
 
 		header = (
 			<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -230,7 +245,7 @@ class AdminTable extends Component {
 					<Link to={`/admin/${params.table}/edit/${row[0]}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
 				</TableRowColumn>
 				<TableRowColumn>
-					<FontIcon onClick={() => on_delete(row[0])} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
+					<FontIcon onClick={this.handle_open/*() => on_delete(row[0])*/} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
 				</TableRowColumn>
 			</TableRow>
 		))
@@ -285,6 +300,20 @@ class AdminTable extends Component {
 			matches:     'Матчи',
 		}
 
+		const actions = [
+			<FlatButton
+				label="Нет"
+				primary={true}
+				onTouchTap={this.handle_close}
+			/>,
+			<FlatButton
+				label="Да"
+				primary={true}
+				keyboardFocused={true}
+				onTouchTap={this.handle_close}
+			/>,
+		]
+
 		return (
 			<div>
 				<div style={{height: '45px'}}>
@@ -307,6 +336,16 @@ class AdminTable extends Component {
 						{table.rows}
 					</TableBody>
 				</Table>
+
+				<Dialog
+					title="Удаление записи"
+					actions={actions}
+					modal={false}
+					open={this.state.open}
+					onRequestClose={this.handleClose}
+				>
+					Вы действительно хотите удалить запись?
+				</Dialog>
 			</div>
 		)
 	}
