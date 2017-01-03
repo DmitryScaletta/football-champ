@@ -86,7 +86,6 @@ class AdminTable extends Component {
 			trainers: [
 				'ID',
 				'Имя',
-				'Фамилия',
 			],
 			countries: [
 				'ID',
@@ -159,8 +158,7 @@ class AdminTable extends Component {
 			case 'trainers': {
 				rows_data = data.map((trainer) => [
 					trainer.id,
-					trainer.name,
-					trainer.surname
+					`${trainer.name} ${trainer.surname}`,
 				])
 				break
 			}

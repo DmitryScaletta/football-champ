@@ -48,7 +48,9 @@ export function fetch_table(table, fc_id = 0) {
 				filter_or: {
 					home_fc_id: Number(fc_id),
 					away_fc_id: Number(fc_id),
-				}
+				},
+				order_by: 'match_date',
+				order_type: 'DESC'
 			}
 		}
 
