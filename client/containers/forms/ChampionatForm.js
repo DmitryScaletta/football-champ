@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-// import { RadioButton } from 'material-ui/RadioButton'
-import MenuItem from 'material-ui/MenuItem'
-// import { AutoComplete as MUIAutoComplete } from 'material-ui'
-import RaisedButton from 'material-ui/RaisedButton'
+import MenuItem             from 'material-ui/MenuItem'
+import RaisedButton         from 'material-ui/RaisedButton'
 import {
 	// Checkbox,
 	// DatePicker,
 	SelectField,
 	TextField,
 } from 'redux-form-material-ui'
-import { load_form_data } from '../../actions/AdminEdit'
+import { load_form_data }   from '../../actions/AdminEdit'
 
 
 // validation functions
@@ -24,12 +22,6 @@ class ChampionatForm extends Component {
 			.getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
 			.getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
 			.focus()                // on TextField
-
-		const { action_type, load_form_data, data } = this.props
-
-		// if (action_type === 'edit') {
-			// load_form_data(data)
-		// }
 	}
 
 	// componentDidUpdate() {}
@@ -45,8 +37,6 @@ class ChampionatForm extends Component {
 		}
 
 		const submit_title = (action_type === 'new') ? 'Добавить' : (action_type === 'edit') ? 'Сохранить' : 'Error'
-
-		// console.log(action_type)
 
 		return (
 			<form onSubmit={handleSubmit}>
@@ -70,7 +60,7 @@ class ChampionatForm extends Component {
 						{ countries.map((country) => <MenuItem key={country.id} value={country.id} primaryText={country.name} />) }
 					</Field>
 				</div>
-				<div>
+				<div style={{ paddingTop: '20px' }}>
 					<RaisedButton label={submit_title} type="submit" disabled={submitting} primary={true} />
 					{' '}
 					<RaisedButton label="Отмена" type="button" disabled={submitting} onClick={onCancel} />

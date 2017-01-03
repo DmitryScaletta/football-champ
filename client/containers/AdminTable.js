@@ -8,8 +8,14 @@ import FontIcon                 from 'material-ui/FontIcon'
 import { red500, yellow700 }    from 'material-ui/styles/colors'
 import SelectField              from 'material-ui/SelectField'
 import MenuItem                 from 'material-ui/MenuItem'
-// import AutoComplete             from 'material-ui/AutoComplete'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
+import { 
+	Table,
+	TableBody,
+	TableHeader,
+	TableHeaderColumn,
+	TableRow,
+	TableRowColumn
+} from 'material-ui/Table'
 import * as actions             from '../actions/AdminTable'
 import { fetch_football_clubs } from '../actions/FootballClubList'
 import { delete_record }        from '../actions/AdminEdit'
