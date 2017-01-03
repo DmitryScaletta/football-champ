@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import { Link }             from 'react-router'
-import Moment               from 'moment'
 import * as actions         from '../actions/Match'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
 import FlagLink             from '../components/FlagLink'
+import DateTime             from '../components/DateTime'
+
 
 class Match extends Component {
 
@@ -21,8 +22,6 @@ class Match extends Component {
 
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
-
-		Moment.locale('ru')
 
 		return (
 			<div>
@@ -56,7 +55,7 @@ class Match extends Component {
 								</tr>
 								<tr>
 									<td><em>Дата и время:</em></td>
-									<td>{Moment.unix(match.match_date).format('LLL')}</td>
+									<td><DateTime timestamp={match.match_date} format={'LLL'} /></td>
 								</tr>
 								<tr>
 									<td><em>Чемпионат:</em></td>

@@ -1,7 +1,7 @@
 import React    from 'react'
 import { Link } from 'react-router'
-import Moment   from 'moment'
 import FlagLink from './FlagLink'
+import DateTime from './DateTime'
 
 
 const PlayersTableExtended = ({ players }) => {
@@ -16,13 +16,13 @@ const PlayersTableExtended = ({ players }) => {
 				<td>
 					<FlagLink title={player.country_name} flag={player.country_short_name} />
 				</td>
-				<td>{Moment.unix(player.birth_date).format('L')} ({ Moment().diff(Moment.unix(player.birth_date), 'years')})</td>
+				<td>
+					<DateTime timestamp={player.birth_date} format={'L'} years={true} />
+				</td>
 				<td>{player.line_short_name}</td>
 			</tr>
 		)
 	})
-
-	Moment.locale('ru')
 
 	return (
 		<table className="table" >

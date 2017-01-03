@@ -1,18 +1,17 @@
 import React            from 'react'
 import { Link }         from 'react-router'
-import Moment           from 'moment'
 import FootballClubLink from './FootballClubLink'
+import DateTime         from './DateTime'
 
 
 const MatchesTable = ({ matches }) => {
 
-	Moment.locale('ru')
 	const rows = !matches ? null : matches.map((match) => {
 		return (
 			<tr key={match.id}>
 				<td style={{width: '16%'}}>
 					<Link to={`/match/${match.id}`}>
-						{Moment.unix(match.match_date).format('L')}
+						<DateTime timestamp={match.match_date} format={'L'} />
 					</Link>
 				</td>
 				<td style={{width: '38%'}}>

@@ -110,139 +110,111 @@ class AdminTable extends Component {
 			</TableHeader>
 		)
 
-		// TODO add delete question
-		const on_delete = (id) => { delete_record(params.table, id) }
+		
+
+		let rows_data = []
 
 		switch (params.table) {
 			case 'championats': {
-				rows = data.map((champ) => (
-					<TableRow key={champ.id}>
-						<TableRowColumn>{champ.id}</TableRowColumn>
-						<TableRowColumn>{champ.name}</TableRowColumn>
-						<TableRowColumn>
-							<FlagLink title={champ.country_name} flag={champ.country_short_name} />
-						</TableRowColumn>
-						<TableRowColumn>
-							<Link to={`/admin/championats/edit/${champ.id}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
-						</TableRowColumn>
-						<TableRowColumn>
-							<FontIcon onClick={() => on_delete(champ.id)} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
-						</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((champ) => [
+					champ.id,
+					champ.name,
+					<FlagLink title={champ.country_name} flag={champ.country_short_name} />,
+				])
 				break
 			}
 
 			case 'seasons': {
-				rows = data.map((season) => (
-					<TableRow key={season.id}>
-						<TableRowColumn>{season.id}</TableRowColumn>
-						<TableRowColumn>{season.championat_name}</TableRowColumn>
-						<TableRowColumn>{season.year_begin}</TableRowColumn>
-						<TableRowColumn>{season.year_end}</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((season) => [
+					season.id,
+					season.championat_name,
+					season.year_begin,
+					season.year_end,
+				])
 				break
 			}
 
 			case 'fcs': {
-				rows = data.map((fc) => (
-					<TableRow key={fc.id}>
-						<TableRowColumn>{fc.id}</TableRowColumn>
-						<TableRowColumn>
-							{ !fc.image ? null : <img alt={fc.name} src={`/img/logos/small/${fc.image}`} /> }
-							{' '}
-							{fc.name}
-						</TableRowColumn>
-						<TableRowColumn>
-							<FlagLink title={fc.country_name} flag={fc.country_short_name} />
-						</TableRowColumn>
-						<TableRowColumn>{fc.stadium_name}</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((fc) => [
+					fc.id,
+					<span>
+						{ !fc.image ? null : <img alt={fc.name} src={`/img/logos/small/${fc.image}`} /> }
+						{' '}
+						{fc.name}
+					</span>,
+					<FlagLink title={fc.country_name} flag={fc.country_short_name} />,
+					fc.stadium_name,
+				])
 				break
 			}
 
 			case 'players': {
-				rows = null/*data.map((player) => (
-					<TableRow key={fc.id}>
-						<TableRowColumn>{fc.id}</TableRowColumn>
-						<TableRowColumn>{fc.name}</TableRowColumn>
-						<TableRowColumn>{fc.country_name}</TableRowColumn>
-						<TableRowColumn>{fc.stadium_name}</TableRowColumn>
-					</TableRow>
-				))*/
+				rows_data = []
 				break
 			}
 
 			case 'trainers': {
-				rows = data.map((trainer) => (
-					<TableRow key={trainer.id}>
-						<TableRowColumn>{trainer.id}</TableRowColumn>
-						<TableRowColumn>{trainer.name}</TableRowColumn>
-						<TableRowColumn>{trainer.surname}</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((trainer) => [
+					trainer.id,
+					trainer.name,
+					trainer.surname
+				])
 				break
 			}
 
 			case 'countries': {
-				rows = data.map((country) => (
-					<TableRow key={country.id}>
-						<TableRowColumn>{country.id}</TableRowColumn>
-						<TableRowColumn>
-							<FlagLink title={country.name} flag={country.short_name} />
-						</TableRowColumn>
-						<TableRowColumn>{country.short_name}</TableRowColumn>
-						<TableRowColumn>
-							<Link to={`/admin/countries/edit/${country.id}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
-						</TableRowColumn>
-						<TableRowColumn>
-							<Link to={''}><FontIcon className="material-icons" color={red500}>delete</FontIcon></Link>
-						</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((country) => [
+					country.id,
+					<FlagLink title={country.name} flag={country.short_name} />,
+					country.short_name,
+				])
 				break
 			}
 
 			case 'cities': {
-				rows = data.map((city) => (
-					<TableRow key={city.id}>
-						<TableRowColumn>{city.id}</TableRowColumn>
-						<TableRowColumn>{city.name}</TableRowColumn>
-						<TableRowColumn>
-							<FlagLink title={city.country_name} flag={city.country_short_name} />
-						</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((city) => [
+					city.id,
+					city.name,
+					<FlagLink title={city.country_name} flag={city.country_short_name} />,
+				])
 				break
 			}
 
 			case 'lines': {
-				rows = data.map((line) => (
-					<TableRow key={line.id}>
-						<TableRowColumn>{line.id}</TableRowColumn>
-						<TableRowColumn>{line.name}</TableRowColumn>
-						<TableRowColumn>{line.short_name}</TableRowColumn>
-					</TableRow>
-				))
+				rows_data = data.map((line) => [
+					line.id,
+					line.name,
+					line.short_name
+				])
 				break
 			}
 
 			case 'matches': {
-				rows = null /*data.map((line) => (
-					<TableRow key={line.id}>
-						<TableRowColumn>{line.id}</TableRowColumn>
-						<TableRowColumn>{line.name}</TableRowColumn>
-						<TableRowColumn>{line.short_name}</TableRowColumn>
-					</TableRow>
-				))*/
+				rows_data = []
 				break
 			}
 
 			default:
 				break
 		}
+
+		// TODO add delete question
+		const on_delete = (id) => { delete_record(params.table, id) }
+
+		rows = rows_data.map((row) => (
+			<TableRow key={row[0]}>
+				{ row.map((col, i) => <TableRowColumn key={i}>{col}</TableRowColumn>) }
+				<TableRowColumn>
+					<Link to={`/admin/${params.table}/edit/${row[0]}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
+				</TableRowColumn>
+				<TableRowColumn>
+					<FontIcon onClick={() => on_delete(row[0])} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
+				</TableRowColumn>
+			</TableRow>
+		))
+		
+		
+
 
 		return {
 			header,

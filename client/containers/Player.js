@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import { Link }             from 'react-router'
-import Moment               from 'moment'
 import * as actions         from '../actions/Player'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
 import FlagLink             from '../components/FlagLink'
 import FootballClubLink     from '../components/FootballClubLink'
+import DateTime             from '../components/DateTime'
 
 class Player extends Component {
 
@@ -22,8 +22,6 @@ class Player extends Component {
 
 		if (error)    return <ErrorMessage message={error} />
 		if (fetching) return <Loading />
-
-		Moment.locale('ru')
 
 		return (
 			<div>
@@ -49,7 +47,9 @@ class Player extends Component {
 								</tr>
 								<tr>
 									<td><em>Дата рождения:</em></td>
-									<td>{Moment.unix(player.birth_date).format('LL')} ({Moment().diff(Moment.unix(player.birth_date), 'years')})</td>
+									<td>
+										<DateTime timestamp={player.birth_date} format={'LL'} years={true} />
+									</td>
 								</tr>
 								{ !player.growth ? null : <tr>
 									<td><em>Рост:</em></td>
