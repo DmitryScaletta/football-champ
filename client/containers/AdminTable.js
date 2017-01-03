@@ -16,7 +16,6 @@ import { delete_record }        from '../actions/AdminEdit'
 import FlagLink                 from '../components/FlagLink'
 import FootballClubLink         from '../components/FootballClubLink'
 import DateTime                 from '../components/DateTime'
-import DeleteDialog             from '../components/DeleteDialog'
 
 
 class AdminTable extends Component {
@@ -25,11 +24,13 @@ class AdminTable extends Component {
 		super(props)
 		this.state = {
 			open: false,
+			id: 0,
 		}
 
 		this.handle_change = this.handle_change.bind(this)
-		this.handle_open   = this.handle_open  .bind(this)
-		this.handle_close  = this.handle_close .bind(this)
+		this.handle_open = this.handle_open.bind(this)
+		this.handle_close = this.handle_close.bind(this)
+		this.handle_confirm_delete = this.handle_confirm_delete.bind(this)
 	}
 
 	componentDidMount() {
@@ -57,16 +58,24 @@ class AdminTable extends Component {
 		}
 	}
 
-	handle_open() {
-		this.setState({ open: true })
+	handle_open(id) {
+		this.setState({ open: true, id })
 	}
 
 	handle_close() {
 		this.setState({ open: false })
 	}
 
+	handle_confirm_delete() {
+		const { delete_record, params, fetch_table, current_fc } = this.props
+		delete_record(params.table, this.state.id, () => {
+			fetch_table(params.table, current_fc)
+			this.setState({ open: false, id: 0 })
+		})
+	}
+
 	prepare_table_data() {
-		const { params, data, delete_record } = this.props
+		const { params, data,  } = this.props
 
 		let header = null
 		let rows   = null
@@ -245,7 +254,7 @@ class AdminTable extends Component {
 					<Link to={`/admin/${params.table}/edit/${row[0]}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
 				</TableRowColumn>
 				<TableRowColumn>
-					<FontIcon onClick={this.handle_open/*() => on_delete(row[0])*/} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
+					<FontIcon onClick={() => this.handle_open(row[0])/*() => on_delete(row[0])*/} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
 				</TableRowColumn>
 			</TableRow>
 		))
@@ -310,7 +319,7 @@ class AdminTable extends Component {
 				label="Да"
 				primary={true}
 				keyboardFocused={true}
-				onTouchTap={this.handle_close}
+				onTouchTap={this.handle_confirm_delete}
 			/>,
 		]
 
