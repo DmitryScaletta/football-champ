@@ -4,9 +4,10 @@
   "description": "My course project",
   "main": "server/index.js",
   "scripts": {
-    "start": "nodemon ./server/index.js ./server",
+    "start": "nodemon ./server/",
     "build": "set NODE_ENV=production&& webpack -p",
-    "dev:client": "node dev-client.js"
+    "dev:client": "node dev-client.js",
+    "dev:server": "nodemon ./server/ -V -w ./server/index.js -w ./server/api -w ./server/db"
   },
   "author": "DmitryScaletta",
   "license": "MIT",
