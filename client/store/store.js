@@ -62,7 +62,7 @@ const initial_state = {
 	},
 	admin: {
 		data:         [],
-		valid:        true,
+		current_fc:   0,
 		fetching:     false,
 		error:        null,
 	},

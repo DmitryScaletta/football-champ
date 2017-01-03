@@ -57,7 +57,6 @@ class AdminEdit extends Component {
 
 		switch (params.table) {
 			case 'championats': {
-				// fetch countries
 				return <ChampionatForm
 					initialValues={data}
 					action_type={action_type}
@@ -66,16 +65,19 @@ class AdminEdit extends Component {
 					onCancel={onCancel}
 					onSubmit={this.on_submit} />
 			}
-			/*case 'seasons':
+			case 'seasons':
 			case 'fcs':
 			case 'trainers':
 			case 'countries':
 			case 'cities':
 			case 'lines':
 			case 'players':
-			case 'matches':*/
+				return <div></div>
+			case 'matches':
+				return null
 
-			default: return null
+			default:
+				return null
 		}
 
 	}

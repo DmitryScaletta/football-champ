@@ -4,10 +4,12 @@ export const ADMIN_FETCH_TABLE_REQUEST   = 'ADMIN_FETCH_TABLE_REQUEST'
 export const ADMIN_FETCH_TABLE_SUCCESS   = 'ADMIN_FETCH_TABLE_SUCCESS'
 export const ADMIN_FETCH_TABLE_FAILURE   = 'ADMIN_FETCH_TABLE_FAILURE'
 
-export const INVALIDATE_ADMIN_TABLE_DATA = 'INVALIDATE_ADMIN_TABLE_DATA'
+export const ADMIN_CHANGE_CURRENT_FC     = 'ADMIN_CHANGE_CURRENT_FC'
+
+export const ADMIN_CLEAR_DATA            = 'ADMIN_CLEAR_DATA'
 
 
-export function fetch_table(table) {
+export function fetch_table(table, fc_id = 0) {
 	return (dispatch) => {
 		dispatch({ type: ADMIN_FETCH_TABLE_REQUEST })
 
@@ -20,26 +22,8 @@ export function fetch_table(table) {
 			case 'countries':   { api_table = 'country'    } break
 			case 'cities':      { api_table = 'city'       } break
 			case 'lines':       { api_table = 'line'       } break
-			
-			case 'players':
-			case 'matches': {
-				axios.post('/api/fc/search')
-				.then(
-					(result) => {
-						dispatch({
-							type: ADMIN_FETCH_TABLE_SUCCESS,
-							data: result.data
-						})
-					},
-					(error) => {
-						dispatch({
-							type: ADMIN_FETCH_TABLE_FAILURE,
-							error: error.response.data
-						})
-					}
-				)
-				return
-			}
+			case 'players':     { api_table = 'player'     } break
+			case 'matches':     { api_table = 'match'      } break
 
 			default: {
 				dispatch({
@@ -50,26 +34,47 @@ export function fetch_table(table) {
 			}
 		}
 
-		axios.post(`/api/${api_table}/search`)
-		.then(
-			(result) => {
-				dispatch({
-					type: ADMIN_FETCH_TABLE_SUCCESS,
-					data: result.data
-				})
-			},
-			(error) => {
-				dispatch({
-					type: ADMIN_FETCH_TABLE_FAILURE,
-					error: error.response.data
-				})
+		let request_data = {}
+
+		if (api_table === 'player') {
+			request_data = {
+				filter: {
+					fc_id: Number(fc_id)
+				}
 			}
+		} else
+		if (api_table === 'match') {
+			request_data = {
+				filter_or: {
+					home_fc_id: Number(fc_id),
+					away_fc_id: Number(fc_id),
+				}
+			}
+		}
+
+		axios.post(`/api/${api_table}/search`, request_data)
+		.then(
+			(result) => dispatch({
+				type: ADMIN_FETCH_TABLE_SUCCESS,
+				data: result.data
+			}),
+			(error) => dispatch({
+				type: ADMIN_FETCH_TABLE_FAILURE,
+				error: error.response.data
+			})
 		)
 	}
 }
 
-export function invalidate_data() {
+export function change_current_fc(fc_id) {
 	return {
-		type: INVALIDATE_ADMIN_TABLE_DATA
+		type: ADMIN_CHANGE_CURRENT_FC,
+		current_fc: fc_id,
+	}
+}
+
+export function admin_clear_data() {
+	return {
+		type: ADMIN_CLEAR_DATA,
 	}
 }

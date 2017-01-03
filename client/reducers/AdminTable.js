@@ -2,7 +2,8 @@ import {
 	ADMIN_FETCH_TABLE_REQUEST, 
 	ADMIN_FETCH_TABLE_SUCCESS, 
 	ADMIN_FETCH_TABLE_FAILURE,
-	INVALIDATE_ADMIN_TABLE_DATA,
+	ADMIN_CHANGE_CURRENT_FC,
+	ADMIN_CLEAR_DATA,
 } from '../actions/AdminTable'
 import initial_state from '../store/store'
 
@@ -13,27 +14,34 @@ export default function(state = initial_state.admin, action) {
 		case ADMIN_FETCH_TABLE_REQUEST:
 			return {
 				...state,
-				error: false,
+				data:     [],
+				error:    false,
 				fetching: true,
-				valid: false,
 			}
 		case ADMIN_FETCH_TABLE_SUCCESS:
 			return {
 				...state,
-				data: action.data,
+				data:     action.data,
 				fetching: false,
 			}
 		case ADMIN_FETCH_TABLE_FAILURE:
 			return {
 				...state,
-				error: action.error,
+				error:    action.error,
 				fetching: false,
 			}
 
-		case INVALIDATE_ADMIN_TABLE_DATA:
+		case ADMIN_CHANGE_CURRENT_FC:
 			return {
 				...state,
-				valid: false,
+				current_fc: action.current_fc,
+			}
+
+		case ADMIN_CLEAR_DATA:
+			return {
+				...state,
+				current_fc: 0,
+				data: [],
 			}
 
 		default:
