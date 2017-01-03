@@ -34,8 +34,7 @@ export default class App extends Component {
 					</Route>
 					<Route path='/admin' component={Admin}>
 						<Route path=':table' component={AdminTable} />
-						<Route path=':table/new' component={AdminEdit} />
-						<Route path=':table/edit/:id' component={AdminEdit} />
+						<Route path=':table/:action(/:id)' component={AdminEdit} />
 					</Route>
 				</Router>
 			</Provider>

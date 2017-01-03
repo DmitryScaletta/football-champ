@@ -268,21 +268,21 @@ class AdminTable extends Component {
 		const data_source = (Array.isArray(data)) ? data : []
 
 		const titles = {
-			championats: '',
-			seasons:     '',
-			fcs:         '',
-			players:     '',
-			trainers:    '',
-			countries:   '',
-			cities:      '',
-			lines:       '',
-			matches:     '',
+			championats: 'Чемпионаты',
+			seasons:     'Сезоны',
+			fcs:         'Команды',
+			players:     'Игроки',
+			trainers:    'Тренеры',
+			countries:   'Страны',
+			cities:      'Города',
+			lines:       'Амплуа',
+			matches:     'Матчи',
 		}
 
 		return (
 			<div>
 				<div style={{height: '45px'}}>
-					<h4 style={{padding: '0 0 10px', float: 'left'}}>{params.table}</h4>
+					<h4 style={{padding: '0 0 10px', float: 'left'}}>{titles[params.table]}</h4>
 					<Link to={`/admin/${params.table}/new`}>
 						<RaisedButton 
 							label="Добавить"
@@ -294,7 +294,7 @@ class AdminTable extends Component {
 				</div>
 				
 				<div>
-					<AutoComplete
+					{/*<AutoComplete
 						hintText="Type anything"
 						dataSource={data_source}
 						openOnFocus={true}
@@ -302,7 +302,7 @@ class AdminTable extends Component {
 						dataSourceConfig={{text: 'name', value: 'id' }}
 						// onUpdateInput={this.handleUpdateInput}
 					/>
-					{/*<SelectField
+					<SelectField
 						floatingLabelText="Команда"
 						hintText="Выберите команду"
 						value={this.state.value}

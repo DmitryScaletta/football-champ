@@ -25,11 +25,17 @@ class ChampionatForm extends Component {
 			.getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
 			.focus()                // on TextField
 
-		this.props.load_form_data(this.props.data)
+		const { action_type, load_form_data, data } = this.props
+
+		if (action_type === 'edit') {
+			load_form_data(data)
+		}
 	}
 
+	// componentDidUpdate() {}
+
 	render() {
-		const { countries, onCancel, handleSubmit, pristine, reset, submitting } = this.props
+		const { action_type, countries, onCancel, handleSubmit, pristine, reset, submitting } = this.props
 
 		function get_country_id_by_name(country_name) {
 			for (const country of countries) {
@@ -37,6 +43,8 @@ class ChampionatForm extends Component {
 			}
 			return false
 		}
+
+		const submit_title = (action_type === 'new') ? 'Добавить' : (action_type === 'edit') ? 'Сохранить' : 'Error'
 
 		return (
 			<form onSubmit={handleSubmit}>
@@ -46,7 +54,6 @@ class ChampionatForm extends Component {
 						component={TextField}
 						hintText="Название чемпионата"
 						floatingLabelText="Название"
-						//validate={required}
 						ref="name" 
 						withRef
 					/>
@@ -62,7 +69,7 @@ class ChampionatForm extends Component {
 					</Field>
 				</div>
 				<div>
-					<RaisedButton label="Сохранить" type="submit" disabled={submitting} primary={true} />
+					<RaisedButton label={submit_title} type="submit" disabled={submitting} primary={true} />
 					{' '}
 					<RaisedButton label="Отмена" type="button" disabled={submitting} onClick={onCancel} />
 				</div>
@@ -72,19 +79,23 @@ class ChampionatForm extends Component {
 }
 
 ChampionatForm.propTypes = {
-	data: React.PropTypes.object,
-	countries: React.PropTypes.array,
-	initialValues: React.PropTypes.object,
+	data:           React.PropTypes.object,
+	countries:      React.PropTypes.array,
+	initialValues:  React.PropTypes.object,
 	load_form_data: React.PropTypes.func,
 }
 
-function mapStateToProps(state) {
+/*function mapStateToProps(state) {
 	return {
 		initialValues: state.admin_edit.data,
 	}
-}
+}*/
 
-export default connect(mapStateToProps, { load_form_data })(reduxForm({
+// export default connect(mapStateToProps, { load_form_data })(reduxForm({
+// 	form: 'championat'
+// })(ChampionatForm))
+
+export default reduxForm({
 	form: 'championat'
-})(ChampionatForm))
+})(ChampionatForm)
 

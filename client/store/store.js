@@ -79,7 +79,9 @@ const initial_state = {
 		lines:        [],
 		valid:        true,
 		fetching:     false,
+		fetching2:    false,
 		error:        null,	
+		error2:       null,	
 	}
 }
 

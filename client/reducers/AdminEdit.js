@@ -2,33 +2,9 @@ import {
 	FETCH_RECORD_REQUEST,
 	FETCH_RECORD_SUCCESS,
 	FETCH_RECORD_FAILURE,
-	FETCH_RECORD_CHAMPIONAT_REQUEST,
-	FETCH_RECORD_CHAMPIONAT_SUCCESS,
-	FETCH_RECORD_CHAMPIONAT_FAILURE,
-	FETCH_RECORD_SEASON_REQUEST,
-	FETCH_RECORD_SEASON_SUCCESS,
-	FETCH_RECORD_SEASON_FAILURE,
-	FETCH_RECORD_FC_REQUEST,
-	FETCH_RECORD_FC_SUCCESS,
-	FETCH_RECORD_FC_FAILURE,
-	FETCH_RECORD_PLAYER_REQUEST,
-	FETCH_RECORD_PLAYER_SUCCESS,
-	FETCH_RECORD_PLAYER_FAILURE,
-	FETCH_RECORD_TRAINER_REQUEST,
-	FETCH_RECORD_TRAINER_SUCCESS,
-	FETCH_RECORD_TRAINER_FAILURE,
-	FETCH_RECORD_COUNTRY_REQUEST,
-	FETCH_RECORD_COUNTRY_SUCCESS,
-	FETCH_RECORD_COUNTRY_FAILURE,
-	FETCH_RECORD_CITY_REQUEST,
-	FETCH_RECORD_CITY_SUCCESS,
-	FETCH_RECORD_CITY_FAILURE,
-	FETCH_RECORD_LINE_REQUEST,
-	FETCH_RECORD_LINE_SUCCESS,
-	FETCH_RECORD_LINE_FAILURE,
-	FETCH_RECORD_MATCH_REQUEST,
-	FETCH_RECORD_MATCH_SUCCESS,
-	FETCH_RECORD_MATCH_FAILURE,
+	FETCH_ADDITIONAL_TABLES_REQUEST,
+	FETCH_ADDITIONAL_TABLES_SUCCESS,
+	FETCH_ADDITIONAL_TABLES_FAILURE,
 	UPDATE_RECORD_REQUEST,
 	UPDATE_RECORD_SUCCESS,
 	UPDATE_RECORD_FAILURE,
@@ -43,117 +19,56 @@ import initial_state from '../store/store'
 export default function(state = initial_state.admin_edit, action) {
 	switch (action.type) {
 		
-		case FETCH_RECORD_CHAMPIONAT_REQUEST:
-		case FETCH_RECORD_SEASON_REQUEST:
-		case FETCH_RECORD_FC_REQUEST:
-		case FETCH_RECORD_PLAYER_REQUEST:
-		case FETCH_RECORD_TRAINER_REQUEST:
-		case FETCH_RECORD_COUNTRY_REQUEST:
-		case FETCH_RECORD_CITY_REQUEST:
-		case FETCH_RECORD_LINE_REQUEST:
-		case FETCH_RECORD_MATCH_REQUEST:
+		case FETCH_RECORD_REQUEST:
 			return {
 				...state,
-				data: {},
-				error: false,
+				data:     {},
+				error:    false,
 				fetching: true,
-				valid: false,
 			}
-		case FETCH_RECORD_CHAMPIONAT_FAILURE:
-		case FETCH_RECORD_SEASON_FAILURE:
-		case FETCH_RECORD_FC_FAILURE:
-		case FETCH_RECORD_PLAYER_FAILURE:
-		case FETCH_RECORD_TRAINER_FAILURE:
-		case FETCH_RECORD_COUNTRY_FAILURE:
-		case FETCH_RECORD_CITY_FAILURE:
-		case FETCH_RECORD_LINE_FAILURE:
-		case FETCH_RECORD_MATCH_FAILURE:
+		case FETCH_RECORD_SUCCESS:
 			return {
 				...state,
-				error: action.error,
+				data:      action.data,
+				fetching:  false,
+			}
+		case FETCH_RECORD_FAILURE:
+			return {
+				...state,
+				error:    action.error,
 				fetching: false,
 			}
 
-		case FETCH_RECORD_CHAMPIONAT_SUCCESS:
+		case FETCH_ADDITIONAL_TABLES_REQUEST:
 			return {
 				...state,
-				data:      action.data,
-				countries: action.countries,
-				fetching:  false,
-				valid:     true,
+				error2:    false,
+				fetching2: true,
 			}
-		case FETCH_RECORD_SEASON_SUCCESS:
+		case FETCH_ADDITIONAL_TABLES_SUCCESS:
 			return {
 				...state,
-				data:        action.data,
 				championats: action.championats,
-				fetching:    false,
-				valid:       true,
+				seasons:     action.seasons,
+				fcs:         action.fcs,
+				trainers:    action.trainers,
+				countries:   action.countries,
+				cities:      action.cities,
+				lines:       action.lines,
+				fetching2:   false,
 			}
-		case FETCH_RECORD_FC_SUCCESS:
+		case FETCH_ADDITIONAL_TABLES_FAILURE:
 			return {
 				...state,
-				data:      action.data,
-				countries: action.countries,
-				cities:    action.cities,
-				trainers:  action.trainers,
-				fetching:  false,
-				valid:     true,
-			}
-		case FETCH_RECORD_PLAYER_SUCCESS:
-			return {
-				...state,
-				data:      action.data,
-				fcs:       action.fcs,
-				countries: action.countries,
-				lines:     action.lines,
-				fetching:  false,
-				valid:     true,
-			}
-		case FETCH_RECORD_TRAINER_SUCCESS:
-			return {
-				...state,
-				data:     action.data,
-				fetching: false,
-				valid:    true,
-			}
-		case FETCH_RECORD_COUNTRY_SUCCESS:
-			return {
-				...state,
-				data:     action.data,
-				fetching: false,
-				valid:    true,
-			}
-		case FETCH_RECORD_CITY_SUCCESS:
-			return {
-				...state,
-				data:     action.data,
-				country:  action.country,
-				fetching: false,
-				valid:    true,
-			}
-		case FETCH_RECORD_LINE_SUCCESS:
-			return {
-				...state,
-				data:     action.data,
-				fetching: false,
-				valid:    true,
-			}
-		case FETCH_RECORD_MATCH_SUCCESS:
-			return {
-				...state,
-				data:     action.data,
-				seasons:  action.seasons,
-				fcs:      action.fcs,
-				fetching: false,
-				valid:    true,
+				error2:    action.error,
+				fetching2: false,
 			}
 
 
 		case UPDATE_RECORD_REQUEST:
 			return {
 				...state,
-				error: false,
+				error:    false,
 				fetching: true,
 			}
 		case UPDATE_RECORD_SUCCESS:
@@ -161,19 +76,18 @@ export default function(state = initial_state.admin_edit, action) {
 				...state,
 				affected: action.affected,
 				fetching: false,
-				valid: false,
 			}
 		case UPDATE_RECORD_FAILURE:
 			return {
 				...state,
-				error: action.error,
+				error:    action.error,
 				fetching: false,
 			}
 
 		case CREATE_RECORD_REQUEST:
 			return {
 				...state,
-				error: false,
+				error:    false,
 				fetching: true,
 			}
 		case CREATE_RECORD_SUCCESS:
@@ -181,12 +95,11 @@ export default function(state = initial_state.admin_edit, action) {
 				...state,
 				affected: action.affected,
 				fetching: false,
-				valid: false,
 			}
 		case CREATE_RECORD_FAILURE:
 			return {
 				...state,
-				error: action.error,
+				error:    action.error,
 				fetching: false,
 			}
 

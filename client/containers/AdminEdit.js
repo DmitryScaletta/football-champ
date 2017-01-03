@@ -1,47 +1,15 @@
 import React, { Component }  from 'react'
 import { connect }           from 'react-redux'
-import { Link }              from 'react-router'
-import { Field, reduxForm }  from 'redux-form'
-import TextField             from 'material-ui/TextField'
+// import { Link }              from 'react-router'
+// import { Field, reduxForm }  from 'redux-form'
+// import TextField             from 'material-ui/TextField'
 // import RaisedButton          from 'material-ui/RaisedButton'
 // import FontIcon              from 'material-ui/FontIcon'
 import * as actions          from '../actions/AdminEdit'
-import { invalidate_data }   from '../actions/AdminTable'
-// import { fetch_countries }   from '../../actions/'
 import ChampionatForm        from './forms/ChampionatForm'
 
 
 class AdminEdit extends Component {
-
-	fetch_record(table, id) {
-		const {
-			fetch_record_championat,
-			fetch_record_season,
-			fetch_record_fc,
-			fetch_record_trainer,
-			fetch_record_country,
-			fetch_record_city,
-			fetch_record_line,
-			fetch_record_player,
-			fetch_record_match,
-		} = this.props
-
-		switch (table) {
-			case 'championats': { fetch_record_championat(id) } break
-			case 'seasons':     { fetch_record_season(id)     } break
-			case 'fcs':         { fetch_record_fc(id)         } break
-			case 'trainers':    { fetch_record_trainer(id)    } break
-			case 'countries':   { fetch_record_country(id)    } break
-			case 'cities':      { fetch_record_city(id)       } break
-			case 'lines':       { fetch_record_line(id)       } break
-			case 'players':     { fetch_record_player(id)     } break
-			case 'matches':     { fetch_record_match(id)      } break
-
-			default: return false
-		}
-
-		return true
-	}
 
 	constructor(props) {
 		super(props)
@@ -50,34 +18,53 @@ class AdminEdit extends Component {
 	}
 
 	componentDidMount() {
-		const { params } = this.props
-		this.fetch_record(params.table, params.id)
+		const { fetch_record, fetch_additional_tables, load_form_data, params } = this.props
+
+		if (params.action === 'edit') {
+			fetch_record(params.table, params.id)
+			// load_form_data(data)
+		}
+		load_form_data({})
+		fetch_additional_tables(params.table)
 	}
 
 	componentDidUpdate(prev_props) {
-		const { params, location } = this.props
+		const { fetch_additional_tables, fetch_record, load_form_data, params, location, data } = this.props
+		
 		if (params.table !== prev_props.params.table || location.pathname !== prev_props.location.pathname) {
-			this.fetch_record(params.table, params.id)
+			if (params.action === 'edit') {
+				fetch_record(params.table, params.id)
+				// load_form_data(data)
+			}
+			fetch_additional_tables(params.table)
+			load_form_data({})
 		}
 	}
 
 	on_submit(data) {
-		const { update_record, params, router } = this.props
-		// console.log(data)
-		update_record(params.table, data, () => {
-			router.push(`/admin/${this.props.params.table}`)
-		})
+		const { create_record, update_record, params, router } = this.props
+		
+		const callback = () => router.push(`/admin/${this.props.params.table}`)
+		
+		if (params.action === 'new')  { create_record(params.table, data, callback) } else
+		if (params.action === 'edit') { update_record(params.table, data, callback) }
 	}
 
 	render_form() {
 		const { params, data, countries, router } = this.props
-
+		const action_type = (params.action === 'new' || params.action === 'edit') ? params.action : null
 		const onCancel = () => { router.push(`/admin/${this.props.params.table}`) }
 
 		switch (params.table) {
 			case 'championats': {
 				// fetch countries
-				return <ChampionatForm onCancel={onCancel} data={data} countries={countries} onSubmit={this.on_submit} />
+				return <ChampionatForm
+					initialValues={data}
+					action_type={data}
+					data={data}
+					countries={countries}
+					onCancel={onCancel}
+					onSubmit={this.on_submit} />
 			}
 			/*case 'seasons':
 			case 'fcs':
@@ -94,17 +81,29 @@ class AdminEdit extends Component {
 	}
 
 	render() {
-		const { error, fetching, params, data } = this.props
-
-		// console.log(data)
+		const { error, fetching, fetching2, params, data } = this.props
 
 		if (error)    return <div>ERROR. {error}</div>
 		if (fetching) return <div>Loading...</div>
 
+		const titles = {
+			championats: 'Чемпионат',
+			seasons:     'Сезон',
+			fcs:         'Команд',
+			players:     'Игрок',
+			trainers:    'Тренер',
+			countries:   'Страна',
+			cities:      'Город',
+			lines:       'Амплуа',
+			matches:     'Матч',
+		}
+
+		const second_title = (params.action === 'new') ? 'Добавление' : (params.action === 'edit') ? 'Изменение' : ''
+
 		return (
 			<div>
-				<h3>{params.table + ' ' + params.id}</h3>
-				{this.render_form()}
+				<h3>{`${titles[params.table]}. ${second_title}`}</h3>
+				{fetching2 ? null : this.render_form()}
 			</div>
 		)
 	}
@@ -121,21 +120,17 @@ AdminEdit.propTypes = {
 	countries:               React.PropTypes.array,
 	cities:                  React.PropTypes.array,
 	lines:                   React.PropTypes.array,
-	valid:                   React.PropTypes.bool,
 	fetching:                React.PropTypes.bool,
+	fetching2:               React.PropTypes.bool,
 	error:                   React.PropTypes.any,
-	fetch_record_championat: React.PropTypes.func,
-	fetch_record_season:     React.PropTypes.func,
-	fetch_record_fc:         React.PropTypes.func,
-	fetch_record_trainer:    React.PropTypes.func,
-	fetch_record_country:    React.PropTypes.func,
-	fetch_record_city:       React.PropTypes.func,
-	fetch_record_line:       React.PropTypes.func,
-	fetch_record_player:     React.PropTypes.func,
-	fetch_record_match:      React.PropTypes.func,
+	error2:                  React.PropTypes.any,
+	fetch_record:            React.PropTypes.func,
 	update_record:           React.PropTypes.func,
 	create_record:           React.PropTypes.func,
+	fetch_additional_tables: React.PropTypes.func,
+	load_form_data:          React.PropTypes.func,
 	router:                  React.PropTypes.object,
+	location:                React.PropTypes.object,
 }
 
 function mapStateToProps(state) {
@@ -149,10 +144,11 @@ function mapStateToProps(state) {
 		countries:   state.admin_edit.countries,
 		cities:      state.admin_edit.cities,
 		lines:       state.admin_edit.lines,
-		valid:       state.admin.valid,
 		fetching:    state.admin_edit.fetching,
+		fetching2:   state.admin_edit.fetching2,
 		error:       state.admin_edit.error,
+		error2:      state.admin_edit.error2,
 	}
 }
 
-export default connect(mapStateToProps, { ...actions, invalidate_data })(AdminEdit)
+export default connect(mapStateToProps, actions)(AdminEdit)
