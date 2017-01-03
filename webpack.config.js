@@ -18,11 +18,11 @@ if (isProduction) {
 	// Assign the module and chunk ids by occurrence count.
 	plugins.push(new webpack.optimize.OccurenceOrderPlugin())
 	// Minimize all JavaScript output of chunks
-	new webpack.optimize.UglifyJsPlugin({
+	plugins.push(new webpack.optimize.UglifyJsPlugin({
 		compress: {
 			warnings: false
 		}
-	})
+	}))
 } else {
 	plugins.push(new webpack.HotModuleReplacementPlugin())
 
