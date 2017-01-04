@@ -2,9 +2,6 @@ const db = require('../db/database.js')
 
 module.exports = function(req, res) {
 
-	// console.log(`/api/${req.params.table}/search`)
-	// console.log(req.body)
-
 	const table_schema = db.get_table_schema(db.schema, req.params.table)
 	const field_names  = db.get_field_names(table_schema)
 
@@ -40,7 +37,6 @@ module.exports = function(req, res) {
 		limit_sql = `TOP ${req.body.limit} `
 	}
 
-
 	// order_by
 	let order_by_sql = ''
 	if (typeof req.body.order_by !== 'undefined') {
@@ -59,7 +55,6 @@ module.exports = function(req, res) {
 		}
 	}
 	
-	
 	const SQL_SEARCH_CHAMP = 
 	`SELECT ${limit_sql}
 		Championat.id,
@@ -71,7 +66,7 @@ module.exports = function(req, res) {
 		s.year_begin,
 		s.year_end
 	FROM Championat
-	INNER JOIN Country AS co ON Championat.country_id=co.id
+	FULL JOIN Country AS co ON Championat.country_id=co.id
 	FULL JOIN Season AS s ON Championat.id=s.championat_id`
 	
 	const SQL_SEARCH_SEASON =
@@ -110,8 +105,8 @@ module.exports = function(req, res) {
 		co.short_name AS country_short_name,
 		ci.name AS city_name
 	FROM FootballClub
-	INNER JOIN Country AS co ON FootballClub.country_id=co.id
-	INNER JOIN City AS ci ON FootballClub.city_id=ci.id`
+	FULL JOIN Country AS co ON FootballClub.country_id=co.id
+	FULL JOIN City AS ci ON FootballClub.city_id=ci.id`
 	
 	const SQL_SEARCH_PLAYER =
 	`SELECT ${limit_sql}
@@ -127,7 +122,7 @@ module.exports = function(req, res) {
 		Player.birth_date
 	FROM Player
 	INNER JOIN Line AS l ON Player.line_id=l.id
-	INNER JOIN Country AS co ON Player.country_id=co.id`
+	FULL  JOIN Country AS co ON Player.country_id=co.id`
 	
 	const SQL_SEARCH_MATCH  = 
 	`SELECT ${limit_sql}
@@ -154,7 +149,7 @@ module.exports = function(req, res) {
 		co.name AS country_name,
 		co.short_name AS country_short_name
 	FROM City
-	INNER JOIN Country AS co ON City.country_id=co.id`
+	FULL JOIN Country AS co ON City.country_id=co.id`
 
 	// make sql
 	let sql = ''
@@ -173,13 +168,9 @@ module.exports = function(req, res) {
 			break
 	}
 
-
 	if (where_array.length > 0) sql += ` WHERE ${where_array.join(' AND ')}`
 
 	sql += order_by_sql
-
-	// console.log(sql)
-
 
 	// execute sql
 	db.query(sql, params, param_types)
@@ -219,6 +210,4 @@ module.exports = function(req, res) {
 		console.log('Database Error:', err.message)
 		res.sendStatus(500)
 	})
-
-	// res.send(sql + '\n\n' + JSON.stringify(params) + '\n\n' + JSON.stringify(param_types))
 }

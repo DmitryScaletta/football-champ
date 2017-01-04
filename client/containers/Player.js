@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
-import { Link }             from 'react-router'
 import * as actions         from '../actions/Player'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
@@ -14,8 +13,6 @@ class Player extends Component {
 		const { params, fetch_player } = this.props
 		fetch_player(params.id)
 	}
-
-	// componentDidUpdate(prev_props) {}
 
 	render() {
 		const { error, fetching, player } = this.props

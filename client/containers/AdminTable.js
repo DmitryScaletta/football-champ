@@ -393,7 +393,7 @@ class AdminTable extends Component {
 				<Snackbar
 					open={is_snackbar_open}
 					message={`${snackbar_title} ${affected}`}
-					autoHideDuration={4000}
+					autoHideDuration={2500}
 					onRequestClose={clear_affected_data}
 				/>
 			</div>

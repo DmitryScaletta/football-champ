@@ -1,8 +1,5 @@
 import React, { Component }     from 'react'
 import { connect }              from 'react-redux'
-// import { Link }                 from 'react-router'
-import TextField                from 'material-ui/TextField'
-// import FlatButton               from 'material-ui/FlatButton'
 import * as actions             from '../actions/PlayerList'
 import { fetch_football_clubs } from '../actions/FootballClubList'
 import ErrorMessage             from '../components/ErrorMessage'
@@ -21,8 +18,6 @@ class PlayerList extends Component {
 	componentDidMount() {
 		this.props.fetch_football_clubs()
 	}
-
-	// componentDidUpdate(prev_props) {}
 
 	handle_change(event) {
 		this.setState({value: event.target.value})

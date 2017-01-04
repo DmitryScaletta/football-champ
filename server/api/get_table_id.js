@@ -25,9 +25,9 @@ module.exports = function(req, res) {
 		fc.colors,
 		fc.previous_names
 	FROM FootballClub AS fc
-	INNER JOIN Country AS co ON fc.country_id=co.id
-	INNER JOIN City    AS ci ON fc.city_id=ci.id
-	FULL  JOIN Trainer AS t  ON fc.trainer_id=t.id
+	FULL JOIN Country AS co ON fc.country_id=co.id
+	FULL JOIN City    AS ci ON fc.city_id=ci.id
+	FULL JOIN Trainer AS t  ON fc.trainer_id=t.id
 	
 	WHERE fc.id=@id`
 
@@ -52,9 +52,9 @@ module.exports = function(req, res) {
 		p.weight,
 		p.growth
 	FROM Player AS p
-	INNER JOIN FootballClub AS fc ON p.fc_id=fc.id
+	FULL JOIN FootballClub AS fc ON p.fc_id=fc.id
 	INNER JOIN Line AS l ON p.line_id=l.id
-	INNER JOIN Country AS co ON p.country_id=co.id
+	FULL JOIN Country AS co ON p.country_id=co.id
 	WHERE p.id=@id`
 
 	const SQL_SELECT_MATCH =
@@ -82,7 +82,7 @@ module.exports = function(req, res) {
 	FROM Match AS m
 	INNER JOIN Season AS s ON m.season_id=s.id
 	INNER JOIN Championat AS ch ON s.championat_id=ch.id
-	INNER JOIN Country AS co ON ch.country_id=co.id
+	FULL  JOIN Country AS co ON ch.country_id=co.id
 	INNER JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
 	INNER JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
 	WHERE m.id=@id`
