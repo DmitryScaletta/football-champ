@@ -2,6 +2,7 @@ import React, { Component }     from 'react'
 import { connect }              from 'react-redux'
 import { Link }                 from 'react-router'
 import Dialog                   from 'material-ui/Dialog'
+import Snackbar                 from 'material-ui/Snackbar'
 import RaisedButton             from 'material-ui/RaisedButton'
 import FlatButton               from 'material-ui/FlatButton'
 import FontIcon                 from 'material-ui/FontIcon'
@@ -18,7 +19,10 @@ import {
 } from 'material-ui/Table'
 import * as actions             from '../actions/AdminTable'
 import { fetch_football_clubs } from '../actions/FootballClubList'
-import { delete_record }        from '../actions/AdminEdit'
+import { 
+	delete_record,
+	clear_affected_data
+} from '../actions/AdminEdit'
 import FlagLink                 from '../components/FlagLink'
 import FootballClubLink         from '../components/FootballClubLink'
 import DateTime                 from '../components/DateTime'
@@ -28,6 +32,7 @@ class AdminTable extends Component {
 
 	constructor(props) {
 		super(props)
+
 		this.state = {
 			open: false,
 			id: 0,
@@ -236,9 +241,6 @@ class AdminTable extends Component {
 				break
 		}
 
-		// TODO add delete question
-		// const on_delete = (id) => { delete_record(params.table, id, () => {}) }
-
 		header = (
 			<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 				<TableRow>
@@ -260,7 +262,7 @@ class AdminTable extends Component {
 					<Link to={`/admin/${params.table}/edit/${row[0]}`}><FontIcon className="material-icons" color={yellow700}>edit</FontIcon></Link>
 				</TableRowColumn>
 				<TableRowColumn>
-					<FontIcon onClick={() => this.handle_open(row[0])/*() => on_delete(row[0])*/} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
+					<FontIcon onClick={() => this.handle_open(row[0])} style={{cursor: 'pointer'}} className="material-icons" color={red500}>delete</FontIcon>
 				</TableRowColumn>
 			</TableRow>
 		))
@@ -290,13 +292,14 @@ class AdminTable extends Component {
 				onChange={this.handle_change}
 				autoWidth={true}
 			>
+				<MenuItem disabled={true} value={0} primaryText="Выберите команду" />
 				{filter}
 			</SelectField>
 		</div>
 	}
 
 	render() {
-		const { error, fetching, params } = this.props
+		const { error, fetching, params, affected, last_action, clear_affected_data } = this.props
 
 		if (error)    return <div>ERROR</div>
 		if (fetching) return <div>Loading...</div>
@@ -328,6 +331,16 @@ class AdminTable extends Component {
 				onTouchTap={this.handle_confirm_delete}
 			/>,
 		]
+
+		
+		let snackbar_title = ''
+		switch (last_action) {
+			case 'create': { snackbar_title = 'Создано записей: '   } break
+			case 'update': { snackbar_title = 'Обновлено записей: ' } break
+			case 'delete': { snackbar_title = 'Удалено записей: '   } break
+		}
+
+		const is_snackbar_open = (last_action !== '')
 
 		return (
 			<div>
@@ -361,33 +374,50 @@ class AdminTable extends Component {
 				>
 					Вы действительно хотите удалить запись?
 				</Dialog>
+
+				<Snackbar
+					open={is_snackbar_open}
+					message={`${snackbar_title} ${affected}`}
+					autoHideDuration={4000}
+					onRequestClose={clear_affected_data}
+				/>
 			</div>
 		)
 	}
 }
 
 AdminTable.propTypes = {
-	params:        React.PropTypes.object,
-	data:          React.PropTypes.array,
-	current_fc:    React.PropTypes.number,
-	fcs:           React.PropTypes.array,
-	fetching:      React.PropTypes.bool,
-	error:         React.PropTypes.any,
-	fetch_table:   React.PropTypes.func,
-	delete_record: React.PropTypes.func,
+	params:               React.PropTypes.object,
+	data:                 React.PropTypes.array,
+	current_fc:           React.PropTypes.number,
+	fcs:                  React.PropTypes.array,
+	affected:             React.PropTypes.number,
+	fetching:             React.PropTypes.bool,
+	last_action:          React.PropTypes.oneOf(['', 'create', 'update', 'delete']),
+	error:                React.PropTypes.string,
+	fetch_table:          React.PropTypes.func,
+	delete_record:        React.PropTypes.func,
+	clear_affected_data:  React.PropTypes.func,
 	fetch_football_clubs: React.PropTypes.func,
-	change_current_fc: React.PropTypes.func,
-	admin_clear_data: React.PropTypes.func,
+	change_current_fc:    React.PropTypes.func,
+	admin_clear_data:     React.PropTypes.func,
 }
 
 function mapStateToProps(state) {
 	return {
-		data:       state.admin.data,
-		current_fc: state.admin.current_fc,
-		fcs:        state.fcs.items,
-		fetching:   state.admin.fetching,
-		error:      state.admin.error,
+		data:        state.admin.data,
+		current_fc:  state.admin.current_fc,
+		fcs:         state.fcs.items,
+		affected:    state.admin_edit.affected,
+		last_action: state.admin_edit.last_action,
+		fetching:    state.admin.fetching,
+		error:       state.admin.error,
 	}
 }
 
-export default connect(mapStateToProps, { ...actions, delete_record, fetch_football_clubs })(AdminTable)
+export default connect(mapStateToProps, { 
+	...actions,
+	delete_record,
+	fetch_football_clubs,
+	clear_affected_data
+})(AdminTable)

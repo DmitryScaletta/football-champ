@@ -70,6 +70,7 @@ const initial_state = {
 		data:         {},
 		form_data:    {},
 		affected:     0,
+		last_action:  '',
 		championats:  [],
 		seasons:      [],
 		fcs:          [],

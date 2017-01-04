@@ -22,19 +22,17 @@ class AdminEdit extends Component {
 
 		if (params.action === 'edit') {
 			fetch_record(params.table, params.id)
-			// load_form_data(data)
 		}
 		load_form_data({}) // TODO rename to clear data
 		fetch_additional_tables(params.table)
 	}
 
 	componentDidUpdate(prev_props) {
-		const { fetch_additional_tables, fetch_record, load_form_data, params, location, data } = this.props
+		const { fetch_additional_tables, fetch_record, load_form_data, params, location } = this.props
 		
 		if (params.table !== prev_props.params.table || location.pathname !== prev_props.location.pathname) {
 			if (params.action === 'edit') {
 				fetch_record(params.table, params.id)
-				// load_form_data(data)
 			}
 			fetch_additional_tables(params.table)
 			load_form_data({})
@@ -53,7 +51,7 @@ class AdminEdit extends Component {
 	render_form() {
 		const { params, data, countries, router } = this.props
 		const action_type = (params.action === 'new' || params.action === 'edit') ? params.action : null
-		const onCancel = () => { router.push(`/admin/${this.props.params.table}`) }
+		const on_cancel = () => { router.push(`/admin/${this.props.params.table}`) }
 
 		switch (params.table) {
 			case 'championats': {
@@ -62,7 +60,7 @@ class AdminEdit extends Component {
 					action_type={action_type}
 					data={data}
 					countries={countries}
-					onCancel={onCancel}
+					on_cancel={on_cancel}
 					onSubmit={this.on_submit} />
 			}
 			case 'seasons':
@@ -83,7 +81,7 @@ class AdminEdit extends Component {
 	}
 
 	render() {
-		const { error, fetching, fetching2, params, data } = this.props
+		const { error, fetching, fetching2, params } = this.props
 
 		if (error)    return <div>ERROR. {error}</div>
 		if (fetching) return <div>Loading...</div>
@@ -103,7 +101,7 @@ class AdminEdit extends Component {
 		const second_title = (params.action === 'new') ? 'Добавление' : (params.action === 'edit') ? 'Изменение' : ''
 
 		return (
-			<div>
+			<div style={{maxWidth: '600px', margin: '0 auto'}}>
 				<h3>{`${titles[params.table]}. ${second_title}`}</h3>
 				{fetching2 ? null : this.render_form()}
 			</div>
@@ -124,8 +122,8 @@ AdminEdit.propTypes = {
 	lines:                   React.PropTypes.array,
 	fetching:                React.PropTypes.bool,
 	fetching2:               React.PropTypes.bool,
-	error:                   React.PropTypes.any,
-	error2:                  React.PropTypes.any,
+	error:                   React.PropTypes.string,
+	error2:                  React.PropTypes.string,
 	fetch_record:            React.PropTypes.func,
 	update_record:           React.PropTypes.func,
 	create_record:           React.PropTypes.func,

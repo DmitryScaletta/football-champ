@@ -22,12 +22,18 @@ export const DELETE_RECORD_FAILURE           = 'DELETE_RECORD_FAILURE'
 
 export const LOAD_FORM_DATA                  = 'LOAD_FORM_DATA'
 
+export const CLEAR_AFFECTED_DATA             = 'CLEAR_AFFECTED_DATA'
+
 
 export function load_form_data(data) {
 	return {
 		type: LOAD_FORM_DATA,
 		data,
 	}
+}
+
+export function clear_affected_data() {
+	return { type: CLEAR_AFFECTED_DATA, }
 }
 
 function validate_table_name(table_name) {
