@@ -1,7 +1,9 @@
 const db = require('../db/database.js')
 
 module.exports = function(req, res) {
-	const sql = `SELECT id FROM ${req.params.table}`
+	const table_schema = db.get_table_schema(db.schema, req.params.table)
+
+	const sql = `SELECT id FROM ${table_schema.name}`
 
 	db.query(sql)
 	.then((result) => {

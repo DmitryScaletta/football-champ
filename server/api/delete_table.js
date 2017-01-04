@@ -1,7 +1,6 @@
 const db = require('../db/database.js')
 
 module.exports = function(req, res) {
-	
 	const table_schema = db.get_table_schema(db.schema, req.params.table)
 
 	let sql            = ''
@@ -18,7 +17,7 @@ module.exports = function(req, res) {
 		}
 	}
 
-	sql = `DELETE FROM ${req.params.table}`
+	sql = `DELETE FROM ${table_schema.name}`
 
 	if (where_array.length > 0) sql += ` WHERE ${where_array.join(' AND ')}`
 

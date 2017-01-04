@@ -1,8 +1,9 @@
 const db = require('../db/database.js')
 
 module.exports = function(req, res) {
-	
-	let sql         = `DELETE FROM ${req.params.table} WHERE id=@id`
+	const table_schema = db.get_table_schema(db.schema, req.params.table)
+
+	let sql         = `DELETE FROM ${table_schema.name} WHERE id=@id`
 	let params      = { id: Number(req.params.id) }
 	let param_types = { id: 'number' }
 
