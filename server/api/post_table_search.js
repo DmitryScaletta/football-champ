@@ -176,7 +176,7 @@ module.exports = function(req, res) {
 	db.query(sql, params, param_types)
 	.then((result) => {
 		if (result.recordsets.length === 0) {
-			res.sendStatus(204)
+			res.send([])
 			return
 		} 
 		if (req.params.table === 'championat') {

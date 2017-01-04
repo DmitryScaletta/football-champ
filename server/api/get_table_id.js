@@ -100,11 +100,10 @@ module.exports = function(req, res) {
 			sql = `SELECT ${field_names.join(',')} FROM ${table_schema.name} WHERE id=@id`
 	}
 
-
 	db.query(sql, params, param_types)
 	.then((result) => {
 		if (!result.recordsets || !result.recordsets[0]) {
-			res.sendStatus(204)
+			res.send({})
 		} else {
 			res.send(result.recordsets[0])
 		}

@@ -1,17 +1,4 @@
 const initial_state = {
-	/*common: {
-		championats:  [],
-		seasons:      [],
-		fcs:          [],
-		players:      [],
-		trainers:     [],
-		countries:    [],
-		cities:       [],
-		lines:        [],
-		matches:      [],
-		fetching:     false,
-		error:        null,
-	},*/
 	championat: {
 		items:        [],
 		fetching:     false,

@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { Provider }         from 'react-redux'
-import { hashHistory, Router, Route, IndexRoute } from 'react-router'
+import { 
+	hashHistory,
+	Router,
+	Route,
+	IndexRoute
+} from 'react-router'
 import Main                 from './Main'
 import Home                 from '../components/Home'
 import Championat           from './Championat'
@@ -43,5 +48,5 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-	store: React.PropTypes.object.isRequired
+	store: React.PropTypes.object.isRequired,
 }
