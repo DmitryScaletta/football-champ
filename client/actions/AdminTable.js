@@ -26,6 +26,7 @@ export function fetch_table(table, fc_id = 0) {
 		switch (table) {
 			case 'championats': { api_table = 'championat' } break
 			case 'seasons':     { api_table = 'season'     } break
+			case 'season-fcs':  { api_table = 'season-fc'  } break
 			case 'fcs':         { api_table = 'fc'         } break
 			case 'trainers':    { api_table = 'trainer'    } break
 			case 'countries':   { api_table = 'country'    } break

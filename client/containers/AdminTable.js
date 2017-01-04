@@ -105,6 +105,11 @@ class AdminTable extends Component {
 				'Начало',
 				'Конец',
 			],
+			'season-fcs': [
+				'ID',
+				'Сезон',
+				'Команда',
+			],
 			fcs: [
 				'ID',
 				'Название',
@@ -165,6 +170,15 @@ class AdminTable extends Component {
 					season.championat_name,
 					season.year_begin,
 					season.year_end,
+				])
+				break
+			}
+
+			case 'season-fcs': {
+				rows_data = data.map((season_fc) => [
+					season_fc.id,
+					`${season_fc.championat_name} (${season_fc.season_year_begin}-${season_fc.season_year_end})`,
+					<FootballClubLink name={season_fc.fc_name} image={season_fc.fc_image} />,
 				])
 				break
 			}
@@ -307,15 +321,16 @@ class AdminTable extends Component {
 		const table = this.prepare_table_data()
 
 		const titles = {
-			championats: 'Чемпионаты',
-			seasons:     'Сезоны',
-			fcs:         'Команды',
-			players:     'Игроки',
-			trainers:    'Тренеры',
-			countries:   'Страны',
-			cities:      'Города',
-			lines:       'Амплуа',
-			matches:     'Матчи',
+			championats:  'Чемпионаты',
+			seasons:      'Сезоны',
+			'season-fcs': 'Команды в сезоне',
+			fcs:          'Команды',
+			players:      'Игроки',
+			trainers:     'Тренеры',
+			countries:    'Страны',
+			cities:       'Города',
+			lines:        'Амплуа',
+			matches:      'Матчи',
 		}
 
 		const actions = [

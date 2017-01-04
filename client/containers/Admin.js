@@ -1,27 +1,11 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
-import { Link }             from 'redux'
-import AppBar from 'material-ui/AppBar'
-import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton'
-// import RaisedButton from 'material-ui/RaisedButton'
-
-// import Paper from 'material-ui/Paper'
-// import IconButton from 'material-ui/IconButton'
-// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-// import NavigationClose from 'material-ui/svg-icons/navigation/close'
-// import IconMenu from 'material-ui/IconMenu'
-// import FontIcon from 'material-ui/FontIcon'
-// import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
-import DropDownMenu from 'material-ui/DropDownMenu'
-
-// import * as actions         from '../actions/Admin'
+import AppBar               from 'material-ui/AppBar'
+import Drawer               from 'material-ui/Drawer'
+import MenuItem             from 'material-ui/MenuItem'
+import FlatButton           from 'material-ui/FlatButton'
 
 
-
-//  style={this.state.open ? {paddingLeft: '256px'} : null}
-// iconElementRight={<FlatButton label="Кнопка" />}
 class Admin extends Component {
 
 	constructor(props) {
@@ -68,6 +52,7 @@ class Admin extends Component {
 					<AppBar title="Таблицы" showMenuIconButton={false} />
 					<MenuItem onTouchTap={() => {this.handle_close('championats')}} style={(location.pathname === '/admin/championats') ? active : null}>Чемпионаты</MenuItem>
 					<MenuItem onTouchTap={() => {this.handle_close('seasons')}}     style={(location.pathname === '/admin/seasons')     ? active : null}>Сезоны</MenuItem>
+					<MenuItem onTouchTap={() => {this.handle_close('season-fcs')}}  style={(location.pathname === '/admin/season-fcs')  ? active : null}>Команды в сезоне</MenuItem>
 					<MenuItem onTouchTap={() => {this.handle_close('fcs')}}         style={(location.pathname === '/admin/fcs')         ? active : null}>Команды</MenuItem>
 					<MenuItem onTouchTap={() => {this.handle_close('players')}}     style={(location.pathname === '/admin/players')     ? active : null}>Игроки</MenuItem>
 					<MenuItem onTouchTap={() => {this.handle_close('trainers')}}    style={(location.pathname === '/admin/trainers')    ? active : null}>Тренеры</MenuItem>
@@ -88,12 +73,12 @@ Admin.propTypes = {
 	children:     React.PropTypes.node,
 }
 
-function mapStateToProps(state) {
+/*function mapStateToProps(state) {
 	return {
 		// player:   state.player.data,
 		// fetching: state.player.fetching,
 		// error:    state.player.error,
 	}
-}
+}*/
 
-export default connect(mapStateToProps/*, actions*/)(Admin)
+export default connect(/*mapStateToProps, actions*/)(Admin)

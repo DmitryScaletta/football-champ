@@ -76,6 +76,28 @@ class ChampionatForm extends Component {
 				]
 				break
 			}
+			case 'season-fcs': {
+				const { seasons, fcs } = this.props
+				let years = []
+				for (let i = 2000; i <= 2017; ++i) {
+					years.push({ value: i, text: i })
+				}
+				fields = [
+					{	type:       'SelectField',
+						name:       'season_id',
+						label:      'Сезон',
+						hint:       'Сезон',
+						items:      seasons.map((season) => ({ value: season.id, text: `${season.championat_name} (${season.year_begin}-${season.year_end})` }))
+					}, 
+					{	type:       'SelectField',
+						name:       'fc_id',
+						label:      'Команда',
+						hint:       'Команда',
+						items:      fcs.map((fc) => ({ value: fc.id, text: fc.name }))
+					},
+				]
+				break
+			}
 			case 'fcs': {
 				const { countries, cities, trainers } = this.props
 				fields = [
@@ -118,6 +140,7 @@ class ChampionatForm extends Component {
 						name:       'foundation_year',
 						label:      'Год основания',
 						hint:       'Год основания клуба',
+						number:     true,
 					},
 					{	type:       'TextField',
 						name:       'stadium_name',
@@ -197,6 +220,7 @@ class ChampionatForm extends Component {
 						name:       'player_number',
 						label:      'Номер',
 						hint:       'Номер игрока',
+						number:     true,
 					},
 					{	type:       'SelectField',
 						name:       'line_id',
@@ -209,11 +233,13 @@ class ChampionatForm extends Component {
 						name:       'weight',
 						label:      'Вес',
 						hint:       'Вес игрока',
+						number:     true,
 					},
 					{	type:       'TextField',
 						name:       'growth',
 						label:      'Рост',
 						hint:       'Рост игрока',
+						number:     true,
 					},
 				]
 				break
@@ -316,16 +342,19 @@ class ChampionatForm extends Component {
 						name:       'tour',
 						label:      'Тур',
 						hint:       'Тур',
+						number:      true,
 					},
 					{	type:       'TextField',
 						name:       'score_home',
 						label:      'Счет дома',
 						hint:       'Счет дома',
+						number:     true,
 					},
 					{	type:       'TextField',
 						name:       'score_away',
 						label:      'Счет в гостях',
 						hint:       'Счет в гостях',
+						number:     true,
 					},
 					{	type:       'DatePicker',
 						name:       'match_date',
@@ -357,6 +386,7 @@ class ChampionatForm extends Component {
 							floatingLabelText={field.label}
 							validate={field.required ? required : null}
 							fullWidth={true}
+							parse={field.number ? (v) => Number(v) : null}
 							multiLine={field.multi_line ? true : false}
 							rows={field.rows ? field.rows : 1}
 						/>

@@ -1,9 +1,5 @@
 import React, { Component }  from 'react'
 import { connect }           from 'react-redux'
-import Moment                from 'moment'
-// import TextField             from 'material-ui/TextField'
-// import RaisedButton          from 'material-ui/RaisedButton'
-// import FontIcon              from 'material-ui/FontIcon'
 import * as actions          from '../actions/AdminEdit'
 import AdminForm             from './AdminForm'
 
@@ -113,15 +109,16 @@ class AdminEdit extends Component {
 		if (fetching) return <div>Loading...</div>
 
 		const titles = {
-			championats: 'Чемпионат',
-			seasons:     'Сезон',
-			fcs:         'Команд',
-			players:     'Игрок',
-			trainers:    'Тренер',
-			countries:   'Страна',
-			cities:      'Город',
-			lines:       'Амплуа',
-			matches:     'Матч',
+			championats:  'Чемпионат',
+			seasons:      'Сезон',
+			'season-fcs': 'Команда в сезоне',
+			fcs:          'Команда',
+			players:      'Игрок',
+			trainers:     'Тренер',
+			countries:    'Страна',
+			cities:       'Город',
+			lines:        'Амплуа',
+			matches:      'Матч',
 		}
 
 		const second_title = (params.action === 'new') ? 'Добавление' : (params.action === 'edit') ? 'Изменение' : ''

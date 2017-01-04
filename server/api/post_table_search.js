@@ -86,11 +86,18 @@ module.exports = function(req, res) {
 
 	const SQL_SEARCH_SEASON_FC =
 	`SELECT
+		SeasonFootbalClub.id,
 		SeasonFootbalClub.season_id,
+		ch.name AS championat_name,
+		s.year_begin AS season_year_begin,
+		s.year_end AS season_year_end,
 		fc.id AS fc_id,
-		fc.name AS fc_name
+		fc.name AS fc_name,
+		fc.image AS fc_image
 	FROM SeasonFootbalClub
-	INNER JOIN FootballClub AS fc ON SeasonFootbalClub.fc_id=fc.id`
+	INNER JOIN FootballClub AS fc ON SeasonFootbalClub.fc_id=fc.id
+	INNER JOIN Season AS s ON SeasonFootbalClub.season_id=s.id
+	INNER JOIN Championat AS ch ON s.championat_id=ch.id`
 
 	const SQL_SEARCH_FC = 
 	`SELECT ${limit_sql}

@@ -31,6 +31,7 @@ function validate_table_name(table_name) {
 	switch (table_name) {
 		case 'championats': return 'championat'
 		case 'seasons':     return 'season'
+		case 'season-fcs':  return 'season-fc'
 		case 'fcs':         return 'fc'
 		case 'trainers':    return 'trainer'
 		case 'countries':   return 'country'
@@ -187,6 +188,10 @@ export function fetch_additional_tables(table) {
 		switch (table) {
 			case 'championats':
 				tables['countries']   = true
+				break
+			case 'season-fcs':
+				tables['seasons']     = true
+				tables['fcs']         = true
 				break
 			case 'seasons':
 				tables['championats'] = true
