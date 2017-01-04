@@ -367,8 +367,7 @@ function add_all_params(table_schema, obj, params, param_types) {
 		}
 
 		// check field type
-		console.log(field.name, obj[field.name])
-		if (!validate_field_type(obj[field.name], field.type)) {
+		if (obj[field.name] !== undefined && !validate_field_type(obj[field.name], field.type)) {
 			throw {
 				status: 400,
 				message: `Wrong field type: ${field.name}`

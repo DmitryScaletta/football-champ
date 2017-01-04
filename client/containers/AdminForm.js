@@ -191,6 +191,7 @@ class ChampionatForm extends Component {
 					{	type:       'DatePicker',
 						name:       'birth_date',
 						hint:       'Дата рождения',
+						required:   true,
 					},
 					{	type:       'TextField',
 						name:       'player_number',
