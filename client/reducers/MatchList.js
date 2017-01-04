@@ -15,6 +15,7 @@ export default function(state = initial_state.matches, action) {
 				error: null,
 				fetching: true,
 			}
+
 		case FETCH_MATCHES_SUCCESS:
 			return {
 				...state,

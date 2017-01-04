@@ -67,7 +67,6 @@ export default function(state = initial_state.admin_edit, action) {
 				fetching2: false,
 			}
 
-
 		case UPDATE_RECORD_REQUEST:
 			return {
 				...state,

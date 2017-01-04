@@ -15,6 +15,7 @@ export default function(state = initial_state.season, action) {
 				error: null,
 				fetching: true,
 			}
+
 		case FETCH_SEASON_MATCHES_SUCCESS:
 			return {
 				...state,
@@ -23,6 +24,7 @@ export default function(state = initial_state.season, action) {
 				league_table: action.matches.league_table,
 				fetching: false
 			}
+
 		case FETCH_SEASON_MATCHES_FAILURE:
 			return {
 				...state,
