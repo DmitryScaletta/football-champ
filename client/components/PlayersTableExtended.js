@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import FlagLink from './FlagLink'
 import DateTime from './DateTime'
 
-
 const PlayersTableExtended = ({ players }) => {
 
 	const rows = !players ? null : players.map((player) => {

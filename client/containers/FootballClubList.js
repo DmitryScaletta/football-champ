@@ -6,13 +6,12 @@ import Loading              from '../components/Loading'
 import FootballClubTable    from '../components/FootballClubTable'
 import FlagLink             from '../components/FlagLink'
 
+
 class FootballClubList extends Component {
 
 	componentDidMount() {
 		this.props.fetch_football_clubs()
 	}
-
-	// componentDidUpdate(prevProps) {}
 
 	render() {
 		const { error, fetching, fcs, filter, change_filter } = this.props

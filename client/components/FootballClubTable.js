@@ -1,8 +1,6 @@
 import React            from 'react'
-import { Link }         from 'react-router'
 import FootballClubLink from '../components/FootballClubLink'
 import FlagLink         from '../components/FlagLink'
-
 
 const FootballClubTable = ({ fcs }) => {
 

@@ -5,8 +5,10 @@ import {
 } from '../actions/MatchList'
 import initial_state from '../store/store'
 
+
 export default function(state = initial_state.matches, action) {
 	switch (action.type) {
+		
 		case FETCH_MATCHES_REQUEST:
 			return {
 				...state,

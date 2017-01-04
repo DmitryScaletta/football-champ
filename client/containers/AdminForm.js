@@ -13,13 +13,6 @@ import {
 
 class ChampionatForm extends Component {
 
-	/*componentDidMount() {
-		this.refs.name              // the Field
-			.getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-			.getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-			.focus()                // on TextField
-	}*/
-
 	render_fields() {
 		const { table_name, required } = this.props
 

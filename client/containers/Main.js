@@ -1,9 +1,8 @@
-import React, { Component }   from 'react'
-import { connect }            from 'react-redux'
-import { Link }               from 'react-router'
-// import * as actions           from '../actions/Main'
+import React, { Component } from 'react'
+import { Link }             from 'react-router'
 
-class Main extends Component {
+
+export default class Main extends Component {
 	render() {
 		const path = this.props.location.pathname
 		return (
@@ -45,9 +44,3 @@ Main.propTypes = {
 	children: React.PropTypes.node,
 	location: React.PropTypes.object,
 }
-
-function mapStateToProps() {
-	return {}
-}
-
-export default connect(mapStateToProps/*, actions*/)(Main)

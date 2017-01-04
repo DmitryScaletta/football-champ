@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { connect }          from 'react-redux'
 import AppBar               from 'material-ui/AppBar'
 import Drawer               from 'material-ui/Drawer'
 import MenuItem             from 'material-ui/MenuItem'
 import FlatButton           from 'material-ui/FlatButton'
 
 
-class Admin extends Component {
+export default class Admin extends Component {
 
 	constructor(props) {
 		super(props)
@@ -29,7 +28,6 @@ class Admin extends Component {
 		const active = {backgroundColor: 'rgba(0,0,0,.2)'}
 
 		return (
-
 			<div>
 				<div>
 					<AppBar
@@ -39,9 +37,7 @@ class Admin extends Component {
 						iconElementRight={<FlatButton onClick={() => router.push('/')} label="На главную" />}
 					/>
 					<div style={{padding: '84px 20px 20px 20px'}}>
-
 						{this.props.children}
-
 					</div>
 				</div>
 				<Drawer
@@ -67,18 +63,9 @@ class Admin extends Component {
 }
 
 Admin.propTypes = {
-	params:       React.PropTypes.object,
-	router:       React.PropTypes.object,
-	location:     React.PropTypes.object,
-	children:     React.PropTypes.node,
+	params:   React.PropTypes.object,
+	router:   React.PropTypes.object,
+	location: React.PropTypes.object,
+	children: React.PropTypes.node,
 }
 
-/*function mapStateToProps(state) {
-	return {
-		// player:   state.player.data,
-		// fetching: state.player.fetching,
-		// error:    state.player.error,
-	}
-}*/
-
-export default connect(/*mapStateToProps, actions*/)(Admin)

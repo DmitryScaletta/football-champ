@@ -6,6 +6,7 @@ import ErrorMessage             from '../components/ErrorMessage'
 import Loading                  from '../components/Loading'
 import PlayersTableExtended     from '../components/PlayersTableExtended'
 
+
 class PlayerList extends Component {
 
 	constructor(props) {

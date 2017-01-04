@@ -13,8 +13,6 @@ class Championat extends Component {
 		this.props.fetch_championats()
 	}
 
-	// componentDidUpdate(prevProps) {}
-
 	render() {
 		const { error, fetching, championats, params } = this.props
 

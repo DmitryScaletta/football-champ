@@ -5,8 +5,10 @@ import {
 } from '../actions/Season'
 import initial_state from '../store/store'
 
+
 export default function(state = initial_state.season, action) {
 	switch (action.type) {
+		
 		case FETCH_SEASON_MATCHES_REQUEST:
 			return {
 				...state,

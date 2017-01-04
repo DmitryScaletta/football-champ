@@ -1,7 +1,6 @@
 import React    from 'react'
 import { Link } from 'react-router'
 
-
 const PlayersTable = ({ players }) => {
 
 	const rows = !players ? null : players.map((player) => {

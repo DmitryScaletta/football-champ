@@ -8,6 +8,7 @@ import LeagueTable          from '../components/LeagueTable'
 
 
 class Season extends Component {
+	
 	componentDidMount() {
 		const { params, fetch_season_matches } = this.props
 		fetch_season_matches(params.champ_id, params.years)

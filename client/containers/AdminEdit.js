@@ -1,7 +1,7 @@
-import React, { Component }  from 'react'
-import { connect }           from 'react-redux'
-import * as actions          from '../actions/AdminEdit'
-import AdminForm             from './AdminForm'
+import React, { Component } from 'react'
+import { connect }          from 'react-redux'
+import * as actions         from '../actions/AdminEdit'
+import AdminForm            from './AdminForm'
 
 
 class AdminEdit extends Component {

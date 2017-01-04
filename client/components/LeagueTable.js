@@ -1,7 +1,6 @@
 import React    from 'react'
 import { Link } from 'react-router'
 
-
 const LeagueTable = ({ fcs }) => {
 
 	let i = 0

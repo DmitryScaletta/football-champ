@@ -15,8 +15,6 @@ class Match extends Component {
 		fetch_match(params.id)
 	}
 
-	// componentDidUpdate(prev_props) {}
-
 	render() {
 		const { error, fetching, match } = this.props
 

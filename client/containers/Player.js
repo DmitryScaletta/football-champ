@@ -7,6 +7,7 @@ import FlagLink             from '../components/FlagLink'
 import FootballClubLink     from '../components/FootballClubLink'
 import DateTime             from '../components/DateTime'
 
+
 class Player extends Component {
 
 	componentDidMount() {

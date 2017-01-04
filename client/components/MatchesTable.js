@@ -3,7 +3,6 @@ import { Link }         from 'react-router'
 import FootballClubLink from './FootballClubLink'
 import DateTime         from './DateTime'
 
-
 const MatchesTable = ({ matches }) => {
 
 	const rows = !matches ? null : matches.map((match) => {

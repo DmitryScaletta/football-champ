@@ -7,11 +7,10 @@ import MatchesTable         from '../components/MatchesTable'
 
 
 class MatchList extends Component {
+	
 	componentDidMount() {
 		this.props.fetch_matches()
 	}
-
-	// componentDidUpdate(prev_props) {}
 
 	render() {
 		const { error, fetching, next_matches, last_matches } = this.props

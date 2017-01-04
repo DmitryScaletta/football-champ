@@ -13,7 +13,6 @@ var compiler      = webpack(config)
 app.use(devMiddleware(compiler, {
 	publicPath: config.output.publicPath,
 	historyApiFallback: true,
-	contentBase: 'http://localhost:3000/',
 	stats: {
 		colors: true,
 		chunks: false
@@ -29,14 +28,11 @@ app.use(devMiddleware(compiler, {
 
 app.use(hotMiddleware(compiler))
 
-app.use(express.static(path.join(__dirname, './server/static')))
-
 app.use('/api', proxy({ target: 'http://localhost:3000' }))
 
-app.listen(3001, function (err) {
-	if (err) {
-		return console.error(err)
-	}
+app.use(express.static(path.join(__dirname, './server/static')))
 
+app.listen(3001, function (err) {
+	if (err) return console.error(err)
 	console.log('Listening at http://localhost:3001/')
 })

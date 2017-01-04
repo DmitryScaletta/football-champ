@@ -1,6 +1,5 @@
-import React            from 'react'
-import Moment           from 'moment'
-
+import React  from 'react'
+import Moment from 'moment'
 
 const DateTime = ({ timestamp = 0, format = 'L', years = false }) => {
 	Moment.locale('ru')
