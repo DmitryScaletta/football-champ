@@ -1,7 +1,6 @@
 import React, { Component }  from 'react'
 import { connect }           from 'react-redux'
-// import { Link }              from 'react-router'
-// import { Field, reduxForm }  from 'redux-form'
+import Moment                from 'moment'
 // import TextField             from 'material-ui/TextField'
 // import RaisedButton          from 'material-ui/RaisedButton'
 // import FontIcon              from 'material-ui/FontIcon'
@@ -18,24 +17,22 @@ class AdminEdit extends Component {
 	}
 
 	componentDidMount() {
-		const { fetch_record, fetch_additional_tables, load_form_data, params } = this.props
+		const { fetch_record, fetch_additional_tables, params } = this.props
 
 		if (params.action === 'edit') {
 			fetch_record(params.table, params.id)
 		}
-		load_form_data({}) // TODO rename to clear data
 		fetch_additional_tables(params.table)
 	}
 
 	componentDidUpdate(prev_props) {
-		const { fetch_additional_tables, fetch_record, load_form_data, params, location } = this.props
+		const { fetch_additional_tables, fetch_record, params, location } = this.props
 		
 		if (params.table !== prev_props.params.table || location.pathname !== prev_props.location.pathname) {
 			if (params.action === 'edit') {
 				fetch_record(params.table, params.id)
 			}
 			fetch_additional_tables(params.table)
-			load_form_data({})
 		}
 	}
 
@@ -44,8 +41,29 @@ class AdminEdit extends Component {
 		
 		const callback = () => router.push(`/admin/${this.props.params.table}`)
 		
-		if (params.action === 'new')  { create_record(params.table, data, callback) } else
-		if (params.action === 'edit') { update_record(params.table, data, callback) }
+		let new_data = {}
+		if (params.table === 'matches') {
+			let match_date = data.match_date
+			match_date.setHours  (data.match_time.getHours())
+			match_date.setMinutes(data.match_time.getMinutes())
+			new_data = {
+				...data,
+				match_date: match_date.getTime() / 1000
+			}
+			if (new_data.score_home === '') new_data.score_home = null
+			if (new_data.score_away === '') new_data.score_away = null
+		} else
+		if (params.table === 'players') {
+			new_data = {
+				...data,
+				birth_date: data.birth_date.getTime() / 1000
+			}
+		} else {
+			new_data = data
+		}
+
+		if (params.action === 'new')  { create_record(params.table, new_data, callback) } else
+		if (params.action === 'edit') { update_record(params.table, new_data, callback) }
 	}
 
 	render_form() {
@@ -54,8 +72,26 @@ class AdminEdit extends Component {
 		const on_cancel = () => { router.push(`/admin/${this.props.params.table}`) }
 		const required  = (value) => value == null ? 'Обязательное поле' : undefined
 
+		let new_data 
+		if (data.match_date && params.table === 'matches') {
+			const match_date = new Date(Number(data.match_date) * 1000)
+			new_data = {
+				...data,
+				match_date,
+				match_time: match_date,
+			}
+		} else
+		if (data.birth_date && params.table === 'players') {
+			new_data = {
+				...data,
+				birth_date: new Date(Number(data.birth_date) * 1000)
+			}
+		} else {
+			new_data = data
+		}
+
 		return <AdminForm
-			initialValues={data}
+			initialValues={(params.action === 'edit') ? new_data : {}}
 			table_name={params.table}
 			action_type={action_type}
 			championats={championats}
@@ -68,53 +104,6 @@ class AdminEdit extends Component {
 			on_cancel={on_cancel}
 			required={required}
 			onSubmit={this.on_submit} />
-
-		/*switch (params.table) {
-			case 'championats': {
-				return <ChampionatForm
-					initialValues={data}
-					table_name={params.table}
-					action_type={action_type}
-					data={data}
-					countries={countries}
-					on_cancel={on_cancel}
-					required={required}
-					onSubmit={this.on_submit} />
-			}
-			case 'seasons':
-				return <SeasonForm
-					initialValues={data}
-					action_type={action_type}
-					data={data}
-					championats={championats}
-					on_cancel={on_cancel}
-					required={required}
-					onSubmit={this.on_submit} />
-			case 'fcs':
-				return <ChampionatForm
-					initialValues={data}
-					table_name={params.table}
-					action_type={action_type}
-					data={data}
-					countries={countries}
-					cities={cities}
-					trainers={trainers}
-					on_cancel={on_cancel}
-					required={required}
-					onSubmit={this.on_submit} />
-			case 'trainers':
-			case 'countries':
-			case 'cities':
-			case 'lines':
-			case 'players':
-				return <div></div>
-			case 'matches':
-				return null
-
-			default:
-				return null
-		}*/
-
 	}
 
 	render() {
@@ -165,7 +154,6 @@ AdminEdit.propTypes = {
 	update_record:           React.PropTypes.func,
 	create_record:           React.PropTypes.func,
 	fetch_additional_tables: React.PropTypes.func,
-	load_form_data:          React.PropTypes.func,
 	router:                  React.PropTypes.object,
 	location:                React.PropTypes.object,
 }

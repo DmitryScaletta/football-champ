@@ -340,9 +340,10 @@ function add_all_params(table_schema, obj, params, param_types) {
 
 	function validate_field_type(value, type) {
 
-		if (is_int_type(type) || is_bigint_type(type)) { return typeof value === 'number'  }
-		if (is_nvarchar_type(type))                    { return typeof value === 'string'  }
-		if (is_bit_type(type))                         { return value === 0 || value === 1 }
+		if (is_int_type(type) || 
+			is_bigint_type(type))   { return typeof value === 'number' || value === null }
+		if (is_nvarchar_type(type)) { return typeof value === 'string' || value === null }
+		if (is_bit_type(type))      { return typeof value === 'number' || value === false || value === true }
 
 		return false
 	}
@@ -366,6 +367,7 @@ function add_all_params(table_schema, obj, params, param_types) {
 		}
 
 		// check field type
+		console.log(field.name, obj[field.name])
 		if (!validate_field_type(obj[field.name], field.type)) {
 			throw {
 				status: 400,

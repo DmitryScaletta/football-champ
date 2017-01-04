@@ -119,8 +119,8 @@ module.exports = [
 			{	name: 'home_fc_id',			type: 'INT',			required: true	},
 			{	name: 'away_fc_id',			type: 'INT',			required: true	},
 			{	name: 'tour',				type: 'INT',	},
-			{	name: 'score_home',			type: 'INT',			default: 0	},
-			{	name: 'score_away',			type: 'INT',			default: 0	},
+			{	name: 'score_home',			type: 'INT',			default: null	},
+			{	name: 'score_away',			type: 'INT',			default: null	},
 			{	name: 'match_date',			type: 'BIGINT',			required: true	},
 			{	name: 'is_over',			type: 'BIT',			default: 0	},
 		]

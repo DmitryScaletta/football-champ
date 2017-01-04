@@ -5,6 +5,7 @@ import RaisedButton         from 'material-ui/RaisedButton'
 import {
 	Checkbox,
 	DatePicker,
+	TimePicker,
 	SelectField,
 	TextField,
 } from 'redux-form-material-ui'
@@ -330,6 +331,11 @@ class ChampionatForm extends Component {
 						hint:       'Дата проведения матча',
 						required:   true,
 					},
+					{	type:       'TimePicker',
+						name:       'match_time',
+						hint:       'Время проведения матча',
+						required:   true,
+					},
 					{	type:       'Checkbox',
 						name:       'is_over',
 						label:      'Закончен?',
@@ -390,6 +396,18 @@ class ChampionatForm extends Component {
 						/>
 					</div>
 				}
+				case 'TimePicker': {
+					return <div key={i}>
+						<Field
+							name={field.name}
+							component={TimePicker}
+							format={null}
+							hintText={field.hint}
+							validate={field.required ? required : null}
+							fullWidth={true}
+						/>
+					</div>
+				}
 				default: return null
 			}
 		})
@@ -414,7 +432,6 @@ class ChampionatForm extends Component {
 }
 
 ChampionatForm.propTypes = {
-	// data:          React.PropTypes.object,
 	table_name:    React.PropTypes.string,
 	countries:     React.PropTypes.array,
 	championats:   React.PropTypes.array,

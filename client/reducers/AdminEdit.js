@@ -14,7 +14,6 @@ import {
 	DELETE_RECORD_REQUEST,
 	DELETE_RECORD_SUCCESS,
 	DELETE_RECORD_FAILURE,
-	LOAD_FORM_DATA,
 	CLEAR_AFFECTED_DATA,
 } from '../actions/AdminEdit'
 import initial_state from '../store/store'
@@ -136,12 +135,6 @@ export default function(state = initial_state.admin_edit, action) {
 				last_action: 'create',
 				error:       action.error,
 				fetching:    false,
-			}
-
-		case LOAD_FORM_DATA:
-			return {
-				...state,
-				data: action.data,
 			}
 
 		case CLEAR_AFFECTED_DATA:
