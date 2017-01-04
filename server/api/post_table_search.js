@@ -66,8 +66,8 @@ module.exports = function(req, res) {
 		s.year_begin,
 		s.year_end
 	FROM Championat
-	FULL JOIN Country AS co ON Championat.country_id=co.id
-	FULL JOIN Season AS s ON Championat.id=s.championat_id`
+	INNER JOIN Country AS co ON Championat.country_id=co.id
+	INNER JOIN Season AS s ON Championat.id=s.championat_id`
 	
 	const SQL_SEARCH_SEASON =
 	`SELECT
@@ -105,7 +105,7 @@ module.exports = function(req, res) {
 		co.short_name AS country_short_name,
 		ci.name AS city_name
 	FROM FootballClub
-	FULL JOIN Country AS co ON FootballClub.country_id=co.id
+	INNER JOIN Country AS co ON FootballClub.country_id=co.id
 	FULL JOIN City AS ci ON FootballClub.city_id=ci.id`
 	
 	const SQL_SEARCH_PLAYER =
@@ -149,7 +149,7 @@ module.exports = function(req, res) {
 		co.name AS country_name,
 		co.short_name AS country_short_name
 	FROM City
-	FULL JOIN Country AS co ON City.country_id=co.id`
+	INNER JOIN Country AS co ON City.country_id=co.id`
 
 	// make sql
 	let sql = ''

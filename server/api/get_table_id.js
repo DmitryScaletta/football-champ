@@ -25,9 +25,9 @@ module.exports = function(req, res) {
 		fc.colors,
 		fc.previous_names
 	FROM FootballClub AS fc
-	FULL JOIN Country AS co ON fc.country_id=co.id
-	FULL JOIN City    AS ci ON fc.city_id=ci.id
-	FULL JOIN Trainer AS t  ON fc.trainer_id=t.id
+	INNER JOIN Country AS co ON fc.country_id=co.id
+	FULL  JOIN City    AS ci ON fc.city_id=ci.id
+	FULL  JOIN Trainer AS t  ON fc.trainer_id=t.id
 	
 	WHERE fc.id=@id`
 
