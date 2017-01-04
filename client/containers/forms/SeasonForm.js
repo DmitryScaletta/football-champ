@@ -2,52 +2,53 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import MenuItem             from 'material-ui/MenuItem'
 import RaisedButton         from 'material-ui/RaisedButton'
-import {
-	// Checkbox,
-	// DatePicker,
-	SelectField,
-	TextField,
-} from 'redux-form-material-ui'
+import { SelectField }      from 'redux-form-material-ui'
 
 
-class ChampionatForm extends Component {
-
-	componentDidMount() {
-		this.refs.name              // the Field
-			.getRenderedComponent() // on Field, returns ReduxFormMaterialUITextField
-			.getRenderedComponent() // on ReduxFormMaterialUITextField, returns TextField
-			.focus()                // on TextField
-	}
+class SeasonForm extends Component {
 
 	render() {
-		const { required, handleSubmit, action_type, countries, on_cancel, submitting } = this.props
+		const { required, handleSubmit, action_type, championats, on_cancel, submitting } = this.props
 
 		const submit_title = (action_type === 'new') ? 'Добавить' : (action_type === 'edit') ? 'Сохранить' : 'Error'
+
+		let years = []
+		for (let i = 2000; i <= 2017; ++i) {
+			years.push(<MenuItem key={i} value={i} primaryText={i} />)
+		}
 
 		return (
 			<form onSubmit={handleSubmit}>
 				<div>
-					<Field 
-						name="name"
-						component={TextField}
-						hintText="Название чемпионата"
-						floatingLabelText="Название"
-						validate={required}
-						fullWidth={true}
-						ref="name" 
-						withRef
-					/>
-				</div>
-				<div>
 					<Field
-						name="country_id"
+						name="championat_id"
 						component={SelectField}
-						hintText="Страна"
-						floatingLabelText="Страна"
+						hintText="Чемпионат"
+						floatingLabelText="Чемпионат"
 						validate={required}
 						fullWidth={true}
 					>
-						{ countries.map((country) => <MenuItem key={country.id} value={country.id} primaryText={country.name} />) }
+						{ championats.map((champ) => <MenuItem key={champ.id} value={champ.id} primaryText={champ.name} />) }
+					</Field>
+					<Field
+						name="year_begin"
+						component={SelectField}
+						hintText="Начало"
+						floatingLabelText="Начало"
+						validate={required}
+						fullWidth={true}
+					>
+						{ years }
+					</Field>
+					<Field
+						name="year_end"
+						component={SelectField}
+						hintText="Конец"
+						floatingLabelText="Конец"
+						validate={required}
+						fullWidth={true}
+					>
+						{ years }
 					</Field>
 				</div>
 				<div style={{ paddingTop: '20px' }}>
@@ -60,9 +61,9 @@ class ChampionatForm extends Component {
 	}
 }
 
-ChampionatForm.propTypes = {
+SeasonForm.propTypes = {
 	data:          React.PropTypes.object,
-	countries:     React.PropTypes.array,
+	championats:   React.PropTypes.array,
 	action_type:   React.PropTypes.string,
 	submitting:    React.PropTypes.bool,
 	on_cancel:     React.PropTypes.func,
@@ -72,6 +73,6 @@ ChampionatForm.propTypes = {
 }
 
 export default reduxForm({
-	form: 'championat'
-})(ChampionatForm)
+	form: 'season'
+})(SeasonForm)
 

@@ -7,6 +7,7 @@ import { connect }           from 'react-redux'
 // import FontIcon              from 'material-ui/FontIcon'
 import * as actions          from '../actions/AdminEdit'
 import ChampionatForm        from './forms/ChampionatForm'
+import SeasonForm            from './forms/SeasonForm'
 
 
 class AdminEdit extends Component {
@@ -49,9 +50,10 @@ class AdminEdit extends Component {
 	}
 
 	render_form() {
-		const { params, data, countries, router } = this.props
+		const { params, data, countries, championats, router } = this.props
 		const action_type = (params.action === 'new' || params.action === 'edit') ? params.action : null
 		const on_cancel = () => { router.push(`/admin/${this.props.params.table}`) }
+		const required  = (value) => value == null ? 'Обязательное поле' : undefined
 
 		switch (params.table) {
 			case 'championats': {
@@ -61,9 +63,18 @@ class AdminEdit extends Component {
 					data={data}
 					countries={countries}
 					on_cancel={on_cancel}
+					required={required}
 					onSubmit={this.on_submit} />
 			}
 			case 'seasons':
+				return <SeasonForm
+					initialValues={data}
+					action_type={action_type}
+					data={data}
+					championats={championats}
+					on_cancel={on_cancel}
+					required={required}
+					onSubmit={this.on_submit} />
 			case 'fcs':
 			case 'trainers':
 			case 'countries':
@@ -122,8 +133,8 @@ AdminEdit.propTypes = {
 	lines:                   React.PropTypes.array,
 	fetching:                React.PropTypes.bool,
 	fetching2:               React.PropTypes.bool,
-	error:                   React.PropTypes.string,
-	error2:                  React.PropTypes.string,
+	error:                   React.PropTypes.any,
+	error2:                  React.PropTypes.any,
 	fetch_record:            React.PropTypes.func,
 	update_record:           React.PropTypes.func,
 	create_record:           React.PropTypes.func,

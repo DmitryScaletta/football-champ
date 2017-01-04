@@ -394,7 +394,7 @@ AdminTable.propTypes = {
 	affected:             React.PropTypes.number,
 	fetching:             React.PropTypes.bool,
 	last_action:          React.PropTypes.oneOf(['', 'create', 'update', 'delete']),
-	error:                React.PropTypes.string,
+	error:                React.PropTypes.any,
 	fetch_table:          React.PropTypes.func,
 	delete_record:        React.PropTypes.func,
 	clear_affected_data:  React.PropTypes.func,

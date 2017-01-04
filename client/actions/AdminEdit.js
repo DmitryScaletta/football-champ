@@ -195,31 +195,31 @@ export function fetch_additional_tables(table) {
 
 		switch (table) {
 			case 'championats':
-				tables['countries']  = true
+				tables['countries']   = true
 				break
 			case 'seasons':
-				tables['champonats'] = true
+				tables['championats'] = true
 				break
 			case 'fcs':
-				tables['countries']  = true
-				tables['cities']     = true
-				tables['trainers']   = true
+				tables['countries']   = true
+				tables['cities']      = true
+				tables['trainers']    = true
 				break
 			case 'trainers':
 			case 'countries':
 			case 'lines':
 				break
 			case 'cities':
-				tables['countries']  = true
+				tables['countries']   = true
 				break
 			case 'players':
-				tables['fcs']        = true
-				tables['countries']  = true
-				tables['trainers']   = true
+				tables['fcs']         = true
+				tables['countries']   = true
+				tables['trainers']    = true
 				break
 			case 'matches':
-				tables['fcs']        = true
-				tables['seasons']    = true
+				tables['fcs']         = true
+				tables['seasons']     = true
 				break
 		}
 
