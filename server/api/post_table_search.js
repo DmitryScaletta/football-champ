@@ -106,7 +106,7 @@ module.exports = function(req, res) {
 		ci.name AS city_name
 	FROM FootballClub
 	INNER JOIN Country AS co ON FootballClub.country_id=co.id
-	FULL JOIN City AS ci ON FootballClub.city_id=ci.id`
+	INNER JOIN City AS ci ON FootballClub.city_id=ci.id`
 	
 	const SQL_SEARCH_PLAYER =
 	`SELECT ${limit_sql}

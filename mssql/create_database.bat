@@ -10,4 +10,7 @@ sqlcmd -i "./data.sqlite3.sql"
 sqlcmd -i "./procedure_get_completed_matches.sql"
 sqlcmd -i "./procedure_get_football_clubs.sql"
 
+@echo # Create Triggers
+sqlcmd -i "./trigger_delete_matches.sql"
+
 @echo Done!
