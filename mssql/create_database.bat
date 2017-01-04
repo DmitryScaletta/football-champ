@@ -12,5 +12,6 @@ sqlcmd -i "./procedure_get_football_clubs.sql"
 
 @echo # Create Triggers
 sqlcmd -i "./trigger_delete_matches.sql"
+sqlcmd -i "./trigger_delete_league.sql"
 
 @echo Done!

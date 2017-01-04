@@ -21,7 +21,7 @@ module.exports = [
 		]
 	},
 	{
-		name: 'SeasonFootbalClub',
+		name: 'SeasonFootballClub',
 		alias: 'seasons_fcs',
 		url: 'season-fc',
 		fields: [

@@ -67,7 +67,7 @@ module.exports = function(req, res) {
 		s.year_end
 	FROM Championat
 	INNER JOIN Country AS co ON Championat.country_id=co.id
-	INNER JOIN Season AS s ON Championat.id=s.championat_id`
+	FULL  JOIN Season AS s ON Championat.id=s.championat_id`
 	
 	const SQL_SEARCH_SEASON =
 	`SELECT
