@@ -185,12 +185,12 @@ export function fetch_additional_tables(table) {
 
 		let tables = {
 			championats: false,
-			seasons: false,
-			fcs: false,
-			trainers: false,
-			countries: false,
-			cities: false,
-			lines: false,
+			seasons:     false,
+			fcs:         false,
+			trainers:    false,
+			countries:   false,
+			cities:      false,
+			lines:       false,
 		}
 
 		switch (table) {
@@ -215,7 +215,7 @@ export function fetch_additional_tables(table) {
 			case 'players':
 				tables['fcs']         = true
 				tables['countries']   = true
-				tables['trainers']    = true
+				tables['lines']       = true
 				break
 			case 'matches':
 				tables['fcs']         = true

@@ -6,8 +6,7 @@ import { connect }           from 'react-redux'
 // import RaisedButton          from 'material-ui/RaisedButton'
 // import FontIcon              from 'material-ui/FontIcon'
 import * as actions          from '../actions/AdminEdit'
-import ChampionatForm        from './forms/ChampionatForm'
-import SeasonForm            from './forms/SeasonForm'
+import AdminForm             from './AdminForm'
 
 
 class AdminEdit extends Component {
@@ -50,15 +49,31 @@ class AdminEdit extends Component {
 	}
 
 	render_form() {
-		const { params, data, countries, championats, router } = this.props
+		const { data, championats, seasons, fcs, trainers, countries, cities, lines, router, params } = this.props
 		const action_type = (params.action === 'new' || params.action === 'edit') ? params.action : null
 		const on_cancel = () => { router.push(`/admin/${this.props.params.table}`) }
 		const required  = (value) => value == null ? 'Обязательное поле' : undefined
 
-		switch (params.table) {
+		return <AdminForm
+			initialValues={data}
+			table_name={params.table}
+			action_type={action_type}
+			championats={championats}
+			seasons={seasons}
+			fcs={fcs}
+			trainers={trainers}
+			countries={countries}
+			cities={cities}
+			lines={lines}
+			on_cancel={on_cancel}
+			required={required}
+			onSubmit={this.on_submit} />
+
+		/*switch (params.table) {
 			case 'championats': {
 				return <ChampionatForm
 					initialValues={data}
+					table_name={params.table}
 					action_type={action_type}
 					data={data}
 					countries={countries}
@@ -76,6 +91,17 @@ class AdminEdit extends Component {
 					required={required}
 					onSubmit={this.on_submit} />
 			case 'fcs':
+				return <ChampionatForm
+					initialValues={data}
+					table_name={params.table}
+					action_type={action_type}
+					data={data}
+					countries={countries}
+					cities={cities}
+					trainers={trainers}
+					on_cancel={on_cancel}
+					required={required}
+					onSubmit={this.on_submit} />
 			case 'trainers':
 			case 'countries':
 			case 'cities':
@@ -87,7 +113,7 @@ class AdminEdit extends Component {
 
 			default:
 				return null
-		}
+		}*/
 
 	}
 
