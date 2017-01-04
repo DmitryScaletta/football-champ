@@ -18,10 +18,8 @@ module.exports = function(req, res) {
 	params     ['id'] = Number(req.params.id)
 	param_types['id'] = 'number'
 
-	// generate SQL query
 	let sql = `UPDATE ${table_schema.name} SET ${field_names.map((field) => `${field}=@${field}${db.DATA_POSTFIX}`).join(',')} WHERE id=@id`
 
-	// create object in database
 	db.query(sql, params, param_types)
 	.then((result) => {
 		res.status(200).send({ affected: result.affected })

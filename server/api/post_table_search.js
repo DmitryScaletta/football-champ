@@ -151,7 +151,6 @@ module.exports = function(req, res) {
 	FROM City
 	INNER JOIN Country AS co ON City.country_id=co.id`
 
-	// make sql
 	let sql = ''
 
 	switch (req.params.table) {
@@ -172,7 +171,6 @@ module.exports = function(req, res) {
 
 	sql += order_by_sql
 
-	// execute sql
 	db.query(sql, params, param_types)
 	.then((result) => {
 		if (result.recordsets.length === 0) {

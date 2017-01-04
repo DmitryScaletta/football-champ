@@ -15,16 +15,16 @@ module.exports = function(req, res) {
 		let league_table = {}
 		for (const fc of football_clubs) {
 			league_table[fc.id] = {
-				id: fc.id,
-				name: fc.name,
-				image: fc.image,
-				games_count: 0,
-				games_won: 0,
-				games_draw: 0,
-				games_lost: 0,
-				goals_scored: 0,
+				id:            fc.id,
+				name:          fc.name,
+				image:         fc.image,
+				games_count:   0,
+				games_won:     0,
+				games_draw:    0,
+				games_lost:    0,
+				goals_scored:  0,
 				goals_against: 0,
-				points: 0
+				points:        0
 			}
 		}
 

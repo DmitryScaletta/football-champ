@@ -25,12 +25,10 @@ module.exports = function(req, res) {
 		}
 	}
 
-	// generate SQL query
 	let sql = `UPDATE ${table_schema.name} SET ${field_names.map((field_name) => `${field_name}=@${field_name}${db.DATA_POSTFIX}`).join(',')}`
 
 	if (where_array.length > 0) sql += ` WHERE ${where_array.join(' AND ')}`
 
-	// create object in database
 	db.query(sql, params, param_types)
 	.then((result) => {
 		res.status(200).send({ affected: result.affected })
