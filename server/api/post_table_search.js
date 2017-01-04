@@ -138,8 +138,8 @@ module.exports = function(req, res) {
 		Match.match_date,
 		Match.is_over
 	FROM Match
-	INNER JOIN FootballClub AS home_fc ON Match.home_fc_id=home_fc.id
-	INNER JOIN FootballClub AS away_fc ON Match.away_fc_id=away_fc.id`
+	FULL JOIN FootballClub AS home_fc ON Match.home_fc_id=home_fc.id
+	FULL JOIN FootballClub AS away_fc ON Match.away_fc_id=away_fc.id`
 
 	const SQL_SEARCH_CITY  = 
 	`SELECT ${limit_sql}

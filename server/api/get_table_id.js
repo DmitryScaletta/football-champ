@@ -83,8 +83,8 @@ module.exports = function(req, res) {
 	INNER JOIN Season AS s ON m.season_id=s.id
 	INNER JOIN Championat AS ch ON s.championat_id=ch.id
 	FULL  JOIN Country AS co ON ch.country_id=co.id
-	INNER JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
-	INNER JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
+	FULL  JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
+	FULL  JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
 	WHERE m.id=@id`
 
 	let   sql          = ''

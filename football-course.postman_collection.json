@@ -693,7 +693,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"filter\": {\n\t\t\"championat_id\": 1,\n\t\t\"year_begin\": 2016\n\t}\n}"
+							"raw": ""
 						},
 						"description": ""
 					},
@@ -713,7 +713,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"filter\": {\n\t\t\"season_id\": 2\n\t}\n}"
+							"raw": ""
 						},
 						"description": ""
 					},
