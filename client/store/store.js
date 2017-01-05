@@ -47,6 +47,13 @@ const initial_state = {
 		fetching:     false,
 		error:        null,
 	},
+	search: {
+		text:         '',
+		fcs:          [],
+		players:      [],
+		fetching:     false,
+		error:        null,
+	},
 	admin: {
 		data:         [],
 		current_fc:   0,

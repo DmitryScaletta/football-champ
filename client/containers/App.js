@@ -16,6 +16,7 @@ import PlayerList           from './PlayerList'
 import Player               from './Player'
 import MatchList            from './MatchList'
 import Match                from './Match'
+import Search               from './Search'
 import Admin                from './Admin'
 import AdminTable           from './AdminTable'
 import AdminEdit            from './AdminEdit'
@@ -36,6 +37,7 @@ export default class App extends Component {
 						<Route path='player/:id' component={Player} />
 						<Route path='matches' component={MatchList} />
 						<Route path='match/:id' component={Match} />
+						<Route path='search' component={Search} />
 					</Route>
 					<Route path='/admin' component={Admin}>
 						<Route path=':table' component={AdminTable} />
