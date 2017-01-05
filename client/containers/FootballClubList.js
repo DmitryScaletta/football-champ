@@ -52,7 +52,7 @@ class FootballClubList extends Component {
 		return (
 			<div>
 				<div className="row">
-					<h2>Команды</h2>
+					<h3>Команды</h3>
 					<ul className="nav nav-pills">
 						<li className="nav-item">
 							<a href="#" className={(filter === 0) ? 'nav-link active' : 'nav-link'} onClick={(e) => {

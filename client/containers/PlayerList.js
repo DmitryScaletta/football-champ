@@ -37,7 +37,7 @@ class PlayerList extends Component {
 			<div>
 				<div className="row">
 					<div className="col-lg-6">
-						<h2>Игроки</h2>
+						<h3>Игроки</h3>
 						<div className="form-group">
 							<label htmlFor="select-fc">Выберите команду</label>
 							<select value={this.state.value} className="form-control" id="select-fc" onChange={this.handle_change}>
