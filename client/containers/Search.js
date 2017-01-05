@@ -1,37 +1,14 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'
 import { Link }             from 'react-router'
-import { Field, reduxForm } from 'redux-form'
 import * as actions         from '../actions/Search'
 import ErrorMessage         from '../components/ErrorMessage'
 import Loading              from '../components/Loading'
 import FootballClubLink     from '../components/FootballClubLink'
+import SearchForm           from '../components/SearchForm'
 
-
-class SearchForm extends Component {
-	render() {
-		const { handleSubmit } = this.props
-		return (
-			<form className="form-inline" onSubmit={handleSubmit}>
-				<Field className="form-control" name="q" component="input" type="text" placeholder="Поиск" />
-				{' '}
-				<button className="btn btn-outline-success" type="submit">Найти</button>
-			</form>
-		)
-	}
-}
-
-SearchForm = reduxForm({
-	form: 'search'
-})(SearchForm)
 
 class MatchList extends Component {
-
-	/*constructor(props) {
-		super(props)
-
-		this.state = { q: '' }
-	}*/
 
 	render() {
 		const { error, fetching, fcs, players, text, fetch_search, set_search_text } = this.props
