@@ -20,7 +20,7 @@ AS
 		fc.id,
 		fc.name,
 		fc.image
-	FROM SeasonFootbalClub AS sfc
+	FROM SeasonFootballClub AS sfc
 	INNER JOIN FootballClub AS fc ON sfc.fc_id=fc.id
 	WHERE season_id=@season_id
 GO
