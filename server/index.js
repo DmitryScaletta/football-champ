@@ -14,7 +14,7 @@ const delete_table      = require('./api/delete_table.js')
 const delete_table_id   = require('./api/delete_table_id.js')
 
 const app = express()
-db.connect()
+db.connect().then().catch((err) => console.log(err.message))
 
 app.disable('x-powered-by')
 app.use(express.static(path.join(__dirname, './static')))
