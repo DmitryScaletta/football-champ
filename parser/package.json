@@ -1,0 +1,19 @@
+{
+  "name": "football-champ-parser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "DmitryScaletta",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "co": "^4.6.0",
+    "mkdir": "0.0.2",
+    "sharp": "^0.16.2",
+    "sqlite3": "^3.1.8"
+  }
+}
