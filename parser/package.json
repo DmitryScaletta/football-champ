@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "author": "DmitryScaletta",
@@ -13,7 +12,8 @@
     "cheerio": "^0.22.0",
     "co": "^4.6.0",
     "mkdir": "0.0.2",
-    "sharp": "^0.16.2",
+    "request": "^2.79.0",
+    "sharp": "^0.17.1",
     "sqlite3": "^3.1.8"
   }
 }

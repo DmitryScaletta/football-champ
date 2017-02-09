@@ -1,11 +1,11 @@
-const fs       = require('fs');
-const path     = require('path');
-const request  = require('request');
-const cheerio  = require('cheerio');
-const co       = require('co');
-const sqlite3  = require('sqlite3').verbose();
-const sharp    = require('sharp');
-const mkdirp   = require('mkdirp');
+const fs      = require('fs');
+const path    = require('path');
+const request = require('request');
+const cheerio = require('cheerio');
+const co      = require('co');
+const sqlite3 = require('sqlite3').verbose();
+const sharp   = require('sharp');
+const mkdirp  = require('mkdirp');
 
 
 
@@ -68,8 +68,8 @@ data.lines = [
 	{ id: 4, name: 'Нападающий',   short_name: 'НАП' }
 ];
 
-const DATABASE_FILENAME  = '../mssql/data.sqlite3';
-const JSON_FILENAME      = '../mssql/data.json';
+const DATABASE_FILENAME  = '../server/data.sqlite3';
+const JSON_FILENAME      = '../server/data.json';
 
 const FLAGS_SVG_FOLDER   = '../server/static/img/flags_svg/';
 const FLAGS_PNG_FOLDER   = '../server/static/img/flags/';
@@ -89,30 +89,13 @@ co(function* () {
 	yield* parse_championats(data, championats, LOGOS_ORIG_FOLDER, LOGOS_SMALL_FOLDER);
 	console.timeEnd('Parse championats');
 
-	// fs.writeFileSync('../server/data_raw.json', JSON.stringify(data));
-
 	console.time('Transform data');
 	transform_data(data);
 	console.timeEnd('Transform data');
 
-	fs.writeFileSync(JSON_FILENAME, JSON.stringify(data));
+	// fs.writeFileSync(JSON_FILENAME, JSON.stringify(data));
 
 	add_to_database(data, DATABASE_FILENAME);
-
-
-
-
-	// const arr = [];
-	// arr.push({ url: 'http://static1.liveresult.ru/files/sport/teams/football/arsenal.png', name: 'image.png' });
-
-	// yield* download_images(arr, './img/');
-
-	// yield* parse_football_club(data, 'http://www.liveresult.ru/football/teams/%D0%90%D1%80%D1%81%D0%B5%D0%BD%D0%B0%D0%BB/');
-	// yield* parse_player(data, 'http://www.liveresult.ru/football/players/%D0%9C%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%B0_%D0%9A%D1%83%D0%BA%D0%BE/', 777);
-	// yield* parse_player(data, 'http://www.liveresult.ru/football/players/%D0%A4%D0%B0%D0%BB%D1%8C%D0%BA%D0%B0%D0%BE_%D0%A0%D0%B0%D0%B4%D0%B0%D0%BC%D0%B5%D0%BB%D1%8C/', 777);
-
-	// console.log(data);
-	
 
 }).catch((e) => {
 	console.log(e);
@@ -752,14 +735,14 @@ function add_to_database(data,  database_filename) {
 	const CREATE_TABLE_CHAMPIONAT = 
 `CREATE TABLE Championat
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(50)	NOT NULL,	-- название
 	country_id		INT				NOT NULL	-- id страны
 );`;
 	const CREATE_TABLE_SEASON = 
 `CREATE TABLE Season
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	championat_id	INT				NOT NULL,	-- id чемпионата
 	year_begin		INT				NOT NULL,	-- начальный год
 	year_end		INT				NOT NULL	-- конечный год
@@ -767,14 +750,14 @@ function add_to_database(data,  database_filename) {
 	const CREATE_TABLE_SEASON_FC = 
 `CREATE TABLE SeasonFootballClub
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	season_id		INT				NOT NULL,	-- id сезона
 	fc_id			INT				NOT NULL	-- id клуба
 );`;
 	const CREATE_TABLE_FC = 
 `CREATE TABLE FootballClub
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(100)	NOT NULL,	-- название
 	name_eng		NVARCHAR(50),				-- название на английском
 	image			NVARCHAR(260),				-- эмблема клуба
@@ -791,7 +774,7 @@ function add_to_database(data,  database_filename) {
 	const CREATE_TABLE_PLAYER = 
 `CREATE TABLE Player
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(100)	NOT NULL,	-- имя на русском
 	surname			NVARCHAR(100)	NOT NULL,	-- фамилия на русском
 	name_eng		NVARCHAR(50),				-- имя на английском
@@ -807,35 +790,35 @@ function add_to_database(data,  database_filename) {
 	const CREATE_TABLE_TRAINER = 
 `CREATE TABLE Trainer
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(100)	NOT NULL,	-- имя
 	surname			NVARCHAR(100)	NOT NULL	-- фамилия
 );`;
 	const CREATE_TABLE_COUNTRY = 
 `CREATE TABLE Country
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(100)	NOT NULL,	-- название
 	short_name		NVARCHAR(3)		NOT NULL	-- сокращенное название
 );`;
 	const CREATE_TABLE_CITY = 
 `CREATE TABLE City
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(200)	NOT NULL,	-- название
 	country_id		INT				NOT NULL	-- id страны
 );`;
 	const CREATE_TABLE_LINE = 
 `CREATE TABLE Line
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	name			NVARCHAR(50)	NOT NULL,	-- название
 	short_name		NVARCHAR(10)	NOT NULL	-- сокращенное название
 );`;
 	const CREATE_TABLE_MATCH = 
 `CREATE TABLE Match
 (
-	id				INT IDENTITY	PRIMARY KEY,
+	id				INTEGER PRIMARY KEY AUTOINCREMENT,
 	season_id		INT,						-- id сезона
 	home_fc_id		INT				NOT NULL,	-- команда дома
 	away_fc_id		INT				NOT NULL,	-- команда в гостях
