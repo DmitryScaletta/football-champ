@@ -1,52 +1,65 @@
-const path         = require('path')
-const webpack      = require('webpack')
+const {
+	addPlugins,
+	createConfig,
+	defineConstants,
+	entryPoint,
+	env,
+	performance,
+	setOutput,
+	webpack,
+}               = require('@webpack-blocks/webpack2')
+const babel     = require('@webpack-blocks/babel6')
+const devServer = require('@webpack-blocks/dev-server2')
 
-const isProduction = process.env.NODE_ENV === 'production'
-let   plugins      = []
-let   entry        = []
+// const basePlugins = []
 
-plugins.push(new webpack.NoErrorsPlugin())
-plugins.push(new webpack.DefinePlugin({
-	'process.env': {
-		NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-	}
-}))
-
-if (isProduction) {
-	// Search for equal or similar files and deduplicate them in the output
-	plugins.push(new webpack.optimize.DedupePlugin())
-	// Assign the module and chunk ids by occurrence count.
-	plugins.push(new webpack.optimize.OccurenceOrderPlugin())
-	// Minimize all JavaScript output of chunks
-	plugins.push(new webpack.optimize.UglifyJsPlugin({
+const productionPlugins = [
+	new webpack.LoaderOptionsPlugin({
+		minimize: true,
+		debug: false
+	}),
+	new webpack.optimize.UglifyJsPlugin({
 		compress: {
 			warnings: false
-		}
-	}))
-} else {
-	plugins.push(new webpack.HotModuleReplacementPlugin())
+		},
+		output: {
+			comments: false
+		},
+		screwIe8: true,
+		sourceMap: false
+	}),
+]
 
-	entry.push('react-hot-loader/patch')
-	entry.push('webpack-hot-middleware/client')
-}
+console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
 
-// entry.push('babel-polyfill')
-entry.push('./client/index.js')
-
-
-module.exports = {
-	devtool: null, // isProduction ? null : 'source-map',
-	entry,
-	plugins,
-	output: {
-		path:       path.join(__dirname, 'server', 'static'),
-		filename:   'bundle.js'
-	},
-	module: {
-		loaders: [
-			{	test:    /\.jsx?$/,  
-				loader:  'babel', 
-				include: path.join(__dirname, 'client') },
-		]
-	}
-}
+module.exports = createConfig([
+	setOutput('./server/static/bundle.js'),
+	babel(),
+	// addPlugins(basePlugins),
+	defineConstants({
+		'process.env.NODE_ENV': process.env.NODE_ENV || 'development'
+	}),
+	env('development', [
+		entryPoint([
+			'react-hot-loader/patch',
+			// 'webpack-hot-middleware/client',
+			'./client/index.js',
+		]),
+		devServer.proxy({
+			'/api/*': { target: 'http://localhost:3000' }
+		}),
+		() => ({ devServer: {
+			contentBase: ['server/static']
+		}}),
+		performance({
+			// Increase performance budget thresholds for development mode
+			maxAssetSize: 1500000,
+			maxEntrypointSize: 1500000
+		}),
+		addPlugins([new webpack.HotModuleReplacementPlugin()])
+	]),
+	env('production', [
+		entryPoint('./client/index.js'),
+		addPlugins(productionPlugins)
+	])
+])
