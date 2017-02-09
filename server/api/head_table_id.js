@@ -5,16 +5,14 @@ module.exports = function(req, res) {
 
 	const sql = `SELECT id FROM ${table_schema.name}`
 
-	db.query(sql)
-	.then((result) => {
-		if (!result.recordsets) {
-			res.sendStatus(204)
-		} else {
-			res.sendStatus(200)
-		}
-	})
-	.catch((err) => {
-		console.log('Database Error:', err.message)
-		res.sendStatus(500)
-	})
+	db.query_select(sql).then(
+		(result) => {
+			if (!result.recordsets) {
+				res.sendStatus(204)
+			} else {
+				res.sendStatus(200)
+			}
+		},
+		(err) => res.status(500).send(err)
+	)
 }

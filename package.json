@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon ./server/",
     "build": "set NODE_ENV=production&& webpack -p",
-    "dev:client": "node dev-client.js",
-    "dev:server": "nodemon ./server/ -V -w ./server/index.js -w ./server/api -w ./server/db"
+    "dev": "node dev-client.js"
   },
   "author": "DmitryScaletta",
   "license": "MIT",

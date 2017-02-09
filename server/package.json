@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon . -V -w index.js -w api -w db",
+    "dev": "nodemon . -V -w index.js -w api -w db",
     "start": "nodemon ."
   },
   "author": "DmitryScaletta",
@@ -13,6 +13,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mssql": "^3.3.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "sqlite3": "^3.1.8"
   }
 }

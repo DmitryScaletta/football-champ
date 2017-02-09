@@ -1,6 +1,7 @@
 module.exports = [
 	{
 		name: 'Championat',
+		short_name: 'ch',
 		alias: 'championats',
 		url: 'championat',
 		fields: [
@@ -11,6 +12,7 @@ module.exports = [
 	},
 	{
 		name: 'Season',
+		short_name: 's',
 		alias: 'seasons',
 		url: 'season',
 		fields: [
@@ -22,6 +24,7 @@ module.exports = [
 	},
 	{
 		name: 'SeasonFootballClub',
+		short_name: 'sfc',
 		alias: 'seasons_fcs',
 		url: 'season-fc',
 		fields: [
@@ -32,6 +35,7 @@ module.exports = [
 	},
 	{
 		name: 'FootballClub',
+		short_name: 'fc',
 		alias: 'football_clubs',
 		url: 'fc',
 		fields: [
@@ -52,6 +56,7 @@ module.exports = [
 	},
 	{
 		name: 'Player',
+		short_name: 'p',
 		alias: 'players',
 		url: 'player',
 		fields: [
@@ -71,6 +76,7 @@ module.exports = [
 	},
 	{
 		name: 'Trainer',
+		short_name: 't',
 		alias: 'trainers',
 		url: 'trainer',
 		fields: [
@@ -81,6 +87,7 @@ module.exports = [
 	},
 	{
 		name: 'Country',
+		short_name: 'co',
 		alias: 'countries',
 		url: 'country',
 		fields: [
@@ -91,6 +98,7 @@ module.exports = [
 	},
 	{
 		name: 'City',
+		short_name: 'ci',
 		alias: 'cities',
 		url: 'city',
 		fields: [
@@ -101,6 +109,7 @@ module.exports = [
 	},
 	{
 		name: 'Line',
+		short_name: 'l',
 		alias: 'lines',
 		url: 'line',
 		fields: [
@@ -111,6 +120,7 @@ module.exports = [
 	},
 	{
 		name: 'Match',
+		short_name: 'm',
 		alias: 'matches',
 		url: 'match',
 		fields: [

@@ -1,153 +1,82 @@
-// const co  = require('co')
-const sql       = require('mssql')
-const db_config = require('../db_config.js')
-const schema    = require('./schema.js')
-
-let connection = false
+const sqlite3 = require('sqlite3').verbose()
+const db      = new sqlite3.Database('./data.sqlite3')
+const schema  = require('./schema.js')
 
 
+/*query_select('SELECT * FROM Line WHERE id=?', [1])
+.then((result) => {
+	console.log(result)
+})
+.catch((err) => {
+	console.log(err)
+})*/
 
-function connect() {
 
-	return new Promise((resolve, reject) => {		
-
-		if (!connection || !connection.connected) {
-			
-			console.time('Connect to database')
-			connection = sql.connect(db_config, (err) => {
-				if (err) {
-					reject(err)
-				} else {
-					console.timeEnd('Connect to database')
-				}
-
-				resolve()
-			})
-		} else {
-			resolve()
-		}
-	})
-}
-
-// set param types for request or stmt object
-function set_param_types_for_request(request, param_types, params = false) {
-
-	if (typeof param_types !== 'object') return true
-
-	const keys = Object.keys(param_types)
-	for (let key of keys) {
-
-		const regex = /^NVARCHAR\((\d+)\)$/
-		
-		let type = false
-		let m
-		
-		if (param_types[key] === 'INT')                  { type = sql.Int      } else
-		if (param_types[key] === 'BIGINT')               { type = sql.BigInt   } else
-		if (param_types[key] === 'BIT')                  { type = sql.Bit      } else
-		if (param_types[key] === 'string')               { type = sql.NVarChar } else
-		if (param_types[key] === 'number')               { type = sql.BigInt   } else
-		if ((m = regex.exec(param_types[key])) !== null) { type = sql.NVarChar(Number(m[1])) }
-
-		if (!type) return false
-
-		if (params) {
-			// for stored procedure
-			request.input(key, type, params[key])
-		} else {
-			// for prepared statement
-			request.input(key, type)
-		}
-	}
-	
-	return true
-}
 
 /*
-	Execute SQL query and returns the result
+	Execute SELECT query and returns the result
 	\param[in] string sql_query   SQL query
-	\param[in] object params      parameters list
-	\param[in] object param_types parameter types list
-	\returns   object { recordsets, affected }
+	\param[in] array  params      parameters list
+	\returns   array              recordsets
 */
-function query(sql_query, params, param_types) {
+function query_select(sql_query, params = []) {
 
 	return new Promise((resolve, reject) => {
 
-		connect()
-		.then(() => {
-			const stmt = new sql.PreparedStatement(connection)
-
-			// set parameter types
-			if (!set_param_types_for_request(stmt, param_types)) {
-				reject({ message: 'Field type is not specified' })
+		db.all(sql_query, params, (err, recordsets) => {
+			if (err) {			
+				reject(err)
 				return
 			}
-
-			// prepare and execute statement
-			stmt.prepare(sql_query, (err) => {
-				if (err) {
-					reject(err)
-					return
-				}
-
-				stmt.execute(params, (err, recordsets, affected) => {
-					if (err) {
-						reject(err)
-						return
-					}
-
-					resolve({
-						recordsets,
-						affected
-					})
-
-					stmt.unprepare((err) => {
-						if (err) reject(err)
-					})
-				})
-				
-			})
-
+			resolve(recordsets)
 		})
-		.catch((err) => {
-			reject(err)
-		})
-
 	})
 }
 
 /*
-	Execute stored procedure and returns the result
-	\param[in] string procedure_name name of stored procedure
-	\param[in] object params         parameters list
-	\param[in] object param_types    parameter types list
-	\returns   object recordset
+	Execute INSERT, UPDATE or DELETE query
+	\param[in] string sql_query   SQL query
+	\param[in] array  params      parameters list
+	\returns   number             number of affected rows
 */
-function stored_procedure(procedure_name, params, param_types) {
+function query(sql_query, params = []) {
 
 	return new Promise((resolve, reject) => {
-		connect()
-		.then(() => {
-			const request = new sql.Request()
 
-			if (!set_param_types_for_request(request, param_types, params)) {
-				reject({ message: 'Field type is not specified' })
+		db.run(sql_query, params, function(err) { // don't use arrow function here because this.lastID and this.changes doesn't work
+			if (err) {
+				reject(err)
 				return
 			}
-
-			request.execute(procedure_name)
-			.then((recordsets) => {
-				resolve(recordsets)
-			})
-			.catch((err) => {
-				reject(err)
-			})
-		}).catch((err) => {
-			reject(err)
+			let result = 0
+			if (this.lastID !== undefined) {
+				// the value of the last inserted row ID (only INSERT)
+				result = 1
+			} else 
+			if (this.changes !== undefined) {
+				// number of rows affected by this query (only UPDATE or DELETE)
+				result = this.changes
+			}
+			resolve(result)
 		})
 	})
+}
 
+
+
+function get_table_schema(db_schema, table_name) {
+	for (let table of db_schema) {
+		if (table.url === table_name) return table
+	}
+	return false
+}
+
+function get_field_names(table_schema) {
+	let field_names = []
+	for (let field of table_schema.fields) {
+		field_names.push(field.name)
+	}
+	return field_names
 }
 
 function is_nvarchar_type(type) {
@@ -170,22 +99,7 @@ function is_bigint_type(type) {
 	return type === 'BIGINT'
 }
 
-function get_table_schema(db_schema, table_name) {
-	for (let table of db_schema) {
-		if (table.url === table_name) return table
-	}
-	return false
-}
-
-function get_field_names(table_schema) {
-	let field_names = []
-	for (let field of table_schema.fields) {
-		field_names.push(field.name)
-	}
-	return field_names
-}
-
-function filter_to_where_array(filter, table_schema, params, param_types) {
+function filter_to_where_array(filter, table_schema, params, use_short_name = false) {
 
 	function get_field_from_table_schema(table_schema, field_name) {
 		for (let field of table_schema.fields) {
@@ -194,7 +108,7 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 		return false
 	}
 
-	if (typeof filter !== 'object') throw { status: 400, message: 'Filter must be an object' }
+	if (typeof filter !== 'object' || filter === null) throw { status: 400, message: 'Filter must be an object' }
 
 	let where_array = []
 
@@ -219,6 +133,8 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 		let condition     = filter[filter_field_name]
 		let sql_condition = ''
 		
+		const table_short_name = (use_short_name) ? table_schema.short_name + '.' : ''
+
 		if (condition && typeof condition === 'object') {
 
 			switch (condition.type) {
@@ -237,9 +153,8 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 						message: 'Value for LIKE operator must be a string'
 					}
 
-					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type} @${table_field.name}`
-					params     [table_field.name] = condition.value
-					param_types[table_field.name] = 'string'
+					sql_condition = `${table_short_name}${table_field.name} ${condition.type} ?`
+					params.push(condition.value)
 					break
 				}
 
@@ -254,9 +169,8 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 						message: 'Type of field and type of filter value must be the same'
 					}
 
-					sql_condition = `${table_schema.name}.${table_field.name}${condition.type}@${table_field.name}`
-					params     [table_field.name] = condition.value
-					param_types[table_field.name] = table_field_type
+					sql_condition = `${table_short_name}${table_field.name}${condition.type}?`
+					params.push(condition.value)
 					break
 				}
 
@@ -273,11 +187,9 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 						message: 'Type of field and type of filter value must be the same'
 					}
 
-					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type} @${table_field.name}1 AND @${table_field.name}2`
-					params     [table_field.name + '1'] = condition.value[0]
-					params     [table_field.name + '2'] = condition.value[1]
-					param_types[table_field.name + '1'] = table_field_type
-					param_types[table_field.name + '2'] = table_field_type
+					sql_condition = `${table_short_name}${table_field.name} ${condition.type} ? AND ?`
+					params.push(condition.value[0])
+					params.push(condition.value[1])
 					break
 				}
 
@@ -294,24 +206,17 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 							status: 400,
 							message: 'Type of field and type of filter value must be the same'
 						}
+						params.push(value)
 					}
 
-					let i = 0
-					const new_values = condition.value.map((value) => {
-						i++
-						const param_name = table_field.name + String(i)
-						params     [param_name] = value
-						param_types[param_name] = table_field_type
-						return `@${param_name}`
-					})
-					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type} (${new_values.join(',')})`
+					sql_condition = `${table_short_name}${table_field.name} ${condition.type} (${condition.value.map(() => '?').join(',')})`
 					break
 				}
 
 				// any field
 				case 'IS NULL':
 				case 'IS NOT NULL': {
-					sql_condition = `${table_schema.name}.${table_field.name} ${condition.type}`
+					sql_condition = `${table_short_name}${table_field.name} ${condition.type}`
 					break
 				}
 
@@ -325,9 +230,8 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 				message: 'Type of field and type of filter value must be the same'
 			}
 
-			sql_condition = `${table_field.name}=@${table_field.name}`
-			params     [table_field.name] = condition
-			param_types[table_field.name] = table_field_type
+			sql_condition = `${table_short_name}${table_field.name}=?`
+			params.push(condition)
 		}
 
 		where_array.push(sql_condition)
@@ -336,7 +240,7 @@ function filter_to_where_array(filter, table_schema, params, param_types) {
 	return where_array
 }
 
-function add_all_params(table_schema, obj, params, param_types) {
+function add_all_params(table_schema, obj, params) {
 
 	function validate_field_type(value, type) {
 
@@ -374,30 +278,16 @@ function add_all_params(table_schema, obj, params, param_types) {
 			}
 		}
 
-		params     [field.name + DATA_POSTFIX] = obj[field.name] === undefined ? default_value : obj[field.name]
-		param_types[field.name + DATA_POSTFIX] = field.type
+		params.push((obj[field.name] === undefined) ? default_value : obj[field.name])
 	}
-
 }
 
-const DATA_POSTFIX = '_d'
 
-
-module.exports.connect               = connect
 module.exports.query                 = query
-module.exports.stored_procedure      = stored_procedure
+module.exports.query_select          = query_select
 module.exports.schema                = schema
-
-module.exports.is_nvarchar_type      = is_nvarchar_type
-module.exports.is_number_type        = is_number_type
-module.exports.is_bit_type           = is_bit_type
-module.exports.is_int_type           = is_int_type
-module.exports.is_nvarchar_type      = is_nvarchar_type
-module.exports.is_bigint_type        = is_bigint_type
 
 module.exports.get_table_schema      = get_table_schema
 module.exports.get_field_names       = get_field_names
 module.exports.filter_to_where_array = filter_to_where_array
 module.exports.add_all_params        = add_all_params
-
-module.exports.DATA_POSTFIX          = DATA_POSTFIX

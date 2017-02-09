@@ -26,10 +26,10 @@ module.exports = function(req, res) {
 		fc.previous_names
 	FROM FootballClub AS fc
 	INNER JOIN Country AS co ON fc.country_id=co.id
-	FULL  JOIN City    AS ci ON fc.city_id=ci.id
-	FULL  JOIN Trainer AS t  ON fc.trainer_id=t.id
+	INNER JOIN City    AS ci ON fc.city_id=ci.id
+	INNER JOIN Trainer AS t  ON fc.trainer_id=t.id
 	
-	WHERE fc.id=@id`
+	WHERE fc.id=?`
 
 	const SQL_SELECT_PLAYER =
 	`SELECT
@@ -52,10 +52,10 @@ module.exports = function(req, res) {
 		p.weight,
 		p.growth
 	FROM Player AS p
-	FULL JOIN FootballClub AS fc ON p.fc_id=fc.id
-	INNER JOIN Line AS l ON p.line_id=l.id
-	FULL JOIN Country AS co ON p.country_id=co.id
-	WHERE p.id=@id`
+	INNER JOIN FootballClub AS fc ON p.fc_id=fc.id
+	INNER JOIN Line         AS l  ON p.line_id=l.id
+	INNER JOIN Country      AS co ON p.country_id=co.id
+	WHERE p.id=?`
 
 	const SQL_SELECT_MATCH =
 	`SELECT
@@ -80,16 +80,15 @@ module.exports = function(req, res) {
 		m.match_date,
 		m.is_over
 	FROM Match AS m
-	INNER JOIN Season AS s ON m.season_id=s.id
-	INNER JOIN Championat AS ch ON s.championat_id=ch.id
-	FULL  JOIN Country AS co ON ch.country_id=co.id
-	FULL  JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
-	FULL  JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
-	WHERE m.id=@id`
+	INNER JOIN Season       AS s       ON m.season_id=s.id
+	INNER JOIN Championat   AS ch      ON s.championat_id=ch.id
+	INNER JOIN Country      AS co      ON ch.country_id=co.id
+	INNER JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
+	INNER JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
+	WHERE m.id=?`
 
-	let   sql          = ''
-	const params       = { id: req.params.id }
-	const param_types  = { id: 'number' }
+	let   sql    = ''
+	const params = [ Number(req.params.id) ]
 
 	switch (req.params.table) {
 		case 'fc':     { sql = SQL_SELECT_FC     } break
@@ -97,19 +96,11 @@ module.exports = function(req, res) {
 		case 'match':  { sql = SQL_SELECT_MATCH  } break
 
 		default:
-			sql = `SELECT ${field_names.join(',')} FROM ${table_schema.name} WHERE id=@id`
+			sql = `SELECT ${field_names.join(',')} FROM ${table_schema.name} WHERE id=?`
 	}
 
-	db.query(sql, params, param_types)
-	.then((result) => {
-		if (!result.recordsets || !result.recordsets[0]) {
-			res.send({})
-		} else {
-			res.send(result.recordsets[0])
-		}
-	})
-	.catch((err) => {
-		console.log('Database Error:', err.message)
-		res.sendStatus(500)
-	})
+	db.query_select(sql, params).then(
+		(result) => res.status(200).send((!result || !result[0]) ? {} : result[0]),
+		(err)    => res.status(500).send(err)
+	)
 }

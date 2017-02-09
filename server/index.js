@@ -2,7 +2,7 @@ const express           = require('express')
 const path              = require('path')
 const body_parser       = require('body-parser')
 
-const db                = require('./db/database.js')
+const db_schema         = require('./db/schema.js')
 const league_table      = require('./api/league_table.js')
 const post_table_search = require('./api/post_table_search.js')
 const get_table_id      = require('./api/get_table_id.js')
@@ -14,7 +14,7 @@ const delete_table      = require('./api/delete_table.js')
 const delete_table_id   = require('./api/delete_table_id.js')
 
 const app = express()
-db.connect().then().catch((err) => console.log(err.message))
+
 
 app.disable('x-powered-by')
 app.use(express.static(path.join(__dirname, './static')))
@@ -55,7 +55,7 @@ function validate_table_name_middleware(req, res, next) {
 		return false
 	}
 
-	if (is_valid_table_name(db.schema, req.params.table)) {
+	if (is_valid_table_name(db_schema, req.params.table)) {
 		next()	
 	} else {
 		res.status(400).send('Invalid table name')

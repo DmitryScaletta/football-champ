@@ -1,16 +1,40 @@
 const db = require('../db/database.js')
 
 module.exports = function(req, res) {
-	const params      = { season_id: req.params.season_id }
-	const param_types = { season_id: 'number' }
+	
+	// res.send([])
+	
+	const params = [ Number(req.params.season_id) ]
+	
+	const SELECT_COMPLETED_MATCHES = 
+	`SELECT 
+		home_fc_id,
+		home_fc.name AS home_fc_name,
+		away_fc_id, 
+		away_fc.name AS away_fc_name,
+		m.score_home, 
+		m.score_away
+	FROM Match AS m 
+	INNER JOIN FootballClub AS home_fc ON m.home_fc_id=home_fc.id
+	INNER JOIN FootballClub AS away_fc ON m.away_fc_id=away_fc.id
+	WHERE season_id=? AND is_over=1`
+
+	const SELECT_FOOTBALL_CLUBS =
+	`SELECT
+		fc.id,
+		fc.name,
+		fc.image
+	FROM SeasonFootballClub AS sfc
+	INNER JOIN FootballClub AS fc ON sfc.fc_id=fc.id
+	WHERE season_id=?`
 
 	Promise.all([
-		db.stored_procedure('get_completed_matches', params, param_types),
-		db.stored_procedure('get_football_clubs',    params, param_types),
-	])
-	.then((results) => {
-		const completed_matches = results[0][0]
-		const football_clubs    = results[1][0]
+		db.query_select(SELECT_COMPLETED_MATCHES, params),
+		db.query_select(SELECT_FOOTBALL_CLUBS,    params),
+	]).then((results) => {
+
+		const completed_matches = results[0]
+		const football_clubs    = results[1]
 
 		let league_table = {}
 		for (const fc of football_clubs) {
@@ -78,7 +102,6 @@ module.exports = function(req, res) {
 		})
 
 		res.send(league_table)
-	}).catch((err) => {
-		res.status(500).send(err.message)
-	})
+	},
+	(err) => res.status(500).send(err.message))
 }
