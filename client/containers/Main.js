@@ -9,7 +9,7 @@ export default class Main extends Component {
 			<div>
 				<nav className="navbar navbar-dark bg-primary">
 					<div className="container">
-						<Link className="navbar-brand mb-0" to=''>FOOTBALL</Link>
+						<Link className="navbar-brand mb-0" to='/'>FOOTBALL</Link>
 						<ul className="nav navbar-nav">
 							<li className={(path.indexOf('/championat') === 0) ? 'nav-item active' : 'nav-item'}>
 								<Link className="nav-link" to='championat'>Чемпионаты</Link>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api_table_search } from '../api'
 
 export const FETCH_CHAMPIONATS_REQUEST = 'FETCH_CHAMPIONATS_REQUEST'
 export const FETCH_CHAMPIONATS_SUCCESS = 'FETCH_CHAMPIONATS_SUCCESS'
@@ -9,20 +9,16 @@ export function fetch_championats() {
 	return (dispatch) => {
 		dispatch({ type: FETCH_CHAMPIONATS_REQUEST })
 
-		axios.post('/api/championat/search')
+		api_table_search('championat')
 		.then(
-			(result) => {
-				dispatch({
-					type: FETCH_CHAMPIONATS_SUCCESS,
-					championats: result.data
-				})
-			},
-			(error) => {
-				dispatch({
-					type: FETCH_CHAMPIONATS_FAILURE,
-					error: error.response.data
-				})
-			}
+			(result) => dispatch({
+				type: FETCH_CHAMPIONATS_SUCCESS,
+				championats: result,
+			}),
+			(error) => dispatch({
+				type: FETCH_CHAMPIONATS_FAILURE,
+				error: error,
+			})
 		)
 	}
 }

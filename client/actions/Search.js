@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api_table_search } from '../api'
 
 export const FETCH_SEARCH_REQUEST = 'FETCH_SEARCH_REQUEST'
 export const FETCH_SEARCH_SUCCESS = 'FETCH_SEARCH_SUCCESS'
@@ -12,13 +12,13 @@ export function fetch_search(text) {
 		dispatch({ type: FETCH_SEARCH_REQUEST })
 
 		Promise.all([
-			axios.post('/api/fc/search', {
+			api_table_search('fc', {
 				filter: {
 					name: { type: 'LIKE', value: `%${text}%` }
 				},
 				limit: 20
 			}),
-			axios.post('/api/player/search', {
+			api_table_search('player', {
 				filter_or: {
 					name:    { type: 'LIKE', value: `%${text}%` },
 					surname: { type: 'LIKE', value: `%${text}%` },
@@ -29,12 +29,12 @@ export function fetch_search(text) {
 		.then(
 			(result) => dispatch({
 				type:    FETCH_SEARCH_SUCCESS,
-				fcs:     result[0].data,
-				players: result[1].data,
+				fcs:     result[0],
+				players: result[1],
 			}),
 			(error) => dispatch({
 				type:  FETCH_SEARCH_FAILURE,
-				error: error.response.data
+				error: error,
 			})
 		)
 	}

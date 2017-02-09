@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api_get_record } from '../api'
 
 export const FETCH_MATCH_REQUEST = 'FETCH_MATCH_REQUEST'
 export const FETCH_MATCH_SUCCESS = 'FETCH_MATCH_SUCCESS'
@@ -9,20 +9,16 @@ export function fetch_match(match_id) {
 	return (dispatch) => {
 		dispatch({ type: FETCH_MATCH_REQUEST })
 
-		axios.get(`/api/match/${match_id}`)
+		api_get_record('match', match_id)
 		.then(
-			(result) => {
-				dispatch({
-					type: FETCH_MATCH_SUCCESS,
-					data: result.data
-				})
-			},
-			(error) => {
-				dispatch({
-					type: FETCH_MATCH_FAILURE,
-					error: error.response.data
-				})
-			}
+			(result) => dispatch({
+				type: FETCH_MATCH_SUCCESS,
+				data: result,
+			}),
+			(error) => dispatch({
+				type: FETCH_MATCH_FAILURE,
+				error: error,
+			})
 		)
 	}
 }

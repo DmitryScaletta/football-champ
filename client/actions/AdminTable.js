@@ -1,4 +1,6 @@
-import axios from 'axios'
+import {
+	api_table_search,
+} from '../api'
 
 export const ADMIN_FETCH_TABLE_REQUEST   = 'ADMIN_FETCH_TABLE_REQUEST'
 export const ADMIN_FETCH_TABLE_SUCCESS   = 'ADMIN_FETCH_TABLE_SUCCESS'
@@ -64,15 +66,15 @@ export function fetch_table(table, fc_id = 0) {
 			}
 		}
 
-		axios.post(`/api/${api_table}/search`, request_data)
+		api_table_search(api_table, request_data)
 		.then(
 			(result) => dispatch({
 				type: ADMIN_FETCH_TABLE_SUCCESS,
-				data: result.data
+				data: result,
 			}),
 			(error) => dispatch({
 				type: ADMIN_FETCH_TABLE_FAILURE,
-				error: error.response.data
+				error: error,
 			})
 		)
 	}

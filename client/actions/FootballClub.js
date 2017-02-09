@@ -1,4 +1,7 @@
-import axios from 'axios'
+import { 
+	api_get_record,
+	api_table_search,
+} from '../api'
 
 export const FETCH_FC_REQUEST = 'FETCH_FC_REQUEST'
 export const FETCH_FC_SUCCESS = 'FETCH_FC_SUCCESS'
@@ -10,13 +13,13 @@ export function fetch_football_club(fc_id) {
 		dispatch({ type: FETCH_FC_REQUEST })
 
 		Promise.all([
-			axios.get(`/api/fc/${fc_id}`),
-			axios.post('/api/player/search', {
+			api_get_record('fc', fc_id),
+			api_table_search('player', {
 				filter: {
 					fc_id: Number(fc_id)
 				}
 			}),
-			axios.post('/api/match/search', {
+			api_table_search('match', {
 				filter: {
 					is_over: 0
 				},
@@ -28,7 +31,7 @@ export function fetch_football_club(fc_id) {
 				order_by: 'match_date',
 				order_type: 'ASC'
 			}),
-			axios.post('/api/match/search', {
+			api_table_search('match', {
 				filter: {
 					is_over: 1
 				},
@@ -40,20 +43,16 @@ export function fetch_football_club(fc_id) {
 				order_by: 'match_date',
 				order_type: 'DESC'
 			})
-		]).then((results) => {
-			dispatch({
-				type:         FETCH_FC_SUCCESS,
-				data:         results[0].data,
-				players:      results[1].data,
-				next_matches: results[2].data,
-				last_matches: results[3].data,
-			})
-		}).catch((error) => {
-			dispatch({
-				type: FETCH_FC_FAILURE,
-				error: error.response.data
-			})
-		})
+		]).then((results) => dispatch({
+			type:         FETCH_FC_SUCCESS,
+			data:         results[0],
+			players:      results[1],
+			next_matches: results[2],
+			last_matches: results[3],
+		})).catch((error) => dispatch({
+			type:  FETCH_FC_FAILURE,
+			error: error,
+		}))
 	}
 }
 

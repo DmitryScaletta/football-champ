@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api_get_record } from '../api'
 
 export const FETCH_PLAYER_REQUEST = 'FETCH_PLAYER_REQUEST'
 export const FETCH_PLAYER_SUCCESS = 'FETCH_PLAYER_SUCCESS'
@@ -9,20 +9,16 @@ export function fetch_player(player_id) {
 	return (dispatch) => {
 		dispatch({ type: FETCH_PLAYER_REQUEST })
 
-		axios.get(`/api/player/${player_id}`)
+		api_get_record('player', player_id)
 		.then(
-			(result) => {
-				dispatch({
-					type: FETCH_PLAYER_SUCCESS,
-					data: result.data
-				})
-			},
-			(error) => {
-				dispatch({
-					type: FETCH_PLAYER_FAILURE,
-					error: error.response.data
-				})
-			}
+			(result) => dispatch({
+				type: FETCH_PLAYER_SUCCESS,
+				data: result,
+			}),
+			(error) => dispatch({
+				type: FETCH_PLAYER_FAILURE,
+				error: error,
+			})
 		)
 	}
 }

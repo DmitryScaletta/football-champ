@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { api_table_search } from '../api'
 
 export const FETCH_MATCHES_REQUEST = 'FETCH_MATCHES_REQUEST'
 export const FETCH_MATCHES_SUCCESS = 'FETCH_MATCHES_SUCCESS'
@@ -10,7 +10,7 @@ export function fetch_matches(limit = 20) {
 		dispatch({ type: FETCH_MATCHES_REQUEST })
 
 		Promise.all([
-			axios.post('/api/match/search', {
+			api_table_search('match', {
 				filter: {
 					is_over: 0
 				},
@@ -18,7 +18,7 @@ export function fetch_matches(limit = 20) {
 				order_by: 'match_date',
 				order_type: 'ASC'
 			}),
-			axios.post('/api/match/search', {
+			api_table_search('match', {
 				filter: {
 					is_over: 1
 				},
@@ -26,19 +26,15 @@ export function fetch_matches(limit = 20) {
 				order_by: 'match_date',
 				order_type: 'DESC'
 			}),
-		]).then((result) => {
-			dispatch({
-				type: FETCH_MATCHES_SUCCESS,
-				matches: {
-					last_matches: result[0].data,
-					next_matches: result[1].data,
-				}
-			})
-		}).catch((error) => {
-			dispatch({
-				type: FETCH_MATCHES_FAILURE,
-				error: error.response.data
-			})
-		})
+		]).then((result) => dispatch({
+			type: FETCH_MATCHES_SUCCESS,
+			matches: {
+				last_matches: result[0],
+				next_matches: result[1],
+			}
+		})).catch((error) => dispatch({
+			type:  FETCH_MATCHES_FAILURE,
+			error: error,
+		}))
 	}
 }

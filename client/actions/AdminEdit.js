@@ -1,4 +1,10 @@
-import axios from 'axios'
+import {
+	api_get_record,
+	api_update_record,
+	api_create_record,
+	api_delete_record,
+	api_table_search,
+} from '../api'
 
 export const FETCH_RECORD_REQUEST            = 'FETCH_RECORD_REQUEST'
 export const FETCH_RECORD_SUCCESS            = 'FETCH_RECORD_SUCCESS'
@@ -58,15 +64,15 @@ export function fetch_record(table, id) {
 			return
 		}
 
-		axios.get(`/api/${table_name}/${id}`)
+		api_get_record(table_name, id)
 		.then(
 			(result) => dispatch({
 				type: FETCH_RECORD_SUCCESS,
-				data: result.data,
+				data: result,
 			}),
 			(error) => dispatch({
 				type: FETCH_RECORD_FAILURE,
-				error: error.response.data,
+				error: error,
 			})
 		)
 	}
@@ -86,19 +92,19 @@ export function update_record(table, new_record, callback) {
 			return
 		}
 
-		axios.put(`/api/${table_name}/${new_record.id}`, new_record)
+		api_update_record(table_name, new_record)
 		.then(
 			(result) => {
 				dispatch({
 					type: UPDATE_RECORD_SUCCESS,
-					affected: result.data.affected,
+					affected: result,
 				})
 				callback()
 			},
 			(error) => {
 				dispatch({
 					type: UPDATE_RECORD_FAILURE,
-					error: error.response.data,
+					error: error,
 				})
 			}
 		)
@@ -119,19 +125,19 @@ export function create_record(table, new_record, callback) {
 			return
 		}
 
-		axios.post(`/api/${table_name}`, new_record)
+		api_create_record(table_name, new_record)
 		.then(
 			(result) => {
 				dispatch({
 					type: CREATE_RECORD_SUCCESS,
-					affected: result.data.affected,
+					affected: result,
 				})
 				callback()
 			},
 			(error) => {
 				dispatch({
 					type: CREATE_RECORD_FAILURE,
-					error: error.response.data,
+					error: error,
 				})
 			}
 		)
@@ -152,19 +158,19 @@ export function delete_record(table, id, callback) {
 			return
 		}
 
-		axios.delete(`/api/${table_name}/${id}`)
+		api_delete_record(table_name, id)
 		.then(
 			(result) => {
 				dispatch({
 					type: DELETE_RECORD_SUCCESS,
-					affected: result.data.affected,
+					affected: result,
 				})
 				callback()
 			},
 			(error) => {
 				dispatch({
 					type: DELETE_RECORD_FAILURE,
-					error: error.response.data,
+					error: error,
 				})
 			}
 		)
@@ -221,29 +227,29 @@ export function fetch_additional_tables(table) {
 
 		let promises = []
 
-		promises.push(tables['championats'] ? axios.post('/api/championat/search') : Promise.resolve({ data: [] }))
-		promises.push(tables['seasons']     ? axios.post('/api/season/search')     : Promise.resolve({ data: [] }))
-		promises.push(tables['fcs']         ? axios.post('/api/fc/search')         : Promise.resolve({ data: [] }))
-		promises.push(tables['trainers']    ? axios.post('/api/trainer/search')    : Promise.resolve({ data: [] }))
-		promises.push(tables['countries']   ? axios.post('/api/country/search')    : Promise.resolve({ data: [] }))
-		promises.push(tables['cities']      ? axios.post('/api/city/search')       : Promise.resolve({ data: [] }))
-		promises.push(tables['lines']       ? axios.post('/api/line/search')       : Promise.resolve({ data: [] }))
+		promises.push(tables['championats'] ? api_table_search('championat') : Promise.resolve([]))
+		promises.push(tables['seasons']     ? api_table_search('season')     : Promise.resolve([]))
+		promises.push(tables['fcs']         ? api_table_search('fc')         : Promise.resolve([]))
+		promises.push(tables['trainers']    ? api_table_search('trainer')    : Promise.resolve([]))
+		promises.push(tables['countries']   ? api_table_search('country')    : Promise.resolve([]))
+		promises.push(tables['cities']      ? api_table_search('city')       : Promise.resolve([]))
+		promises.push(tables['lines']       ? api_table_search('line')       : Promise.resolve([]))
 
 		Promise.all(promises)
 		.then(
 			(result) => dispatch({
 				type:        FETCH_ADDITIONAL_TABLES_SUCCESS,
-				championats: result[0].data,
-				seasons:     result[1].data,
-				fcs:         result[2].data,
-				trainers:    result[3].data,
-				countries:   result[4].data,
-				cities:      result[5].data,
-				lines:       result[6].data,
+				championats: result[0],
+				seasons:     result[1],
+				fcs:         result[2],
+				trainers:    result[3],
+				countries:   result[4],
+				cities:      result[5],
+				lines:       result[6],
 			}),
 			(error) => dispatch({
 				type:  FETCH_ADDITIONAL_TABLES_FAILURE,
-				error: error.response.data,
+				error: error,
 			})
 		)
 	}
